@@ -1,18 +1,26 @@
 <template>
   <div>
-    <audio-recorder
-      :upload-url="uploadUri"
-      :attempts="3"
-      :time="2"
-      :before-recording="recordStarted"
-      :pause-recording="callback"
-      :after-recording="recordStoped"
-      :select-record="callback"
-      :before-upload="upload"
-      :successful-upload="uploadSuccessfull"
-      :failed-upload="callback"
-    />
-    <v-snackbar bottom left :color="color" v-model="snackbar">{{ message }}</v-snackbar>
+    <v-container grid-list-lg>
+      <v-layout justify-center row wrap>
+        <v-card>
+          <v-card-text>
+            <audio-recorder
+              :upload-url="uploadUri"
+              :attempts="600"
+              :time="2"
+              :before-recording="recordStarted"
+              :pause-recording="callback"
+              :after-recording="recordStoped"
+              :select-record="callback"
+              :before-upload="upload"
+              :successful-upload="uploadSuccessfull"
+              :failed-upload="callback"
+            />
+          </v-card-text>
+        </v-card>
+        <v-snackbar bottom left :color="color" v-model="snackbar">{{ message }}</v-snackbar>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 <script>

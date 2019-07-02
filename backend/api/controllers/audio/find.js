@@ -26,11 +26,11 @@ module.exports = {
   fn: async function(inputs) {
     var allAudiosThatFellInTime = await Audio.find({
       createdAt: inputs.time
-    });
+    }).sort("createdAt DESC");
 
     if (_.isEmpty(allAudiosThatFellInTime)) {
       // throw "noTimeFound";
-      allAudiosThatFellInTime = await Audio.find({});
+      allAudiosThatFellInTime = await Audio.find({}).sort("createdAt DESC");
     }
 
     sails.sockets.blast("new audio", allAudiosThatFellInTime);
