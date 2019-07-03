@@ -16,7 +16,7 @@ module.exports.routes = {
     action: "audio/find",
     isSocket: true
   },
-  "DELETE /api/v1/audio/delete/:id": { action: "audio/delete" },
+  "DELETE /api/v1/audio/:id": { action: "audio/delete" },
   //   MEMBERS ARENA
   // SET THE USERS PREFERED LANGAUGE
   "POST /api/v1/member/set-language": {

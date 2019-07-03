@@ -1,5 +1,16 @@
 <template>
   <v-app app :class="$store.state.loading ? 'loading': null ">
+    <v-toolbar color="primary" dark>
+      <v-toolbar-title
+        @click="$router.push('/')"
+        class="display-1"
+        style="background:transparent"
+      >Pentecost</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn to="/audios" flat>Records</v-btn>
+      <v-btn to="/members" flat>Members Area</v-btn>
+    </v-toolbar>
+
     <v-content>
       <vue-page-transition name="fade-in-right">
         <router-view />
@@ -45,8 +56,5 @@ export default {
   top: 0;
   transition-delay: 0.15s;
   width: 100%;
-}
-* {
-  background: rgb(248, 249, 250);
 }
 </style>

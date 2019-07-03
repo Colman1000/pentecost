@@ -1,28 +1,24 @@
 module.exports = {
+  friendlyName: "Delete",
 
-
-  friendlyName: 'Delete',
-
-
-  description: 'Delete audio.',
-
+  description: "Delete audio.",
 
   inputs: {
-
+    id: {
+      type: "number",
+      required: true
+    }
   },
 
+  exits: {},
 
-  exits: {
-
-  },
-
-
-  fn: async function (inputs) {
-
+  fn: async function(inputs) {
+    var audio = await Audio.findOne({ id: inputs.id });
+    if (audio) {
+      await sails.rm(audio.fd);
+      await Audio.destroy({ id: inputs.id });
+    }
     // All done.
-    return;
-
+    return audio;
   }
-
-
 };

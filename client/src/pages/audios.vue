@@ -9,8 +9,22 @@
         </v-card>
 
         <v-flex xs12 md6 v-for="(audio, i) in audios" :key="i">
-          <v-card>
-            <v-card-title class="display-1">The translated text should be here</v-card-title>
+          <v-card style="position:relative">
+            <v-btn
+              @click="deleteAudio(audio.id)"
+              style="position:absolute"
+              small
+              fab
+              right
+              color="error darken-3"
+            >
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+
+            <v-card-title class="display-1">
+              <h3>{{ audio.createdAt }}</h3>
+              <v-progress-circular class="text-center" indeterminate color="primary"></v-progress-circular>
+            </v-card-title>
             <v-card-title>{{ audio.createdAt | moment("dddd, MMMM Do YYYY") }}</v-card-title>
             <v-card-text>
               <audio-player :src="`${baseUrl}/audio/download/${audio.id}`" />
@@ -32,7 +46,7 @@ export default {
     };
   },
   mounted() {
-    this.$io.get(this.baseUrl + "/audios/2", data => {
+    this.$io.get(this.baseUrl + "/audios/2362876383", data => {
       this.audios = data;
     });
     // Subcribe to socket event
@@ -40,6 +54,14 @@ export default {
       console.log("New audio distributed", data);
       this.audios.unshift(data);
     });
+  },
+  methods: {
+    deleteAudio(id) {
+      this.$io.delete(this.baseUrl + "/audio/" + id, data => {
+        this.audios.splice(this.audios.indexOf(id), 1);
+        this.audios = [...this.audios];
+      });
+    }
   }
 };
 </script>

@@ -4,6 +4,9 @@
       <v-layout justify-center row wrap>
         <v-card>
           <v-card-text>
+            <Sampler></Sampler>
+          </v-card-text>
+          <v-card-text>
             <audio-recorder
               :upload-url="uploadUri"
               :attempts="600"
@@ -24,7 +27,11 @@
   </div>
 </template>
 <script>
+import Sampler from "@/components/Sampler";
 export default {
+  components: {
+    Sampler
+  },
   data() {
     return {
       message: "Dummy Message",
