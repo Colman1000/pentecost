@@ -15,7 +15,11 @@ module.exports = {
   fn: async function(inputs) {
     var audio = await Audio.findOne({ id: inputs.id });
     if (audio) {
-      await sails.rm(audio.fd);
+      try {
+        await sails.rm(audio.fd);
+      } catch {
+        /** fail silently */
+      }
       await Audio.destroy({ id: inputs.id });
     }
     // All done.

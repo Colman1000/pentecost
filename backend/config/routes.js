@@ -9,6 +9,7 @@
  */
 
 module.exports.routes = {
+  "GET / ": { action: "test" },
   "POST /api/v1/audio/upload": { action: "audio/upload" },
   "GET /api/v1/audio/download/:id": { action: "audio/download" },
   //   GET ALL AUDIO'S WITH INPUT TIME
@@ -17,6 +18,9 @@ module.exports.routes = {
     isSocket: true
   },
   "DELETE /api/v1/audio/:id": { action: "audio/delete" },
+
+  "POST /api/v1/audio/get-audio-text": { action: "audio/get-audio-text" },
+
   //   MEMBERS ARENA
   // SET THE USERS PREFERED LANGAUGE
   "POST /api/v1/member/set-language": {

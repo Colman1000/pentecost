@@ -8,6 +8,7 @@
           </v-card-text>
           <v-card-text>
             <audio-recorder
+              format="wav"
               :upload-url="uploadUri"
               :attempts="600"
               :time="2"

@@ -20,10 +20,19 @@
             >
               <v-icon>mdi-close</v-icon>
             </v-btn>
+            <v-btn
+              @click="getText(audio.id)"
+              style="position:absolute"
+              small
+              fab
+              left
+              color="success darken-2"
+            >
+              <v-icon>mdi-check</v-icon>
+            </v-btn>
 
             <v-card-title class="display-1">
-              <h3>{{ audio.createdAt }}</h3>
-              <v-progress-circular class="text-center" indeterminate color="primary"></v-progress-circular>
+              <!-- <v-progress-circular class="text-center" indeterminate color="primary"></v-progress-circular> -->
             </v-card-title>
             <v-card-title>{{ audio.createdAt | moment("dddd, MMMM Do YYYY") }}</v-card-title>
             <v-card-text>
@@ -56,6 +65,11 @@ export default {
     });
   },
   methods: {
+    getText(id) {
+      this.$io.post("/api/v1/audio/get-audio-text", { id: id }, data => {
+        console.log(data);
+      });
+    },
     deleteAudio(id) {
       this.$io.delete(this.baseUrl + "/audio/" + id, data => {
         this.audios.splice(this.audios.indexOf(id), 1);

@@ -16,6 +16,8 @@ io.sails.environment = process.env.NODE_ENV;
 
 io.sails.url = "//localhost:1337";
 io.sails.transports = ["polling"];
+
+io.socket.on("connect", c => console.clear());
 const SAILS_SOCKET = {
   install(Vue, options) {
     Vue.mixin({

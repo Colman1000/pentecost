@@ -20,6 +20,7 @@ module.exports = {
 
   fn: async function(inputs) {
     var util = require("util");
+    const run = require("shelljs").exec;
 
     var audio = await sails
       .uploadOne(inputs.audio, {
@@ -29,9 +30,13 @@ module.exports = {
       .intercept(
         err => new Error("The photo upload failed: " + util.inspect(err))
       );
-
+    // convert the audio to wav and save it
+    // var transformAudio = new Mp32Wav(audio.fd).exec();
+    // sails.log.warn(transformAudio);
+    run(`ffmpeg -i ${audio.fd} ${audio.fd.replace("mp3", "flac")}`);
+    run(`rm ${audio.fd}`);
     var savedAudio = await Audio.create({
-      fd: audio.fd,
+      fd: audio.fd.replace("mp3", "flac"),
       size: audio.size,
       type: audio.type
     }).fetch();

@@ -41,8 +41,8 @@ export default {
           value: "en-US"
         },
         {
-          text: "Arabic - AR",
-          value: "ar-AR"
+          text: "French ",
+          value: "fr"
         }
         // ...
       ]

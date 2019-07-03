@@ -5,18 +5,24 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "@google-cloud/speech": "^3.2.2",
+    "@google-cloud/text-to-speech": "^1.1.2",
+    "@google-cloud/translate": "^4.1.1",
     "@sailshq/lodash": "^3.10.3",
+    "audio-decode": "^1.4.0",
+    "mp3-to-wav": "^0.1.11",
     "sails": "^1.2.2",
     "sails-hook-apianalytics": "^2.0.3",
     "sails-hook-orm": "^2.1.1",
     "sails-hook-sockets": "^2.0.0",
-    "sails-hook-uploads": "^0.4.3"
+    "sails-hook-uploads": "^0.4.3",
+    "shelljs": "^0.8.3"
   },
   "devDependencies": {
     "eslint": "5.16.0"
   },
   "scripts": {
-    "start": "NODE_ENV=production node app.js",
+    "start": "export GOOGLE_APPLICATION_CREDENTIALS=./pentecost-voice.json && NODE_ENV=development node app.js",
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
     "lint": "./node_modules/eslint/bin/eslint.js . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
     "custom-tests": "echo \"(No other custom tests yet.)\" && echo"
