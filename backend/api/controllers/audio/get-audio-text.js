@@ -13,27 +13,30 @@ module.exports = {
   exits: {},
 
   fn: async function({ id }) {
-    let userLanguage = this.req.session.language || "en-US";
-
+    let userLanguage = this.req.session.language || "fr";
+    sails.log.info("Langauge: ", this.req.session.language);
+    sails.log.debug("Translating Audio Text From One Channel..");
     // translate audio
     let text = await sails.helpers.helpTranslate.with({ id: id });
+    sails.log.info("Translated AudioText :", text);
 
-    sails.log.debug("Translated AudioText :", text);
-
-    // convert audio in eg (en to es)
+    sails.log.debug(
+      `Translating \`${text}\` to \`${userLanguage}\` Equivalent ...`
+    );
+    // convert text in eg (en to es)
     var translatedText = await sails.helpers.translateText2ForeignText.with({
       text: text,
       target: userLanguage
     });
+    sails.log.info(`Translated \`${text}\` to \`${translatedText}\` ...`);
 
-    sails.log.debug("Translated Text:", translatedText);
-
+    sails.log.debug(`Converting \`${translatedText}\` to Audio now  ...`);
     var userAudio = await sails.helpers.translateText2Speech.with({
       locale: userLanguage,
-      text: text
+      text: translatedText
     });
 
-    sails.log.debug(userAudio);
+    sails.log.info(`Converted ${translatedText} to audio`, userAudio);
 
     // All done.
     return userAudio;

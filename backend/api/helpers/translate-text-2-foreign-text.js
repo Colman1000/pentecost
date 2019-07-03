@@ -23,20 +23,8 @@ module.exports = {
   },
 
   fn: async function({ text, target }) {
-    const projectId = "vigilant-guru-245610";
-
-    const { Translate } = require("@google-cloud/translate");
-    const translate = new Translate({ projectId });
-
-    // The text to translate
-
-    // The target language
-
-    // Translates some text into Russian
-    const [translation] = await translate.translate(text, target);
-    console.log(`Text: ${text}`);
-    console.log(`Translation: ${translation}`);
-    // TODO
-    return translation;
+    const translate = require("translate");
+    translate.key = "AIzaSyAtY4abPd-ICKi2FxDl9fccwNazy9CXDLM";
+    return await translate(text, target);
   }
 };

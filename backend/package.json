@@ -10,13 +10,15 @@
     "@google-cloud/translate": "^4.1.1",
     "@sailshq/lodash": "^3.10.3",
     "audio-decode": "^1.4.0",
+    "google-translate": "^2.3.0",
     "mp3-to-wav": "^0.1.11",
     "sails": "^1.2.2",
     "sails-hook-apianalytics": "^2.0.3",
     "sails-hook-orm": "^2.1.1",
     "sails-hook-sockets": "^2.0.0",
     "sails-hook-uploads": "^0.4.3",
-    "shelljs": "^0.8.3"
+    "shelljs": "^0.8.3",
+    "translate": "^1.1.0"
   },
   "devDependencies": {
     "eslint": "5.16.0"
