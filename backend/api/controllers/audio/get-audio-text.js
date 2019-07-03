@@ -17,7 +17,7 @@ module.exports = {
     sails.log.info("Langauge: ", this.req.session.language);
     sails.log.debug("Translating Audio Text From One Channel..");
     // translate audio
-    let text = await sails.helpers.helpTranslate.with({ id: id });
+    let text = await sails.helpers.translateAudio2Text.with({ id: id });
     sails.log.info("Translated AudioText :", text);
 
     sails.log.debug(
@@ -36,7 +36,7 @@ module.exports = {
       text: translatedText
     });
 
-    sails.log.info(`Converted ${translatedText} to audio`, userAudio);
+    sails.log.info(`Converted "${translatedText}" to audio`, userAudio);
 
     // All done.
     return userAudio;

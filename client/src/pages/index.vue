@@ -11,7 +11,7 @@
               format="wav"
               :upload-url="uploadUri"
               :attempts="600"
-              :time="2"
+              :time=".15"
               :before-recording="recordStarted"
               :pause-recording="callback"
               :after-recording="recordStoped"

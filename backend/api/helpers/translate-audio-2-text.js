@@ -29,7 +29,6 @@ module.exports = {
     // The name of the audio file to transcribe
     const _audio = await Audio.findOne({ id: inputs.id });
     fileName = _audio.fd;
-    sails.log(fileName);
 
     // Reads a local audio file and converts it to base64
     const file = fs.readFileSync(fileName);
