@@ -6,14 +6,20 @@ module.exports = {
   inputs: {
     id: {
       type: "number",
+      description: "The audio's id",
       required: true
     }
   },
 
-  exits: {},
+  exits: {
+    failedToTranslateAudio: {
+      description: "The audio translate proccess failed",
+      statusCode: 422
+    }
+  },
 
   fn: async function({ id }) {
-    let userLanguage = this.req.session.language || "fr";
+    let userLanguage = this.req.session.language || "en";
     sails.log.info("Langauge: ", this.req.session.language);
     sails.log.debug("Translating Audio Text From One Channel..");
     // translate audio

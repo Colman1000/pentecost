@@ -11,6 +11,7 @@
     "@sailshq/lodash": "^3.10.3",
     "audio-decode": "^1.4.0",
     "google-translate": "^2.3.0",
+    "moment": "^2.24.0",
     "mp3-to-wav": "^0.1.11",
     "sails": "^1.2.2",
     "sails-hook-apianalytics": "^2.0.3",

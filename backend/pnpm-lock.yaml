@@ -5,6 +5,7 @@ dependencies:
   '@sailshq/lodash': 3.10.3
   audio-decode: 1.4.0
   google-translate: 2.3.0
+  moment: 2.24.0
   mp3-to-wav: 0.1.11
   sails: 1.2.3
   sails-hook-apianalytics: 2.0.3
@@ -2220,6 +2221,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
+  /moment/2.24.0:
+    dev: false
+    resolution:
+      integrity: sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
   /mp3-to-wav/0.1.11:
     dependencies:
       audio-buffer-from: 1.1.1
@@ -3742,6 +3747,7 @@ specifiers:
   audio-decode: ^1.4.0
   eslint: 5.16.0
   google-translate: ^2.3.0
+  moment: ^2.24.0
   mp3-to-wav: ^0.1.11
   sails: ^1.2.2
   sails-hook-apianalytics: ^2.0.3

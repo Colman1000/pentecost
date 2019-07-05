@@ -22,4 +22,3 @@ This consist of the client and server codes, nothing to say for now..
 - Get langauges locales from a remote source
 - Set time batch
 - Create Peter UI for recording [admin]
-- Tackle the session set by socket, seems socket is not reciveing credentials

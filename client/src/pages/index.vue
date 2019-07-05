@@ -47,7 +47,8 @@ export default {
       this.color = "info";
       this.message = "Recording Started..";
     },
-    recordStoped() {
+    recordStoped(e) {
+      console.log("event", e);
       this.snackbar = true;
       this.color = "warning";
       this.message = "Recording Stoped..";

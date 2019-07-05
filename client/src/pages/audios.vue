@@ -55,8 +55,10 @@ export default {
     };
   },
   mounted() {
-    this.$io.get(this.baseUrl + "/audios/2362876383", data => {
-      this.audios = data;
+    this.$io.get(this.baseUrl + "/audios/2362", data => {
+      if (typeof data !== "string") {
+        this.audios = data;
+      }
     });
     // Subcribe to socket event
     this.$io.on("new audio", data => {

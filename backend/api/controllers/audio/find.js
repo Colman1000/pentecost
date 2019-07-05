@@ -18,19 +18,21 @@ module.exports = {
 
   exits: {
     noTimeFound: {
-      responseType: "",
+      statusCode: 404,
       description: "No audios in this current `time` provided"
     }
   },
 
   fn: async function(inputs) {
+    // var moment = require("moment");
     var allAudiosThatFellInTime = await Audio.find({
-      createdAt: inputs.time
+      createdAt: {
+        ">=": 15621
+      }
     }).sort("createdAt DESC");
 
     if (_.isEmpty(allAudiosThatFellInTime)) {
-      // throw "noTimeFound";
-      allAudiosThatFellInTime = await Audio.find({}).sort("createdAt DESC");
+      throw "noTimeFound";
     }
 
     sails.sockets.blast("new audio", allAudiosThatFellInTime);
