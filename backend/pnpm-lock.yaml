@@ -9,6 +9,7 @@ dependencies:
   mp3-to-wav: 0.1.11
   sails: 1.2.3
   sails-hook-apianalytics: 2.0.3
+  sails-hook-cloud: 0.1.1
   sails-hook-orm: 2.1.1
   sails-hook-sockets: 2.0.0
   sails-hook-uploads: 0.4.3
@@ -2903,6 +2904,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-6ZEpBCmJM6uzS6esAaZkRWRM7hh5zXHNN/BtYR+6l0ztTRKPQl9YMTc8JE3bBP+XC7Z8T4Is36B0YukkoMuIOg==
+  /sails-hook-cloud/0.1.1:
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-Xj+d7L/BVfxzCnXRW9K1KH+94Lp8xH7QNsOD9ixLqfqCHEjlglT3hTAhAW+GQrt70pFXGsJq+YtGOPZKya19uw==
   /sails-hook-orm/2.1.1:
     dependencies:
       '@sailshq/lodash': 3.10.3
@@ -3751,6 +3758,7 @@ specifiers:
   mp3-to-wav: ^0.1.11
   sails: ^1.2.2
   sails-hook-apianalytics: ^2.0.3
+  sails-hook-cloud: ^0.1.1
   sails-hook-orm: ^2.1.1
   sails-hook-sockets: ^2.0.0
   sails-hook-uploads: ^0.4.3
