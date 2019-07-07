@@ -2,8 +2,6 @@
 
 This consist of the client and server codes, nothing to say for now..
 
-## THINGS ADDED TODAY
-
 ### Admin Section
 
 - Recorded audio and uploaded to backend
