@@ -4,6 +4,7 @@ import App from "./App.vue";
 import axios from "axios";
 import "./plugins/vuetify";
 import "./plugins/socket";
+import "./plugins/axios";
 import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
@@ -19,7 +20,7 @@ Vue.prototype.baseUrl =
   process.env.NODE_ENV == "development"
     ? "http://localhost:1337/api/v1"
     : "http://our-pentecost-server/api/v1";
-Vue.prototype.$http = axios;
+// Vue.prototype.$http = axios;
 
 import VuePageTransition from "vue-page-transition";
 Vue.use(VuePageTransition);

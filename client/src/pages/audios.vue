@@ -7,6 +7,7 @@
             <h3 class="headline">No audios at the moment</h3>
           </v-card-text>
         </v-card>
+
         <v-flex xs12 md6 v-for="(audio, i) in audios" :key="i">
           <v-card style="position:relative">
             <v-btn
