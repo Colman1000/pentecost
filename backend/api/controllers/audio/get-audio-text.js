@@ -1,7 +1,7 @@
 module.exports = {
   friendlyName: "Get audio text",
 
-  description: "",
+  description: "Translates an audio to it text equivalent",
 
   inputs: {
     id: {
