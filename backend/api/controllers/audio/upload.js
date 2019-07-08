@@ -30,22 +30,22 @@ module.exports = {
       .intercept(
         err => new Error("The photo upload failed: " + util.inspect(err))
       );
-    // convert the audio to wav and save it
-    // var transformAudio = new Mp32Wav(audio.fd).exec();
-    // sails.log.warn(transformAudio);
-    run(`ffmpeg -i ${audio.fd} ${audio.fd.replace("mp3", "flac")}`);
-    run(`rm ${audio.fd}`);
-    var savedAudio = await Audio.create({
-      fd: audio.fd.replace("mp3", "flac"),
-      size: audio.size,
-      type: audio.type
-    }).fetch();
+    if (audio) {
+      // convert the audio to flac and save it
+      run(`ffmpeg -i ${audio.fd} ${audio.fd.replace("mp3", "flac")}`);
+      run(`rm ${audio.fd}`);
+      var savedAudio = await Audio.create({
+        fd: audio.fd.replace("mp3", "flac"),
+        size: audio.size,
+        type: audio.type
+      }).fetch();
 
-    // save the req so that we can update it later from GCP
-    this.req.session.audioID = savedAudio.id;
+      // save the req so that we can update it later from GCP
+      this.req.session.audioID = savedAudio.id;
 
-    sails.sockets.blast("new audio", savedAudio);
-    // All done.
-    return savedAudio;
+      sails.sockets.blast("new audio", savedAudio);
+      // All done.
+      return savedAudio;
+    } else return;
   }
 };
