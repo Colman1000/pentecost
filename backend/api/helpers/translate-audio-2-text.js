@@ -7,6 +7,10 @@ module.exports = {
     id: {
       required: true,
       type: "string"
+    },
+    language: {
+      required: false,
+      type: "string"
     }
   },
 
@@ -42,7 +46,7 @@ module.exports = {
     const config = {
       encoding: "FLAC",
       // sampleRateHertz: 18000,
-      languageCode: "en-US"
+      languageCode: inputs.language || "en-US"
     };
     const request = {
       audio: audio,

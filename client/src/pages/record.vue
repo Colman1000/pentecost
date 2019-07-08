@@ -5,8 +5,8 @@
         <div style class="elevation-5 inn">
           <v-progress-linear v-if="isUploading" class="ma-0 pa-0" indeterminate></v-progress-linear>
 
-          <div @click="stopRecording" v-if="!isRecording" class="animIcon red white--text">
-            <v-btn class="recIcon" color="red" fab icon>
+          <div @click="stopRecording" v-if="isRecording" class="animIcon red white--text">
+            <v-btn class="recIcon" color="error" fab icon>
               <v-icon size="200" color="white">mdi-record-rec</v-icon>
             </v-btn>
             <!-- /* trying to use v-icon good, expect a big bug on your way make sure you kill it*/ -->
@@ -29,6 +29,7 @@ export default {
       audioUrl: undefined,
       audioBlob: undefined,
       mediaRecorder: undefined,
+      maxTime: 15000,
       uploadUri: "//localhost:1337/api/v1/audio/upload",
       isUploading: false
     };
@@ -64,6 +65,9 @@ export default {
           this.audioUrl = audioUrl;
           this.uploadAudio();
         });
+        setTimeout(z => {
+          this.stopRecording();
+        }, this.maxTime);
       });
     },
     /**
@@ -167,20 +171,22 @@ export default {
       #{$i}s
       infinite
       alternate
-      cubic-bezier(0.68, -0.55, 0.27, 11.55); // width: 2em * $i;
+      cubic-bezier(0.68, 0.05, 0.36, 4.5);
+
+    // cubic-bezier(0.68, -0.55, 0.27, 11.55); // width: 2em * $i;
   }
 }
 @keyframes iconAnimStart {
   from {
     height: 300px;
     width: 300px;
-    background: radial-gradient(#fceae9, #ac183d);
+    background: radial-gradient(#fceae9, var(--v-warning-base));
   }
 
   to {
     height: 340px;
     width: 340px;
-    background: radial-gradient(#fceae996, #ea9afa17);
+    background: radial-gradient(#fceae996, var(--v-error-lighten4));
     /* background-color: red; */
   }
 }
