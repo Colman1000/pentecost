@@ -1,15 +1,21 @@
 <template>
-  <div @keydown.space="done">
+  <div @keydown.native="done">
     <v-container grid-list-lg class="text-xs-center">
       <v-layout justify-center row wrap>
-        <v-card width="400" height="400" style="border-radius:100%">
+        <div style class="elevation-5 inn">
           <v-progress-linear v-if="isUploading" class="ma-0 pa-0" indeterminate></v-progress-linear>
-          <v-card-text>
-            <v-icon v-if="isRecording" @click="stopRecording" color="red" size="300">mdi-record-rec</v-icon>
-            <!-- While is not recording.. start recording -->
-            <v-icon v-else @click="startRecording" color="primary" size="300">mdi-microphone</v-icon>
-          </v-card-text>
-        </v-card>
+
+          <div @click="stopRecording" v-if="!isRecording" class="animIcon red white--text">
+            <v-btn class="recIcon" color="red" fab icon>
+              <v-icon size="200" color="white">mdi-record-rec</v-icon>
+            </v-btn>
+            <!-- /* trying to use v-icon good, expect a big bug on your way make sure you kill it*/ -->
+            <div v-for="i in 6" :key="i" :class="`recording-btn${i}`"></div>
+          </div>
+          <!-- While is not recording.. start recording -->
+          <v-icon v-else @click="startRecording" color="primary" size="300">mdi-microphone</v-icon>
+          <!-- </v-card-text> -->
+        </div>
       </v-layout>
     </v-container>
   </div>
@@ -103,3 +109,79 @@ export default {
   mounted() {}
 };
 </script>
+
+
+<style lang="scss">
+/**
+* @author { EmmaJnrk }
+* @license All rights Resevered
+**/
+.animIcon {
+  position: relative;
+  /* position: absolute; */
+  top: 50%;
+  left: 50%;
+  height: 300px;
+  width: 300px;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  align-content: center;
+  border-radius: 100%;
+}
+.recIcon {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0px;
+  width: 300px;
+  height: 300px;
+  z-index: 1000;
+  &:hover {
+    position: fixed;
+    left: 0px;
+    z-index: 1000;
+  }
+  &:focus {
+    position: fixed;
+    left: 0px;
+    z-index: 1000;
+  }
+}
+.inn {
+  border-radius: 10px;
+  width: 400px;
+  height: 400px;
+  position: relative;
+}
+@for $i from 1 through 6 {
+  .recording-btn#{$i} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    height: 1000px;
+    width: 1000px;
+    animation: iconAnimStart
+      #{$i}s
+      infinite
+      alternate
+      cubic-bezier(0.68, -0.55, 0.27, 11.55); // width: 2em * $i;
+  }
+}
+@keyframes iconAnimStart {
+  from {
+    height: 300px;
+    width: 300px;
+    background: radial-gradient(#fceae9, #ac183d);
+  }
+
+  to {
+    height: 340px;
+    width: 340px;
+    background: radial-gradient(#fceae996, #ea9afa17);
+    /* background-color: red; */
+  }
+}
+</style>
