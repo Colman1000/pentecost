@@ -32,7 +32,9 @@ module.exports = {
       );
     if (audio) {
       // convert the audio to flac and save it
-      run(`ffmpeg -i ${audio.fd} ${audio.fd.replace("mp3", "flac")}`);
+      run(
+        `ffmpeg -i ${audio.fd} -v warning ${audio.fd.replace("mp3", "flac")}`
+      );
       run(`rm ${audio.fd}`);
       var savedAudio = await Audio.create({
         fd: audio.fd.replace("mp3", "flac"),

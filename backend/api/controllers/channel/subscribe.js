@@ -27,14 +27,9 @@ module.exports = {
     }
     var channel = await Channel.findOne().where({ id: inputs.id });
     if (!channel) throw "notFound";
-    // Have the socket which made the request join the "funSockets" room.
+    // Have the socket which made the request join the "Name" room.
     sails.sockets.join(this.req, channel.name);
-
-    sails.log.silly("Joined", channel.name);
-
     sails.sockets.broadcast(channel.name, "rotciv", channel, this.req);
-
-    sails.log.silly("Blasted", channel.name);
     // All done.
     return channel;
   }

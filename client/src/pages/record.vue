@@ -120,6 +120,10 @@ export default {
 * @author { EmmaJnrk }
 * @license All rights Resevered
 **/
+$bordered: 300px;
+$pos: 50%;
+$neg_pos: -50%;
+
 .animIcon {
   position: relative;
   /* position: absolute; */
