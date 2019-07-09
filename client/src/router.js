@@ -10,7 +10,7 @@ const RouterLayout = createRouterLayout(layout => {
 });
 
 export default new Router({
-  mode: "hash",
+  mode: "history",
   routes: [
     {
       path: "/",

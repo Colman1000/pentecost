@@ -7,19 +7,17 @@ module.exports = {
     lang: {
       type: "string",
       required: true
+    },
+    message: {
+      type: "string",
+      required: true
     }
   },
 
   exits: {},
-
+  // TODO: Move this file to a helper
   fn: async function(inputs) {
-    sails.sockets.broadcast(
-      inputs.lang,
-      "rotciv",
-      { howdy: "hi there!" },
-      this.req
-    );
-
+    await sails.helpers.broadcast.with(inputs);
     // All done.
     return;
   }

@@ -81,7 +81,7 @@ export default {
       headers[
         "Content-Type"
       ] = `multipart/form-data; boundary=${data._boundary}`;
-      this.$http
+      this.$axios
         .post(this.uploadUri, data, { headers: headers })
         .then(resp => {
           console.log(resp);
@@ -89,7 +89,7 @@ export default {
         .catch(e => console.log(e));
 
       console.log("Uploading audio...", this.audioUrl);
-      this.$http
+      this.$axios
         .post(this.uploadUri, {
           audio: this.audioUrl
         })
