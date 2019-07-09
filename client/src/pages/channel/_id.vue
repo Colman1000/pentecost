@@ -5,7 +5,7 @@
         <v-card id="screen" width="1000" height="550">
           <v-card-text>
             <h3 class="text-xs-center pt-5 pb-3 display-1">{{ message }}</h3>
-            <div v-if="trans.length === 0" class="text-xs-center">There's nothing here</div>
+            <div v-if="trans.length === 0" class="text-xs-center">No live translations for now</div>
             <div
               v-else
               class="headline font-weigth-light text-xs-center"
@@ -28,7 +28,7 @@ export default {
       trans: [],
       sock: "",
       opacity: 0.19,
-      message: "No sermon at the moment",
+      message: "No active translations now",
       config: {
         animate: true,
         patternWidth: 100,

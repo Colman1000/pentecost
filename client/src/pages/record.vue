@@ -84,18 +84,11 @@ export default {
       this.$axios
         .post(this.uploadUri, data, { headers: headers })
         .then(resp => {
-          console.log(resp);
+          this.isUploading = false;
         })
         .catch(e => console.log(e));
 
       console.log("Uploading audio...", this.audioUrl);
-      this.$axios
-        .post(this.uploadUri, {
-          audio: this.audioUrl
-        })
-        .then(({ data }) => {
-          this.isUploading = false;
-        });
     }, // </uploadAudio>
 
     playAudio() {

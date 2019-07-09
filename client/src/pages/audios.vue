@@ -62,13 +62,13 @@ export default {
     });
     // Subcribe to socket event
     this.$io.on("new audio", data => {
-      console.log("New audio distributed", data);
+      console.log("New audio distributed from audios", data);
       this.audios.unshift(data);
     });
   },
   methods: {
     getText(id) {
-      this.$io.post("/api/v1/audio/get-audio-text", { id: id }, data => {
+      this.$io.post("/audio/get-audio-text", { id: id }, data => {
         console.log(data);
       });
     },

@@ -27,9 +27,11 @@ module.exports = {
     }
     var channel = await Channel.findOne().where({ id: inputs.id });
     if (!channel) throw "notFound";
+    // Leave the socket before joing back incase the user is refreshing the page
+    sails.sockets.leave(this.req, channel.name);
     // Have the socket which made the request join the "Name" room.
     sails.sockets.join(this.req, channel.name);
-    sails.sockets.broadcast(channel.name, "rotciv", channel, this.req);
+
     // All done.
     return channel;
   }

@@ -15,9 +15,10 @@ module.exports = {
   },
 
   exits: {},
-  // TODO: Move this file to a helper
   fn: async function(inputs) {
-    await sails.helpers.broadcast.with(inputs);
+    // get all the current broadcasted messages
+    // await sails.helpers.broadcast.with(inputs);
+    sails.sockets.broadcast(inputs.lang, "rotciv", inputs.message, this.req);
     // All done.
     return;
   }

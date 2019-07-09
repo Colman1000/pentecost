@@ -23,6 +23,7 @@ const SAILS_SOCKET = {
   install(Vue, options) {
     Vue.mixin({
       created() {
+        Vue.prototype.$ioSails = io.sails;
         Vue.prototype.io = io.socket;
         Vue.prototype.$io = io.socket;
         window.io = io.socket;

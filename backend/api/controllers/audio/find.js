@@ -6,7 +6,7 @@ module.exports = {
   inputs: {
     time: {
       type: "number",
-      required: true,
+      required: false,
       description: "The current timestamp of audios you want to retrieve"
     },
     limit: {

@@ -2,10 +2,10 @@
   <div>
     <v-container grid-list-md>
       <v-layout justify-center row wrap>
-        <v-flex v-for="(chan, i) in channels" :key="i" xs6 md6>
-          <v-card :to="`/channel/${chan.id}`">
+        <v-flex v-for="(chan, i) in channels" :key="i" xs6 md4>
+          <v-card hover ripple :to="`/channel/${chan.id}`">
             <!-- <v-img :src="chan.flag"></v-img> -->
-            <v-card-text>{{ chan.name }}</v-card-text>
+            <v-card-text class="font-weight-bold">{{ chan.name }}</v-card-text>
           </v-card>
         </v-flex>
       </v-layout>
