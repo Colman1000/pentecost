@@ -11,7 +11,7 @@ import store from "../store";
 let config = {
   baseURL:
     process.env.NODE_ENV == "development"
-      ? "//localhost:1337/api/v1"
+      ? "//localhost:1337"
       : "http://easypharmacy.us-east-2.elasticbeanstalk.com",
 
   timeout: 60 * 1000, // Timeout

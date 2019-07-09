@@ -8,7 +8,7 @@
       >Pentecost</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn to="/audios" flat>Records</v-btn>
-      <v-btn to="/members" flat>Members Area</v-btn>
+      <v-btn to="/channels" flat>Channels</v-btn>
     </v-toolbar>
 
     <v-content>
