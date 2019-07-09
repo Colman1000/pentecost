@@ -35,7 +35,7 @@ module.exports = {
       throw "noTimeFound";
     }
 
-    sails.sockets.blast("new audio", allAudiosThatFellInTime);
+    // sails.sockets.blast("new audio", allAudiosThatFellInTime);
     // All done.
     return allAudiosThatFellInTime;
   }

@@ -1,25 +1,31 @@
 module.exports = {
-  friendlyName: "Broadcast message",
+  friendlyName: "Broadcast Message",
 
-  description: "",
+  description: "Begin the translation proccess and blast the channels",
 
   inputs: {
-    lang: {
+    audioId: {
       type: "string",
       required: true
     },
-    message: {
+    channelId: {
       type: "string",
       required: true
     }
   },
 
   exits: {},
+
   fn: async function(inputs) {
-    // get all the current broadcasted messages
-    // await sails.helpers.broadcast.with(inputs);
-    sails.sockets.broadcast(inputs.lang, "rotciv", inputs.message, this.req);
+    sails.log();
+    if (inputs.channelId == "undefined") return;
+    var chan = await Channel.findOne({ id: inputs.channelId });
+    let text = await sails.helpers.translateAudio2Text.with({
+      id: inputs.audioId
+    });
+    sails.log(chan.name);
+    sails.sockets.broadcast(chan.name, "rotciv", text, this.req);
     // All done.
-    return;
+    return chan;
   }
 };

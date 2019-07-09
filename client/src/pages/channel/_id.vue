@@ -47,7 +47,13 @@ export default {
       noise("#screen", this.config);
     });
   },
+  computed: {
+    channelId() {
+      return this.$route.params.id;
+    }
+  },
   mounted() {
+    var channelId = this.$route.params.id;
     this.$io.get(
       "/channel/subscribe/?id=" + this.$route.params.id,
       (body, jwt) => {
@@ -58,8 +64,22 @@ export default {
         }
       }
     );
+    // Subcribe to socket event
+    this.$io.on("new audio", data => {
+      console.log("Audio Id", data.id);
+      console.log("Channel Id", this.channelId);
+      // tell the server to begin processing this audio file ..
+      // ... and broadcasting it to this particular
+      this.$io.post(
+        `/channel/broadcast-message/?audioId=${data.id}&channelId=${this.$route.params.id}`,
+        d => {
+          console.log("begin trans", d);
+        }
+      );
+    });
 
     this.$io.on("rotciv", data => {
+      console.log(data);
       this.trans.unshift(data);
     });
   },

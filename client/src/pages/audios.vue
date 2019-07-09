@@ -62,7 +62,7 @@ export default {
     });
     // Subcribe to socket event
     this.$io.on("new audio", data => {
-      console.log("New audio distributed from audios", data);
+      console.debug("New audio\n", data);
       this.audios.unshift(data);
     });
   },
