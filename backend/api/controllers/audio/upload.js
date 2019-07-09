@@ -33,7 +33,7 @@ module.exports = {
     if (audio) {
       // convert the audio to flac and save it
       run(
-        `ffmpeg -i ${audio.fd} -b:a 12k -map a ${audio.fd.replace(
+        `ffmpeg -i ${audio.fd} -v error -b:a 12k -map a ${audio.fd.replace(
           "mp3",
           "flac"
         )}`
@@ -46,9 +46,27 @@ module.exports = {
       }).fetch();
 
       // save the req so that we can update it later from GCP
+      // we're not using this at all
       this.req.session.audioID = savedAudio.id;
 
-      sails.sockets.blast("new audio", savedAudio);
+      // before you blast, get the text of the audio from google to aid in
+      // ... translating multiple socket request from the frontend
+      let text = await sails.helpers.translateAudio2Text.with({
+        id: savedAudio.id
+      });
+      // if the text was successfully generated
+      if (text) {
+        // Update the text to match the resulting audio
+        var zed = await Audio.updateOne({ id: savedAudio.id }).set({
+          text: text
+        });
+        // if the audio was updated successfully
+        if (zed) {
+          // Then we can now notify the `Channels` that they can now ..
+          // ... request thier langauage equivalent :()
+          sails.sockets.blast("new audio", savedAudio);
+        } // </zed>
+      } //</if>
       // All done.
       return savedAudio;
     } else return;

@@ -19,14 +19,27 @@ module.exports = {
   fn: async function(inputs) {
     if (inputs.channelId == "undefined") return;
     var chan = await Channel.findOne({ id: inputs.channelId });
-    let text = await sails.helpers.translateAudio2Text.with({
-      id: inputs.audioId,
-      language: chan.language
-    });
-    sails.log(chan.language);
-    sails.log(text);
-    sails.sockets.broadcast(chan.name, "rotciv", text, this.req);
+
+    var audioText = await Audio.findOne({ id: inputs.audioId });
+
+    if (audioText && chan) {
+      audioText = audioText.text;
+      var translatedText = await sails.helpers.translateText2ForeignText.with({
+        text: audioText,
+        target: chan.language
+      });
+
+      sails.log.info("--".repeat(20));
+      sails.log.debug("Channel: ", chan.name);
+      sails.log.debug("Language: ", chan.language);
+      sails.log.debug("origin text:", audioText);
+      sails.log.debug("trans text:", translatedText);
+      sails.log.info("--".repeat(20));
+
+      sails.sockets.broadcast(chan.name, "rotciv", translatedText, this.req);
+      return translatedText;
+    }
+    return;
     // All done.
-    return text;
   }
 };

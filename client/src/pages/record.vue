@@ -86,7 +86,10 @@ export default {
         .then(resp => {
           this.isUploading = false;
         })
-        .catch(e => console.log(e));
+        .catch(e => {
+          console.log(e);
+          this.isUploading = false;
+        });
 
       console.log("Uploading audio...", this.audioUrl);
     }, // </uploadAudio>
@@ -183,7 +186,7 @@ $neg_pos: -50%;
   to {
     height: 340px;
     width: 340px;
-    background: radial-gradient(#fceae996, var(--v-error-lighten4));
+    background: radial-gradient(#fceae996, var(--v-error-lighten5));
     /* background-color: red; */
   }
 }

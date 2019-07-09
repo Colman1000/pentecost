@@ -14,6 +14,8 @@ module.exports = {
     fd: { type: "string", required: true },
     size: { type: "number", required: true },
     type: { type: "string", required: true },
+    // updated the text later
+    text: { type: "string", required: false },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

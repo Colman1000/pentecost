@@ -10,7 +10,6 @@
  */
 
 module.exports.bootstrap = async function() {
-
   // By convention, this is a good place to set up fake data during development.
   //
   // For example:
@@ -20,11 +19,12 @@ module.exports.bootstrap = async function() {
   //   return;
   // }
   //
-  // await User.createEach([
-  //   { emailAddress: 'ry@example.com', fullName: 'Ryan Dahl', },
-  //   { emailAddress: 'rachael@example.com', fullName: 'Rachael Shaw', },
-  //   // etc.
-  // ]);
+  await Channel.destroy({});
+  await Channel.createEach([
+    { flag: "/flags/one.png", name: "English", language: "en" },
+    { flag: "/flags/two.png", name: "Russia", language: "ru" },
+    { flag: "/flags/three.png", name: "Espanol", language: "es" }
+    // etc.
+  ]);
   // ```
-
 };

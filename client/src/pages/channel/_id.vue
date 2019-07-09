@@ -74,6 +74,7 @@ export default {
         `/channel/broadcast-message/?audioId=${data.id}&channelId=${this.$route.params.id}`,
         d => {
           console.log("begin trans", d);
+          this.trans.unshift(d);
         }
       );
     });
