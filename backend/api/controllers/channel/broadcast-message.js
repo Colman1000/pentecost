@@ -17,15 +17,16 @@ module.exports = {
   exits: {},
 
   fn: async function(inputs) {
-    sails.log();
     if (inputs.channelId == "undefined") return;
     var chan = await Channel.findOne({ id: inputs.channelId });
     let text = await sails.helpers.translateAudio2Text.with({
-      id: inputs.audioId
+      id: inputs.audioId,
+      language: chan.language
     });
-    sails.log(chan.name);
+    sails.log(chan.language);
+    sails.log(text);
     sails.sockets.broadcast(chan.name, "rotciv", text, this.req);
     // All done.
-    return chan;
+    return text;
   }
 };

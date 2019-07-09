@@ -8,37 +8,27 @@
           </v-card-text>
         </v-card>
 
-        <v-flex xs12 md6 v-for="(audio, i) in audios" :key="i">
-          <v-card style="position:relative">
-            <v-btn
-              @click="deleteAudio(audio.id)"
-              style="position:absolute"
-              small
-              fab
-              right
-              color="error darken-3"
-            >
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-            <v-btn
-              @click="getText(audio.id)"
-              style="position:absolute"
-              small
-              fab
-              left
-              color="success darken-2"
-            >
-              <v-icon>mdi-check</v-icon>
-            </v-btn>
+        <v-flex v-else xs12 md6>
+          <v-list two-line subheader>
+            <v-subheader inset>{{ Date.now() | moment("dddd, MMMM Do YYYY")}}</v-subheader>
 
-            <v-card-title class="display-1">
-              <!-- <v-progress-circular class="text-center" indeterminate color="primary"></v-progress-circular> -->
-            </v-card-title>
-            <v-card-title>{{ audio.createdAt | moment("dddd, MMMM Do YYYY") }}</v-card-title>
-            <v-card-text>
-              <audio-player :src="`${baseUrl}/audio/download/${audio.id}`" />
-            </v-card-text>
-          </v-card>
+            <v-list-tile v-for="(audio, o) in audios" :key="o" avatar @click>
+              <v-list-tile-avatar @click="play(audio.id)">
+                <v-icon color="primary">mdi-play</v-icon>
+              </v-list-tile-avatar>
+
+              <v-list-tile-content>
+                <v-list-tile-title>{{ "Audio" }}</v-list-tile-title>
+                <v-list-tile-sub-title>{{ audio.createdAt | moment("h:m:sa") }}</v-list-tile-sub-title>
+              </v-list-tile-content>
+
+              <v-list-tile-action>
+                <v-btn @click="deleteAudio(audio.id)" small fab right color="transparent">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list>
           <br />
         </v-flex>
       </v-layout>
@@ -67,8 +57,13 @@ export default {
     });
   },
   methods: {
+    play(id) {
+      console.log(`${this.baseUrl}/audio/download/${id}`);
+      var au = new Audio(`${this.baseUrl}/audio/download/${id}`);
+      au.play();
+    },
     getText(id) {
-      this.$io.post("/audio/get-audio-text", { id: id }, data => {
+      this.$io.get("/audio/get-audio-text/?id=" + id, data => {
         console.log(data);
       });
     },
