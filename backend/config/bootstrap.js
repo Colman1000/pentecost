@@ -21,9 +21,14 @@ module.exports.bootstrap = async function() {
   //
   await Channel.destroy({});
   await Channel.createEach([
-    { flag: "/flags/one.png", name: "English", language: "en" },
-    { flag: "/flags/two.png", name: "Russia", language: "ru" },
-    { flag: "/flags/three.png", name: "Espanol", language: "es" }
+    { flag: "/svg/en.svg", name: "English", language: "en" },
+    { flag: "/svg/es.svg", name: "Russia", language: "ru" },
+    { flag: "/svg/de.svg", name: "Espanol", language: "es" }
+    // { flag: "/svg/de.svg", name: "French", language: "es" },
+    // { flag: "/svg/de.svg", name: "Hebrew", language: "es" },
+    // { flag: "/svg/de.svg", name: "Portugese", language: "es" },
+    // { flag: "/svg/de.svg", name: "German", language: "es" }
+
     // etc.
   ]);
   // ```

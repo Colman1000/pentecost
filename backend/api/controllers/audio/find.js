@@ -27,7 +27,7 @@ module.exports = {
     // var moment = require("moment");
     var allAudiosThatFellInTime = await Audio.find({
       createdAt: {
-        ">=": 15621
+        ">": 1 // moment should be here
       }
     }).sort("createdAt DESC");
 

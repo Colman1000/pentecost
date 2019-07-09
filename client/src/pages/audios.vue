@@ -18,7 +18,7 @@
               </v-list-tile-avatar>
 
               <v-list-tile-content>
-                <v-list-tile-title>{{ "Audio" }}</v-list-tile-title>
+                <v-list-tile-title>{{ audio.text }}</v-list-tile-title>
                 <v-list-tile-sub-title>{{ audio.createdAt | moment("h:m:sa") }}</v-list-tile-sub-title>
               </v-list-tile-content>
 
@@ -45,10 +45,11 @@ export default {
     };
   },
   mounted() {
-    this.$io.get(this.baseUrl + "/audios/2362", data => {
+    this.$io.get(this.baseUrl + "/audios/" + Date.now(), data => {
       if (typeof data !== "string") {
         this.audios = data;
       }
+      console.log(data);
     });
     // Subcribe to socket event
     this.$io.on("new audio", data => {

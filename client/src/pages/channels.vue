@@ -4,8 +4,12 @@
       <v-layout justify-center row wrap>
         <v-flex v-for="(chan, i) in channels" :key="i" xs6 md4>
           <v-card hover ripple :to="`/channel/${chan.id}`">
-            <!-- <v-img :src="chan.flag"></v-img> -->
-            <v-card-text class="font-weight-bold">{{ chan.name }}</v-card-text>
+            <v-card-text class="font-weight-bold">
+              <v-avatar size="60">
+                <v-img :src="chan.flag"></v-img>
+              </v-avatar>
+              {{ chan.name }}
+            </v-card-text>
           </v-card>
         </v-flex>
       </v-layout>
