@@ -23,8 +23,8 @@
               </v-list-tile-content>
 
               <v-list-tile-action>
-                <v-btn @click="deleteAudio(audio.id)" small fab right color="transparent">
-                  <v-icon>mdi-close</v-icon>
+                <v-btn outline @click="deleteAudio(audio.id)" small fab right color="transparent">
+                  <v-icon color="error">mdi-trash-can</v-icon>
                 </v-btn>
               </v-list-tile-action>
             </v-list-tile>
@@ -45,7 +45,7 @@ export default {
     };
   },
   mounted() {
-    this.$io.get(this.baseUrl + "/audios/" + Date.now(), data => {
+    this.$io.get(this.baseUrl + "/audios/1562704091712", data => {
       if (typeof data !== "string") {
         this.audios = data;
       }

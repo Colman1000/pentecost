@@ -25,9 +25,13 @@ module.exports = {
 
   fn: async function(inputs) {
     // var moment = require("moment");
+    // var p = moment(inputs.time).format("h");
+    // var _p = moment(Date.now()).format("h");
+    // sails.log.warn(p);
+    // sails.log.warn(_p);
     var allAudiosThatFellInTime = await Audio.find({
       createdAt: {
-        ">": 1 // moment should be here
+        ">": 100
       }
     }).sort("createdAt DESC");
 
