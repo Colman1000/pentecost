@@ -33,7 +33,7 @@ module.exports = {
     if (audio) {
       // convert the audio to flac and save it
       run(
-        `ffmpeg -i ${audio.fd} -v error -b:a 12k -map a ${audio.fd.replace(
+        `ffmpeg -i ${audio.fd} -v error -b:a 96k -map a ${audio.fd.replace(
           "mp3",
           "flac"
         )}`

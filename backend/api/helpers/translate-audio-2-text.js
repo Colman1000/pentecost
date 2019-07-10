@@ -46,7 +46,7 @@ module.exports = {
     const config = {
       encoding: "FLAC",
       // sampleRateHertz: 18000,
-      languageCode: inputs.language || "en-US"
+      languageCode: inputs.language || "en-NG"
     };
     const request = {
       audio: audio,
