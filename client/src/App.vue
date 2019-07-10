@@ -1,11 +1,7 @@
 <template>
   <v-app app :class="$store.state.loading ? 'loading': null ">
-    <v-toolbar color="primary" dark>
-      <v-toolbar-title
-        @click="$router.push('/')"
-        class="display-1"
-        style="background:transparent"
-      >Pentecost</v-toolbar-title>
+    <v-toolbar color="primary" dark app>
+      <v-toolbar-title @click="$router.push('/')" style="background:transparent">Pentecost</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn to="/record" flat>Record</v-btn>
       <v-btn to="/audios" flat>Audios</v-btn>

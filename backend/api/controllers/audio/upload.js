@@ -21,7 +21,6 @@ module.exports = {
   fn: async function(inputs) {
     var util = require("util");
     const run = require("shelljs").exec;
-
     var audio = await sails
       .uploadOne(inputs.audio, {
         maxBytes: 3000000
@@ -33,7 +32,7 @@ module.exports = {
     if (audio) {
       // convert the audio to flac and save it
       run(
-        `ffmpeg -i ${audio.fd} -v error -b:a 96k -map a ${audio.fd.replace(
+        `ffmpeg -i ${audio.fd} -v warning -b:a 96k -map a ${audio.fd.replace(
           "mp3",
           "flac"
         )}`

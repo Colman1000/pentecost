@@ -15,19 +15,19 @@ module.exports.bootstrap = async function() {
   // For example:
   // ```
   // // Set up fake development data (or if we already have some, avast)
-  // if (await User.count() > 0) {
-  //   return;
-  // }
+  if ((await Channel.count()) > 0) {
+    return;
+  }
   //
-  await Channel.destroy({});
+  // await Channel.destroy({});
   await Channel.createEach([
     { flag: "/svg/en.svg", name: "English", language: "en" },
-    { flag: "/svg/es.svg", name: "Russia", language: "ru" },
-    { flag: "/svg/de.svg", name: "Espanol", language: "es" }
-    // { flag: "/svg/de.svg", name: "French", language: "es" },
+    { flag: "/svg/ru.svg", name: "Russia", language: "ru" },
+    { flag: "/svg/es.svg", name: "Espanol", language: "es" },
+    { flag: "/svg/fr.svg", name: "French", language: "fr" },
     // { flag: "/svg/de.svg", name: "Hebrew", language: "es" },
     // { flag: "/svg/de.svg", name: "Portugese", language: "es" },
-    // { flag: "/svg/de.svg", name: "German", language: "es" }
+    { flag: "/svg/de.svg", name: "German", language: "de" }
 
     // etc.
   ]);

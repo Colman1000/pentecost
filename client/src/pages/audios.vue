@@ -2,9 +2,12 @@
   <div>
     <v-container grid-list-md>
       <v-layout justify-center row wrap>
-        <v-card v-if="audios.length === 0">
-          <v-card-text>
-            <h3 class="headline">No audios at the moment</h3>
+        <v-card width="500" flat v-if="audios.length === 0">
+          <v-card-text class="text-xs-center">
+            <v-icon size="150">mdi-microphone-variant-off</v-icon>
+            <h3
+              class
+            >No live recordings at the moment, please start a session to start translating live audio</h3>
           </v-card-text>
         </v-card>
 
@@ -70,8 +73,10 @@ export default {
     },
     deleteAudio(id) {
       this.$io.delete(this.baseUrl + "/audio/" + id, data => {
-        this.audios.splice(this.audios.indexOf(id), 1);
-        this.audios = [...this.audios];
+        const thing = this.audios.findIndex(t => t.id == id);
+        this.audios.splice(thing, 1);
+        // // No need for this, vue automatically does this
+        // this.audios = [...this.audios];
       });
     }
   }

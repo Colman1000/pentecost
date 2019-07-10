@@ -11,6 +11,13 @@ module.exports = {
     channelId: {
       type: "string",
       required: true
+    },
+    rawText: {
+      type: "string",
+      required: false,
+      description: "A raw text to be translated",
+      exendedDescription: "The `rawText` must have been parsed first",
+      example: "Praise the lord"
     }
   },
 
@@ -21,25 +28,38 @@ module.exports = {
     var chan = await Channel.findOne({ id: inputs.channelId });
 
     var audioText = await Audio.findOne({ id: inputs.audioId });
-
+    var translatedText = String();
+    // process for audio stream
+    sails.log.info("--".repeat(20));
     if (audioText && chan) {
       audioText = audioText.text;
-      var translatedText = await sails.helpers.translateText2ForeignText.with({
+      translatedText = await sails.helpers.translateText2ForeignText.with({
         text: audioText,
         target: chan.language
       });
 
-      sails.log.info("--".repeat(20));
       sails.log.debug("Channel: ", chan.name);
       sails.log.debug("Language: ", chan.language);
       sails.log.debug("origin text:", audioText);
       sails.log.debug("trans text:", translatedText);
-      sails.log.info("--".repeat(20));
 
       sails.sockets.broadcast(chan.name, "rotciv", translatedText, this.req);
-      return translatedText;
+      // return translatedText;
+      // Process for raw text
+    } else if (chan && inputs.rawText) {
+      translatedText = await sails.helpers.translateText2ForeignText.with({
+        text: inputs.rawText,
+        target: chan.language
+      });
+      sails.log.debug("Channel: ", chan.name);
+      sails.log.debug("Language: ", chan.language);
+      sails.log.debug("origin text:", audioText);
+      sails.log.debug("trans text:", translatedText);
+      sails.sockets.broadcast(chan.name, "rotciv", translatedText, this.req);
     }
-    return;
+    sails.log.info("--".repeat(20));
+
+    return translatedText;
     // All done.
   }
 };

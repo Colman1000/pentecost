@@ -18,11 +18,8 @@
         <v-flex xs12>
           Sentences: {{ sentences }}
           <br />
-          Text: {{ text }}
-          <br />
           <!-- Error: {{ error }}
           <br />-->
-          Is Speaking: {{ speaking }}
           <br />
           RuntimeTranscription: {{ runtimeTranscription }}
         </v-flex>
@@ -65,6 +62,9 @@ export default {
       }
     },
     startSpeechRecognition() {
+      recognition.stop();
+      this.toggle = false;
+
       if (!recognition) {
         this.error =
           "Speech Recognition is not available on this browser. Please use Chrome or Firefox";
@@ -116,6 +116,13 @@ export default {
         sentences: this.sentences,
         text: this.sentences.join(". ")
       });
+      console.log(this.text);
+      this.$io.post(
+        "/audio/upload-text/?rawText=" + this.sentences.slice(-1)[0],
+        data => {
+          console.log(data);
+        }
+      );
     },
 
     capitalizeFirstLetter(string) {
