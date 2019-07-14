@@ -62,7 +62,6 @@ export default {
       }
     },
     startSpeechRecognition() {
-      recognition.stop();
       this.toggle = false;
 
       if (!recognition) {
@@ -99,6 +98,7 @@ export default {
             "update:text",
             `${this.text}${this.sentences.slice(-1)[0]}. `
           );
+          this.endSpeechRecognition();
         }
         this.runtimeTranscription = "";
         recognition.stop();
