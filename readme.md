@@ -2,6 +2,10 @@
 
 This consist of the client and server codes, nothing to say for now..
 
+# Caveats
+
+### Due to SPA mode, full reload needs to be taking care of
+
 ### Admin Section
 
 - Recorded audio and uploaded to backend

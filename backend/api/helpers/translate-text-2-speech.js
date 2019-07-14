@@ -49,9 +49,10 @@ module.exports = {
     const [response] = await client.synthesizeSpeech(request);
     // Write the binary audio content to a local file
     const writeFile = util.promisify(fs.writeFile);
-    await writeFile("voice.mp3", response.audioContent, "binary");
-    console.log("Audio content written to file: output.mp3");
-    return response;
-    // TODO
+    // sails.log(response.audioContent.toString("base64"));
+    // sails.log(typeof response);
+    // await writeFile("voice.mp3", response.audioContent, "binary");
+    // console.log("Audio content written to file: output.mp3");
+    return response.audioContent.toString("base64");
   }
 };

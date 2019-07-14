@@ -4,13 +4,14 @@
       <v-layout justify-center row wrap>
         <v-card id="screen" width="1000" height="550">
           <v-card-text>
-            <h3 class="text-xs-center pt-5 pb-3 display-1">{{ message }}</h3>
-            <div v-if="trans.length === 0" class="text-xs-center">No live translations for now</div>
-            <div
-              v-else
-              class="headline font-weigth-light text-xs-center"
-              v-html="trans.join('<br>')"
-            ></div>
+            <h3 class="text-xs-center pt-5 pb-3 display-1">
+              <v-avatar size="60">
+                <v-img :src="channel.flag"></v-img>
+              </v-avatar>
+              {{ message }}
+            </h3>
+            <!-- <div v-if="currentSpoke === ''" class="text-xs-center">No live translations for now</div> -->
+            <div class="headline font-weigth-light text-xs-center" v-html="currentSpoke"></div>
           </v-card-text>
         </v-card>
 
@@ -22,13 +23,17 @@
 
 <script>
 import noise from "noisedot";
+window.speak = new Audio();
 export default {
   data() {
     return {
+      channel: {},
       trans: [],
+      currentSpoke: "",
       sock: "",
       opacity: 0.19,
       message: "No active translations now",
+      isSpeaking: false,
       config: {
         animate: true,
         patternWidth: 100,
@@ -42,6 +47,7 @@ export default {
       }
     };
   },
+  watch: {},
   created() {
     this.$nextTick(z => {
       noise("#screen", this.config);
@@ -61,30 +67,51 @@ export default {
           noise("#screen", Object.assign(this.config, { grainOpacity: 5 }));
         } else {
           this.message = `${body.name}`;
+          this.channel = body;
         }
       }
     );
     // Subcribe to socket event
     this.$io.on("new audio", data => {
-      console.log("Audio Id", data.id);
-      console.log("Channel Id", this.channelId);
-      // tell the server to begin processing this audio file ..
-      // ... and broadcasting it to this particular
-      this.$io.post(
-        `/channel/broadcast-message/?audioId=${data.id}&channelId=${this.$route.params.id}`,
-        d => {
-          console.log("begin trans", d);
-          this.trans.unshift(d);
-        }
-      );
+      console.log("new audio", data);
+      this.translateAudioToText(data);
     });
 
     this.$io.on("rotciv", data => {
-      console.log(data);
-      this.trans.unshift(data);
+      this.trans.push(data);
     });
   },
-  methods: {}
+  methods: {
+    translateAudioToText(data) {
+      this.$io.post(
+        `/channel/broadcast-message/?audioId=${data.id}&channelId=${this.$route.params.id}`,
+        text => {
+          // console.log("data text", text);
+          // console.log("old text", this.currentSpoke);
+          if (text == this.currentSpoke) {
+            return;
+          } else {
+            this.speakTranslatedText(text);
+          }
+        }
+      );
+    },
+    speakTranslatedText(text) {
+      this.currentSpoke = text;
+      this.trans.push(text);
+      this.$io.post(
+        "/channel/speak",
+        {
+          text: text,
+          locale: this.channel.voice // <- The server should have an alternate
+        },
+        data => {
+          speak = new Audio("data:audio/wav;base64," + data);
+          speak.play();
+        }
+      );
+    }
+  }
 };
 </script>
 

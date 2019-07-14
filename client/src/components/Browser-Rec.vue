@@ -110,7 +110,7 @@ export default {
       recognition.start();
     },
     endSpeechRecognition() {
-      recognition.stop();
+      // recognition.stop();
       this.toggle = false;
       this.$emit("speechend", {
         sentences: this.sentences,

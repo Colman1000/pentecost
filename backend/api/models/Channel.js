@@ -14,7 +14,10 @@ module.exports = {
     name: { type: "string", unique: true, required: true },
 
     language: { type: "string", unique: true, required: true },
-    flag: { type: "string", unique: true, required: true }
+
+    flag: { type: "string", unique: true, required: true },
+
+    voice: { type: "string", unique: false, required: false }
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

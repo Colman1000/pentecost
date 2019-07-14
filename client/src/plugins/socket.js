@@ -18,7 +18,7 @@ io.sails.url = "//192.168.43.113:1337";
 io.sails.transports = ["polling"];
 io.sails.useCORSRouteToGetCookie = true;
 io.useCORSRouteToGetCookie = true;
-io.socket.on("connect", c => console.clear());
+// io.socket.on("connect", c => console.clear());
 const SAILS_SOCKET = {
   install(Vue, options) {
     Vue.mixin({
