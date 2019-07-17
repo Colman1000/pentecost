@@ -141,6 +141,7 @@ export default {
 <style lang="scss">
 /**
 * @author { EmmaJnrk }
+* - converted to scss by Navicstein Rotciv
 * @license All rights Resevered
 **/
 $bordered: 300px;
