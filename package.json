@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://gitlab.com/navicstein/pentecost/issues"
   },
-  "homepage": "https://gitlab.com/navicstein/pentecost#readme"
+  "homepage": "https://gitlab.com/navicstein/pentecost#readme",
+  "engines": {
+    "node": "10.x"
+  }
 }
