@@ -1,3 +1,4 @@
 module.exports = {
-  productionSourceMap: false
+  outputDir: "../server/dist",
+  productionSourceMap: true
 };

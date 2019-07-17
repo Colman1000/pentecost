@@ -2,7 +2,6 @@ image: node:latest
 
 stages:
   - setup
-  - build
   - production
 
 cache:
@@ -12,22 +11,9 @@ cache:
 setup:
   stage: setup
   script:
-    - npm i -g sails pnpm
-    - cd ./client && pnpm i --shamefully-flatten -f && cd ..
-    - cd ./server && pnpm i && cd ..
-  only:
-    - master
-
-build:
-  stage: build
-  script:
+    - cd ./client && npm i && cd ..
+    - cd ./server && npm i && cd ..
     - cd ./client && npm run build && cd ..
-    - rm -R ./server/dist && cd ..
-    - mkdir -p ./server/dist && cd ..
-    - cp -f -R ./client/dist ./server && echo "done()" && cd ..
-  artifacts:
-    paths:
-      - dist
   only:
     - master
 
