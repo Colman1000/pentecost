@@ -1,20 +1,28 @@
 image: node:latest
 
 stages:
+  - setup
   - production
 
 cache:
   paths:
     - node_modules/
+
+setup:
+  stage: setup
+  script:
+    - cd ./client && npm i && cd ..
+    - cd ./server && npm i && cd ..
+    - cd ./client && npm run build && cd ..
+  only:
+    - master
+
 # HEROKU
 production:
   type: deploy
   stage: production
   image: ruby:latest
   script:
-    - cd ./client && npm i && cd ..
-    - cd ./server && npm i && cd ..
-    - cd ./client && npm run build && cd ..
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
