@@ -4,6 +4,7 @@
   "description": "This consist of the client and server codes, nothing to say for now..",
   "main": "index.js",
   "scripts": {
+    "start": "cd server && export GOOGLE_APPLICATION_CREDENTIALS=./server/pentecost-voice.json && NODE_ENV=production node app.js",
     "test": "echo \"Test passed!\" && exit 0"
   },
   "repository": {

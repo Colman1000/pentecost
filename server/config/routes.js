@@ -9,7 +9,6 @@
  */
 
 module.exports.routes = {
-  "GET / ": { action: "home" },
   "POST /api/v1/audio/upload": { action: "audio/upload" },
   "GET /api/v1/audio/download/:id": { action: "audio/download" },
 

@@ -1,21 +1,39 @@
 image: node:latest
 
 stages:
+  - setup
   - build
-  - test
+  - production
 
-cache:
-  paths:
-    - node_modules/
+setup:
+  stage: setup
+  script:
+    - npm i -g sails pnpm
+  only:
+    - master
 
-install_dependencies:
+build:
   stage: build
   script:
-    - npm install
+    - cd ./client && npm run build && cd ..
+    - rm -R -v ./server/dist
+    - mkdir -p ./server/dist
+    - cp -f -R ./client/dist ./server
   artifacts:
     paths:
-      - node_modules/
+      - dist
+  only:
+    - master
 
-testing_testing:
-  stage: test
-  script: npm test
+# HEROKU
+production:
+  type: deploy
+  stage: production
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=node-heroku-dpl --api-key=$HEROKU_API_KEY
+  only:
+    - master
