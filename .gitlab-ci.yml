@@ -5,10 +5,16 @@ stages:
   - build
   - production
 
+cache:
+  paths:
+    - node_modules/
+
 setup:
   stage: setup
   script:
     - npm i -g sails pnpm
+    - cd ./client && pnpm i --shamefully-flatten -f && cd ..
+    - cd ./server && pnpm i && cd ..
   only:
     - master
 
@@ -16,9 +22,9 @@ build:
   stage: build
   script:
     - cd ./client && npm run build && cd ..
-    - rm -R -v ./server/dist
-    - mkdir -p ./server/dist
-    - cp -f -R ./client/dist ./server
+    - rm -R ./server/dist && cd ..
+    - mkdir -p ./server/dist && cd ..
+    - cp -f -R ./client/dist ./server && echo "done()" && cd ..
   artifacts:
     paths:
       - dist
