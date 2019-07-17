@@ -1,0 +1,20 @@
+{
+  "name": "pentecost",
+  "version": "1.0.0",
+  "description": "This consist of the client and server codes, nothing to say for now..",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Test passed!\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/navicstein/pentecost.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/navicstein/pentecost/issues"
+  },
+  "homepage": "https://gitlab.com/navicstein/pentecost#readme"
+}
