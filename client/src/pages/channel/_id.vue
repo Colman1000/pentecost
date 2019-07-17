@@ -11,7 +11,7 @@
               {{ message }}
             </h3>
             <!-- <div v-if="currentSpoke === ''" class="text-xs-center">No live translations for now</div> -->
-            <div class="headline font-weigth-light text-xs-center" v-html="currentSpoke"></div>
+            <div class="headline font-weigth-light text-xs-center" v-html="words"></div>
           </v-card-text>
         </v-card>
 
@@ -54,6 +54,9 @@ export default {
     });
   },
   computed: {
+    words() {
+      return this.trans.join("<br><br>");
+    },
     channelId() {
       return this.$route.params.id;
     }
