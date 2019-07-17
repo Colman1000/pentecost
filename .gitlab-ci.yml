@@ -1,12 +1,11 @@
 image: node:latest
 
 stages:
-  - setup
+  - production
 
 cache:
   paths:
     - node_modules/
-
 # HEROKU
 production:
   type: deploy
