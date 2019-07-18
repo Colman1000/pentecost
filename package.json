@@ -6,7 +6,7 @@
   "scripts": {
     "rot": "cd ./server && npm i && cd ..",
     "build": "cd ./client && npm install && npm run build",
-    "start": "npm run rot && cd ./server && NODE_ENV=production node app.js",
+    "start": "npm run rot && cd ./server && export GOOGLE_APPLICATION_CREDENTIALS=google-auth.json && NODE_ENV=production node app.js",
     "test": "echo \"Test passed!\" && exit 0"
   },
   "repository": {
