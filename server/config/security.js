@@ -33,7 +33,8 @@ module.exports.security = {
       "http://localhost:8080",
       "http://192.168.43.15:8080",
       "http://192.168.43.113:8080",
-      "https://pentecust.herokuapp.com"
+      "https://pentecust.herokuapp.com",
+      "http://pentecust.herokuapp.com"
     ],
     allowCredentials: true
   }
