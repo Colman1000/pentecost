@@ -3,7 +3,9 @@
     <v-toolbar color="primary" dark app>
       <v-toolbar-title @click="$router.push('/')" style="background:transparent">Pentecost</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn to="/record" flat>Record</v-btn>
+      <v-btn to="/" flat text>
+        <v-icon>mdi-microphone</v-icon>&nbsp;Speak
+      </v-btn>
       <v-btn to="/audios" flat>Audios</v-btn>
       <v-btn to="/channels" flat>Channels</v-btn>
     </v-toolbar>

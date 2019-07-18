@@ -69,7 +69,17 @@ export default {
       }
     };
   },
-
+  // warn the user is he tries to change the channel
+  beforeRouteLeave(to, from, next) {
+    const answer = window.confirm(
+      "Do you really want to leave? multiple languages would be activated and multiple voices would be spoken at once"
+    );
+    if (answer) {
+      next();
+    } else {
+      next(false);
+    }
+  },
   created() {
     this.$nextTick(z => {
       noise("#screen", this.config);
@@ -134,10 +144,14 @@ export default {
           // Speak the translated text
           this.speakTranslatedText(text);
 
-          //CUSTOM CODE ==>>>>>
-          const elem = document.getElementById("translationScreen");
-          elem.scrollTop = elem.scrollHeight;
-          //CUSTOM CODE ==>>>>>
+          try {
+            //CUSTOM CODE ==>>>>>
+            const elem = document.getElementById("translationScreen");
+            elem.scrollTop = elem.scrollHeight;
+            //CUSTOM CODE ==>>>>>
+          } catch (e) {
+            console.warn(e);
+          }
         }
       );
     },
