@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "rot": "cd ./server && npm i && cd ..",
-    "build": "cd ./client && npm i && npm run build",
+    "build": "cd ./client && npm i && npx vue-cli-service build",
     "start": "npm run rot && cd ./server && export GOOGLE_APPLICATION_CREDENTIALS=./server/pentecost-voice.json && NODE_ENV=production node app.js",
     "test": "echo \"Test passed!\" && exit 0"
   },

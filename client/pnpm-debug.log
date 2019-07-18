@@ -1,0 +1,321 @@
+{
+  "0 info pnpm": {
+    "message": "Installing a flat node_modules. Use flat node_modules only if you rely on buggy dependencies that you cannot fix.",
+    "prefix": "/opt/node/pnpm-global/2_shamefully_flatten"
+  },
+  "1 debug pnpm:scope": {
+    "selected": 1,
+    "workspacePrefix": null
+  },
+  "2 debug pnpm": {
+    "isCaseSensitive": true,
+    "store": "/home/navicstein/.pnpm-store/2"
+  },
+  "3 debug pnpm:package-json": {
+    "initial": {
+      "dependencies": {
+        "@quasar/cli": "^1.0.0-rc.2",
+        "@vue/cli": "^3.9.2",
+        "@vue/cli-service-global": "^3.8.0",
+        "heroku": "^7.26.2",
+        "ionic": "^5.2.2",
+        "npm-check-updates": "^3.1.18"
+      }
+    },
+    "prefix": "/opt/node/pnpm-global/2_shamefully_flatten"
+  },
+  "4 debug pnpm:stage": {
+    "prefix": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "stage": "resolution_started"
+  },
+  "5 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@quasar/cli/1.0.0",
+    "wanted": {
+      "name": "@quasar/cli",
+      "rawSpec": "@quasar/cli@^1.0.0-rc.2"
+    }
+  },
+  "6 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@quasar/cli/1.0.0",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "7 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@vue/cli-service-global/3.9.2",
+    "wanted": {
+      "name": "@vue/cli-service-global",
+      "rawSpec": "@vue/cli-service-global@^3.8.0"
+    }
+  },
+  "8 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@vue/cli-service-global/3.9.2",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "9 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "wanted": {
+      "name": "npm-check-updates",
+      "rawSpec": "npm-check-updates@^3.1.18"
+    }
+  },
+  "10 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "11 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@vue/cli/3.9.2",
+    "wanted": {
+      "name": "@vue/cli",
+      "rawSpec": "@vue/cli@^3.9.2"
+    }
+  },
+  "12 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@vue/cli/3.9.2",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "13 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ionic/5.2.3",
+    "wanted": {
+      "name": "ionic",
+      "rawSpec": "ionic@^5.2.2"
+    }
+  },
+  "14 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ionic/5.2.3",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "15 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/heroku/7.26.2",
+    "wanted": {
+      "name": "heroku",
+      "rawSpec": "heroku@^7.26.2"
+    }
+  },
+  "16 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/heroku/7.26.2",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "17 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/compression/1.7.4",
+    "wanted": {
+      "dependentId": "registry.npmjs.org/@quasar/cli/1.0.0",
+      "name": "compression",
+      "rawSpec": "compression@1.7.4"
+    }
+  },
+  "18 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/compression/1.7.4",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "19 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/connect-history-api-fallback/1.6.0",
+    "wanted": {
+      "dependentId": "registry.npmjs.org/@quasar/cli/1.0.0",
+      "name": "connect-history-api-fallback",
+      "rawSpec": "connect-history-api-fallback@1.6.0"
+    }
+  },
+  "20 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/connect-history-api-fallback/1.6.0",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "21 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/cross-spawn/6.0.5",
+    "wanted": {
+      "dependentId": "registry.npmjs.org/@quasar/cli/1.0.0",
+      "name": "cross-spawn",
+      "rawSpec": "cross-spawn@6.0.5"
+    }
+  },
+  "22 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/cross-spawn/6.0.5",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "23 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/chalk/2.4.2",
+    "wanted": {
+      "dependentId": "registry.npmjs.org/@quasar/cli/1.0.0",
+      "name": "chalk",
+      "rawSpec": "chalk@2.4.2"
+    }
+  },
+  "24 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/chalk/2.4.2",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "25 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ci-info/2.0.0",
+    "wanted": {
+      "dependentId": "registry.npmjs.org/@quasar/cli/1.0.0",
+      "name": "ci-info",
+      "rawSpec": "ci-info@2.0.0"
+    }
+  },
+  "26 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ci-info/2.0.0",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "27 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/consolidate/0.15.1",
+    "wanted": {
+      "dependentId": "registry.npmjs.org/@quasar/cli/1.0.0",
+      "name": "consolidate",
+      "rawSpec": "consolidate@0.15.1"
+    }
+  },
+  "28 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/consolidate/0.15.1",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "29 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/download-git-repo/1.1.0",
+    "wanted": {
+      "dependentId": "registry.npmjs.org/@quasar/cli/1.0.0",
+      "name": "download-git-repo",
+      "rawSpec": "download-git-repo@1.1.0"
+    }
+  },
+  "30 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/download-git-repo/1.1.0",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "31 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/express/4.17.1",
+    "wanted": {
+      "dependentId": "registry.npmjs.org/@quasar/cli/1.0.0",
+      "name": "express",
+      "rawSpec": "express@4.17.1"
+    }
+  },
+  "32 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/express/4.17.1",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "33 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/async/2.6.2",
+    "wanted": {
+      "dependentId": "registry.npmjs.org/@quasar/cli/1.0.0",
+      "name": "async",
+      "rawSpec": "async@2.6.2"
+    }
+  },
+  "34 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/async/2.6.2",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "35 error pnpm": {
+    "message": {
+      "code": "ERR_PNPM_REGISTRY_META_RESPONSE_404",
+      "uri": "https://registry.npmjs.org/@vue%2Fvue-cli-service",
+      "response": {
+        "size": 0,
+        "timeout": 0
+      },
+      "package": "@vue/vue-cli-service"
+    },
+    "err": {
+      "name": "Error",
+      "message": "404 Not Found: @vue/vue-cli-service (via https://registry.npmjs.org/@vue%2Fvue-cli-service)",
+      "code": "ERR_PNPM_REGISTRY_META_RESPONSE_404",
+      "stack": "Error: 404 Not Found: @vue/vue-cli-service (via https://registry.npmjs.org/@vue%2Fvue-cli-service)\n    at fromRegistry (/opt/node/pnpm-global/2/node_modules/.registry.npmjs.org/pnpm/3.5.7/node_modules/pnpm/lib/node_modules/@pnpm/npm-resolver/lib/pickPackage.js:97:21)\n    at processTicksAndRejections (internal/process/task_queues.js:88:5)\n    at async exports.default (/opt/node/pnpm-global/2/node_modules/.registry.npmjs.org/pnpm/3.5.7/node_modules/pnpm/lib/node_modules/@pnpm/npm-resolver/lib/pickPackage.js:68:22)\n    at async resolveNpm (/opt/node/pnpm-global/2/node_modules/.registry.npmjs.org/pnpm/3.5.7/node_modules/pnpm/lib/node_modules/@pnpm/npm-resolver/lib/index.js:70:22)\n    at async Object.resolve (/opt/node/pnpm-global/2/node_modules/.registry.npmjs.org/pnpm/3.5.7/node_modules/pnpm/lib/node_modules/@pnpm/default-resolver/lib/index.js:11:28)\n    at async run (/opt/node/pnpm-global/2/node_modules/.registry.npmjs.org/pnpm/3.5.7/node_modules/pnpm/lib/node_modules/p-queue/dist/index.js:155:29)"
+    }
+  },
+  "36 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/handlebars/4.1.2",
+    "wanted": {
+      "dependentId": "registry.npmjs.org/@quasar/cli/1.0.0",
+      "name": "handlebars",
+      "rawSpec": "handlebars@4.1.2"
+    }
+  },
+  "37 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/handlebars/4.1.2",
+    "requester": "/opt/node/pnpm-global/2_shamefully_flatten",
+    "status": "resolved"
+  },
+  "38 debug pnpm:fetching-progress": {
+    "attempt": 1,
+    "packageId": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "size": 18870,
+    "status": "started"
+  },
+  "39 debug pnpm:fetching-progress": {
+    "downloaded": 737,
+    "packageId": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "status": "in_progress"
+  },
+  "40 debug pnpm:fetching-progress": {
+    "downloaded": 2106,
+    "packageId": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "status": "in_progress"
+  },
+  "41 debug pnpm:fetching-progress": {
+    "downloaded": 3381,
+    "packageId": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "status": "in_progress"
+  },
+  "42 debug pnpm:fetching-progress": {
+    "downloaded": 4750,
+    "packageId": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "status": "in_progress"
+  },
+  "43 debug pnpm:fetching-progress": {
+    "downloaded": 6119,
+    "packageId": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "status": "in_progress"
+  },
+  "44 debug pnpm:fetching-progress": {
+    "downloaded": 7488,
+    "packageId": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "status": "in_progress"
+  },
+  "45 debug pnpm:fetching-progress": {
+    "downloaded": 8857,
+    "packageId": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "status": "in_progress"
+  },
+  "46 debug pnpm:fetching-progress": {
+    "downloaded": 10226,
+    "packageId": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "status": "in_progress"
+  },
+  "47 debug pnpm:fetching-progress": {
+    "downloaded": 11595,
+    "packageId": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "status": "in_progress"
+  },
+  "48 debug pnpm:fetching-progress": {
+    "downloaded": 12964,
+    "packageId": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "status": "in_progress"
+  },
+  "49 debug pnpm:fetching-progress": {
+    "downloaded": 14333,
+    "packageId": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "status": "in_progress"
+  },
+  "50 debug pnpm:fetching-progress": {
+    "downloaded": 15702,
+    "packageId": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "status": "in_progress"
+  },
+  "51 debug pnpm:fetching-progress": {
+    "downloaded": 18870,
+    "packageId": "registry.npmjs.org/npm-check-updates/3.1.20",
+    "status": "in_progress"
+  }
+}
