@@ -14,7 +14,10 @@ io.sails.reconnection = true;
 io.sails.autoConnect = true;
 io.sails.environment = process.env.NODE_ENV;
 
-io.sails.url = "//192.168.43.113:1337";
+io.sails.url =
+  process.env.NODE_ENV == "development"
+    ? "//192.168.43.113:1337"
+    : "https://pentecust.herokuapp.com/#/";
 io.sails.transports = ["polling"];
 // io.sails.initialConnectionHeaders = { nosession: true };
 // io.socket.on("connect", c => console.clear());

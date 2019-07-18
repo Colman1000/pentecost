@@ -12,7 +12,7 @@ let config = {
   baseURL:
     process.env.NODE_ENV == "development"
       ? "//192.168.43.113:1337"
-      : "http://easypharmacy.us-east-2.elasticbeanstalk.com",
+      : "https://pentecust.herokuapp.com/#/",
 
   timeout: 60 * 1000, // Timeout
   withCredentials: true // Check cross-site Access-Control
