@@ -37,7 +37,7 @@ module.exports.security = {
       "http://pentecust.herokuapp.com"
     ],
     allowCredentials: true
-  }
+  },
 
   /****************************************************************************
    *                                                                           *
@@ -52,6 +52,5 @@ module.exports.security = {
    * https://sailsjs.com/docs/concepts/security/csrf                           *
    *                                                                           *
    ****************************************************************************/
-
-  // csrf: false
+  csrf: false
 };
