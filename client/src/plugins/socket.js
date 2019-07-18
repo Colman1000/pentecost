@@ -17,8 +17,8 @@ io.sails.environment = process.env.NODE_ENV;
 io.sails.url =
   process.env.NODE_ENV == "development"
     ? "//192.168.43.113:1337"
-    : "https://pentecust.herokuapp.com/#/";
-io.sails.transports = ["polling"];
+    : "https://pentecust.herokuapp.com";
+io.sails.transports = ["websocket"];
 // io.sails.initialConnectionHeaders = { nosession: true };
 // io.socket.on("connect", c => console.clear());
 const SAILS_SOCKET = {
