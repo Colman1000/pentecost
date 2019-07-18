@@ -25,15 +25,9 @@ export default {
     };
   },
   mounted() {
-    this.$axios
-      .get("/channel/get-channels", {
-        params: {
-          select: ["name", "flag"]
-        }
-      })
-      .then(({ data }) => {
-        this.channels = data;
-      });
+    this.$io.get("/channel/get-channels", data => {
+      this.channels = data;
+    });
   }
 };
 </script>
