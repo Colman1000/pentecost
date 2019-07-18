@@ -1,21 +1,21 @@
 image: node:latest
 
 stages:
-  - setup
+  # - setup
   - production
 
 cache:
   paths:
     - node_modules/
 
-setup:
-  stage: setup
-  script:
-    - cd ./client && npm i && cd ..
-    - cd ./server && npm i && cd ..
-    - cd ./client && npm run build && cd ..
-  only:
-    - master
+# setup:
+#   stage: setup
+#   script:
+#     - cd ./client && npm i && cd ..
+#     - cd ./server && npm i && cd ..
+#     - cd ./client && npm run build && cd ..
+#   only:
+#     - master
 
 # HEROKU
 production:
