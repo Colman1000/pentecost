@@ -30,7 +30,7 @@ export default {
       audioBlob: undefined,
       mediaRecorder: undefined,
       maxTime: 15000,
-      uploadUri: "//localhost:1337/api/v1/audio/upload",
+      uploadUri: "/audio/upload",
       isUploading: false
     };
   },
