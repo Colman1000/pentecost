@@ -4,9 +4,8 @@
   "description": "This consist of the client and server codes, nothing to say for now..",
   "main": "index.js",
   "scripts": {
-    "heroku-prebuild": "cd ./client && npm install &&  npm run build",
-    "init": "cd ./server && npm i && cd .. && cd ./client && npm i && node ./node_modules/\\@vue/cli-service/bin/vue-cli-service.js build && cd ..",
-    "start": "cd server && export GOOGLE_APPLICATION_CREDENTIALS=./server/pentecost-voice.json && NODE_ENV=production node app.js",
+    "init": "cd ./server && npm i && cd ..",
+    "start": "npm init && cd ./server && export GOOGLE_APPLICATION_CREDENTIALS=./server/pentecost-voice.json && NODE_ENV=production node app.js",
     "test": "echo \"Test passed!\" && exit 0"
   },
   "repository": {
