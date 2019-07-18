@@ -70,7 +70,7 @@ _axios.interceptors.response.use(
 
     if (error.response && error.response.status == 400) {
       // store.state.err.key = true;
-      location.href = "#/auth/login";
+      location.href = "#/auth/login/?";
       // store.state.err.message = error.response.statusText.concat(
       //   ", this request failed, please try again later or contact support."
       // );
