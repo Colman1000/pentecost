@@ -1,6 +1,6 @@
 {
   "name": "pentecost",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This consist of the client and server codes, nothing to say for now..",
   "main": "index.js",
   "scripts": {
