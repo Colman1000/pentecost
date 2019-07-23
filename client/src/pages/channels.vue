@@ -25,6 +25,7 @@ export default {
     };
   },
   mounted() {
+    console.log();
     this.$io.get("/channel/get-channels", data => {
       this.channels = data;
     });

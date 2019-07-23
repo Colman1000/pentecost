@@ -23,6 +23,15 @@
           <br />
           RuntimeTranscription: {{ runtimeTranscription }}
         </v-flex>
+
+        <v-flex xs5 md4>
+          <v-select
+            @change="changeInputLnaguage($event)"
+            solo
+            :items="languages"
+            label="Select input language"
+          ></v-select>
+        </v-flex>
       </v-layout>
     </v-container>
   </div>
@@ -34,9 +43,8 @@ let SpeechRecognition =
 let recognition = new SpeechRecognition();
 export default {
   props: {
-    lang: {
-      type: String,
-      default: "en-NG"
+    languages: {
+      type: Array
     },
     text: {
       type: [String, null],
@@ -45,6 +53,7 @@ export default {
   },
   data() {
     return {
+      lang: "en-US",
       isSpeaking: true,
       isUploading: false,
       error: false,
@@ -55,6 +64,10 @@ export default {
     };
   },
   methods: {
+    changeInputLnaguage(e) {
+      this.lang = e;
+      console.log("Lnaguaged changed to: ", e);
+    },
     checkCompatibility() {
       if (!recognition) {
         this.error =
@@ -74,6 +87,7 @@ export default {
       recognition.interimResults = true;
 
       recognition.addEventListener("speechstart", event => {
+        console.log("Speaking using current language: ", this.lang);
         this.speaking = true;
       });
 
@@ -98,7 +112,7 @@ export default {
             "update:text",
             `${this.text}${this.sentences.slice(-1)[0]}. `
           );
-          this.endSpeechRecognition();
+          // this.endSpeechRecognition();
         }
         this.runtimeTranscription = "";
         recognition.stop();
@@ -131,6 +145,7 @@ export default {
   },
   mounted() {
     recognition.stop();
+    console.log(this.languages.length);
     this.checkCompatibility();
   }
 };
