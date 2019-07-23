@@ -4,7 +4,7 @@
       <v-layout justify-center row wrap>
         <v-card width="1000" height="550">
           <v-card-text>
-            <h3 class="text-xs-center pt-5 headline">No sermon at the moment</h3>
+            <h3 class="text-center pt-5 headline">No sermon at the moment</h3>
           </v-card-text>
         </v-card>
 

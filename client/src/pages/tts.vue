@@ -13,16 +13,16 @@
     </v-flex>
     <v-flex xs4></v-flex>
     <v-flex xs12>
-      <div v-show="loader" class="text-xs-center">
+      <div v-show="loader" class="text-center">
         <v-progress-circular indeterminate v-bind:size="100" v-bind:width="3" class="orange--text"></v-progress-circular>
       </div>
       <transition name="slide">
-        <div v-show="result" class="text-xs-center">
+        <div v-show="result" class="text-center">
           <v-layout row wrap>
             <v-flex xs4></v-flex>
             <v-flex xs4>
               <v-card class="darken-2 orange--text">
-                <h4 class="text-xs-center">{{textResult}}</h4>
+                <h4 class="text-center">{{textResult}}</h4>
               </v-card>
             </v-flex>
             <v-flex xs4></v-flex>
@@ -30,7 +30,7 @@
         </div>
       </transition>
       <transition name="slide">
-        <div v-show="resultError" class="text-xs-center">
+        <div v-show="resultError" class="text-center">
           <v-layout row wrap>
             <v-flex xs4></v-flex>
             <v-flex xs4>
@@ -39,7 +39,7 @@
                   <div class="headline">An Unexpected Error Occurred</div>
                 </v-card-title>
                 <v-card-actions>
-                  <v-btn @click.native="redirectError" flat dark>Try Again</v-btn>
+                  <v-btn @click.native="redirectError" text dark>Try Again</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>

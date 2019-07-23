@@ -1,15 +1,5 @@
 <template>
-  <v-app app :class="$store.state.loading ? 'loading': null ">
-    <v-toolbar color="primary" dark app>
-      <v-toolbar-title @click="$router.push('/')" style="background:transparent">Pentecost</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn to="/" flat text>
-        <v-icon>mdi-microphone</v-icon>&nbsp;Speak
-      </v-btn>
-      <v-btn to="/audios" flat>Audios</v-btn>
-      <v-btn to="/channels" flat>Channels</v-btn>
-    </v-toolbar>
-
+  <v-app app :class="$store.state.loading ? 'loadingx': null ">
     <v-content>
       <vue-page-transition name="fade-in-right">
         <router-view />

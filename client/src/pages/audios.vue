@@ -2,8 +2,8 @@
   <div>
     <v-container grid-list-md>
       <v-layout justify-center row wrap>
-        <v-card width="500" flat v-if="audios.length === 0">
-          <v-card-text class="text-xs-center">
+        <v-card width="500" text v-if="audios.length === 0">
+          <v-card-text class="text-center">
             <v-icon size="150">mdi-microphone-variant-off</v-icon>
             <h3
               class
@@ -12,26 +12,22 @@
         </v-card>
 
         <v-flex v-else xs12 md6>
-          <v-list two-line subheader>
-            <v-subheader inset>{{ Date.now() | moment("dddd, MMMM Do YYYY")}}</v-subheader>
+          <v-subheader inset>{{ Date.now() | moment("dddd, MMMM Do YYYY")}}</v-subheader>
+          <v-list-item two-line v-for="(audio, o) in audios" :key="o" avatar @click>
+            <v-list-item-avatar @click="play(audio.id)">
+              <v-icon color="primary">mdi-play</v-icon>
+            </v-list-item-avatar>
 
-            <v-list-tile v-for="(audio, o) in audios" :key="o" avatar @click>
-              <v-list-tile-avatar @click="play(audio.id)">
-                <v-icon color="primary">mdi-play</v-icon>
-              </v-list-tile-avatar>
-
-              <v-list-tile-content>
-                <v-list-tile-title>{{ audio.text }}</v-list-tile-title>
-                <v-list-tile-sub-title>{{ audio.createdAt | moment("h:m:sa") }}</v-list-tile-sub-title>
-              </v-list-tile-content>
-
-              <v-list-tile-action>
-                <v-btn outline @click="deleteAudio(audio.id)" small fab right color="transparent">
-                  <v-icon color="error">mdi-trash-can</v-icon>
-                </v-btn>
-              </v-list-tile-action>
-            </v-list-tile>
-          </v-list>
+            <v-list-item-content>
+              <v-list-item-title>{{ audio.text }}</v-list-item-title>
+              <v-list-item-subtitle>{{ audio.createdAt | moment("h:m:sa") }}</v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-action>
+              <v-btn outlined @click="deleteAudio(audio.id)" small fab right color="transparent">
+                <v-icon color="error">mdi-trash-can</v-icon>
+              </v-btn>
+            </v-list-item-action>
+          </v-list-item>
           <br />
         </v-flex>
       </v-layout>
@@ -48,11 +44,12 @@ export default {
     };
   },
   mounted() {
+    console.log(this.baseUrl);
     this.$io.get(this.baseUrl + "/audios/1562704091712", data => {
       if (typeof data !== "string") {
         this.audios = data;
       }
-      console.log(data);
+      console.log("audios:", data);
     });
     // Subcribe to socket event
     this.$io.on("new audio", data => {

@@ -3,7 +3,7 @@
     <v-container grid-list-md>
       <v-layout justify-center row wrap>
         <v-flex v-for="(chan, i) in channels" :key="i" xs6 md4>
-          <v-card hover ripple :href="`/#/channel/${chan.id}`">
+          <v-card outlined hover ripple :href="`/#/channel/${chan.id}`">
             <v-card-text class="font-weight-bold">
               <v-avatar size="60">
                 <v-img :src="chan.flag"></v-img>

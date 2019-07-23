@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container grid-list-lg class="text-xs-center">
+    <v-container grid-list-lg class="text-center">
       <v-layout justify-center row wrap>
         <v-btn color="primary" @click.native="startRecording">Start</v-btn>
         <v-btn @click.native="stopRecording">stop</v-btn>

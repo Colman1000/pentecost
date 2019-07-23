@@ -1,6 +1,6 @@
 <template>
   <div @keydown.native="done">
-    <v-container grid-list-lg class="text-xs-center">
+    <v-container grid-list-lg class="text-center">
       <v-layout justify-center row wrap>
         <div style class="elevation-5 inn">
           <v-progress-linear v-if="isUploading" class="ma-0 pa-0" indeterminate></v-progress-linear>

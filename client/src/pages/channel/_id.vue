@@ -4,22 +4,21 @@
     <v-container fluid class="pa-0" grid-list-md>
       <v-layout justify-center row wrap>
         <v-card
-          height="1000px"
+          height="680"
           id="screen"
           width="1000"
           style="overflow-y: scroll !important; border-radius: 0 !important;"
         >
           <v-card-text>
-            <h3 class="text-xs-center pt-3 pb-3 display-1">
+            <h3 class="text-center pt-3 pb-3 display-1">
               <v-avatar size="60">
                 <v-img :src="channel.flag"></v-img>
               </v-avatar>
               {{ message }}
             </h3>
-            <hr class="mt-2 mb-4" />
             <v-divider></v-divider>
             <!-- <div v-if="currentSpoke === ''" class="text-xs-center">No live translations for now</div> -->
-            <div id="translationScreen" class="headline font-weigth-light text-xs-center">
+            <div id="translationScreen" class="headline font-weigth-light text-center">
               <div
                 v-for="(t, index) in trans"
                 :key="index"
@@ -45,6 +44,7 @@ import noise from "noisedot";
 // My plugins config
 window.speak = new Audio();
 export default {
+  layout: "blank",
   data() {
     return {
       channel: {},
@@ -60,7 +60,7 @@ export default {
         animate: true,
         patternWidth: 100,
         patternHeight: 100,
-        grainOpacity: 0.19,
+        grainOpacity: 0.2,
         grainDensity: 1,
         grainWidth: 1,
         grainHeight: 1,
@@ -83,9 +83,6 @@ export default {
   created() {
     this.$nextTick(z => {
       noise("#screen", this.config);
-      document.addEventListener("ondragstart", e => {
-        e.preventDefault();
-      });
     });
   },
   computed: {
