@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      lang: "en-US",
+      lang: "en-NG",
       isSpeaking: true,
       isUploading: false,
       error: false,
@@ -85,13 +85,14 @@ export default {
       this.toggle = true;
       recognition.lang = this.lang;
       recognition.interimResults = true;
+      // recognition.continuous = true;
 
-      recognition.addEventListener("speechstart", event => {
+      recognition.addEventListener("onstart", event => {
         console.log("Speaking using current language: ", this.lang);
         this.speaking = true;
       });
 
-      recognition.addEventListener("speechend", event => {
+      recognition.addEventListener("onend", event => {
         this.speaking = false;
       });
 

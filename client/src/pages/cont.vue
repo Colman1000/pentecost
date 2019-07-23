@@ -75,7 +75,7 @@ export default {
         console.log("onstart: ", "started!");
       };
       recognition.onend = function() {
-        console.log("Speech ended!");
+        console.log("Speech ended! restarting...");
         that.isSpeaking = false;
         that.$store.state.isActivated = false;
       };
