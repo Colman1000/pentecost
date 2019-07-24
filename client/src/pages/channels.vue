@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-container grid-list-md>
-      <v-layout justify-center row wrap>
+    <v-container fill-height grid-list-md>
+      <v-layout justify-center align-center row wrap>
         <v-flex v-for="(chan, i) in channels" :key="i" xs6 md4>
           <v-card outlined hover ripple :href="`/#/channel/${chan.id}`">
             <v-card-text class="font-weight-bold">
@@ -19,6 +19,7 @@
 
 <script>
 export default {
+  layout: "blank",
   data() {
     return {
       channels: []

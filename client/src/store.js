@@ -16,7 +16,8 @@ export default new Vuex.Store({
     connected: false,
     waiting: true,
     isActivated: false,
-    timer: 0
+    timer: 0,
+    infinite: false //? Whether the mic should continue speaking even after its inbuilt timeout
   },
   actions: {
     setTimer(state, time) {

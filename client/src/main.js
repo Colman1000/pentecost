@@ -28,9 +28,20 @@ Vue.mixin({
           : "https://pentecust.herokuapp.com"
     };
   },
-  mounted() {},
+  mounted() {
+    console.log(
+      `Store state has been loaded into this component - dynamically`
+    );
+  },
   computed: {
-    ...mapState(["isActivated", "_loading", "waiting", "connected", "timer"])
+    ...mapState([
+      "infinite",
+      "isActivated",
+      "_loading",
+      "waiting",
+      "connected",
+      "timer"
+    ])
   }
 });
 
