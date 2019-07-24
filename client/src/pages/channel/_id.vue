@@ -1,8 +1,26 @@
 <template>
   <div>
     <!-- TODO: Should override `pt-2` for mobile screens -->
+
     <v-container fluid class="pa-0" grid-list-md>
       <v-layout justify-center row wrap>
+        <!-- TRANSCRIBED BIBLE PASSAGE -->
+        <v-dialog fullscreen width="400" v-model="overlay">
+          <v-card class="text-center">
+            <v-card-text class="display-1">
+              <v-icon size="200">mdi-bible</v-icon>
+              <br />
+              {{ biblePassage }}
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn x-large color="primary" rounded @click="overlay = false">Amen</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <!--// TRANSCRIBED BIBLE PASSAGE -->
+
         <v-card
           height="680"
           id="screen"
@@ -47,6 +65,8 @@ export default {
   layout: "blank",
   data() {
     return {
+      overlay: false,
+      biblePassage: "loading..",
       noVoiceOutput: false, //? Determines if theresa voice output for a channel
       noVoiceText: "...",
       channel: {},
@@ -71,6 +91,26 @@ export default {
       }
     };
   },
+
+  //? Show a transcript of a particular bible message before this component is visited
+
+  beforeRouteEnter(to, from, next) {
+    let biblePassage = `We are from these different countries, but we can hear these men in our own languages! We can all understand the great things they are saying about God.`;
+    /** Window element */ io.post(
+      "/channel/translate-text",
+      {
+        text: biblePassage,
+        channelId: to.params.id
+      },
+      data => {
+        next(vm => {
+          vm.overlay = true;
+          vm.biblePassage = data;
+        });
+      }
+    );
+  },
+
   // warn the user is he tries to change the channel
   beforeRouteLeave(to, from, next) {
     const answer = window.confirm(
@@ -187,6 +227,9 @@ export default {
 </script>
 
 <style scoped>
+* {
+  font-family: "Montserrat", sans-serif !important;
+}
 .currentSpoken {
   color: rgb(255, 255, 255) !important;
 }

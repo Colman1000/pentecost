@@ -17,11 +17,16 @@
         </v-layout>
       </v-container>
     </v-content>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
+import Footer from "@/components/Footer";
 export default {
+  components: {
+    Footer
+  },
   mounted() {},
   data() {
     return {};
