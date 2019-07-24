@@ -1,23 +1,18 @@
 <template>
   <div>
-    <Sampler :languages="languages" :text.sync="text" @speechend="speechEnd"></Sampler>
-    <!-- <div>{{ sentences }}</div> -->
-    <v-flex xs6>
-      <v-divider inset></v-divider>
-    </v-flex>
+    <Sampler :languages="languages"></Sampler>
   </div>
 </template>
 
 <script>
-import Sampler from "@/components/Browser-Rec";
+import Sampler from "@/components/Cont";
 export default {
   components: { Sampler },
   mounted() {
+    // Checks if user is `brand new` :)
     var isFirstTimer = localStorage.getItem("isFirstTimer");
     if (!isFirstTimer) {
       this.$router.push("/channels");
-    } else {
-      this.$router.push("/cont");
     }
   },
   data() {
@@ -495,17 +490,9 @@ export default {
           text: "普通话 (中国大陆)",
           value: "cmn-Hans-CN"
         }
-      ],
-      text: "",
-      sentences: null
+      ]
     };
   },
-  methods: {
-    speechEnd({ sentences, text }) {
-      console.log("text", text);
-      console.log("sentences", sentences);
-      this.sentences = sentences;
-    }
-  }
+  methods: {}
 };
 </script>
