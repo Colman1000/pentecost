@@ -9,6 +9,7 @@
           width="1000"
           style="overflow-y: scroll !important; border-radius: 0 !important;"
         >
+          <v-alert v-if="noVoiceOutput" icon="mdi-volume-off" type="warning">{{ noVoiceText }}</v-alert>
           <v-card-text>
             <h3 class="text-center pt-3 pb-3 display-1">
               <v-avatar size="60">
@@ -23,16 +24,15 @@
                 v-for="(t, index) in trans"
                 :key="index"
                 class="beautify"
-                :style="`color: ${index === numberOfTranslations -1? 'white': 'grey'}`"
+                :style="`color: ${ index === numberOfTranslations -1 ? 'white': 'grey' }`"
               >
-                {{t.text}}
+                {{ t.text }}
                 <br />
-                <small class="smaller">{{t.createdAt}}</small>
+                <small class="smaller">{{ t.createdAt }}</small>
               </div>
             </div>
           </v-card-text>
         </v-card>
-
         <v-flex xs6 class="mt-3"></v-flex>
       </v-layout>
     </v-container>
@@ -47,6 +47,8 @@ export default {
   layout: "blank",
   data() {
     return {
+      noVoiceOutput: false, //? Determines if theresa voice output for a channel
+      noVoiceText: "...",
       channel: {},
       trans: [],
       currentSpoke: "",
@@ -109,6 +111,10 @@ export default {
           // Else assing the channel argins
           this.message = `${body.name}`;
           this.channel = body;
+          if (_.isEmpty(this.channel.voice)) {
+            this.noVoiceOutput = true;
+            this.noVoiceText = this.channel.noVoiceText;
+          }
         }
       }
     );

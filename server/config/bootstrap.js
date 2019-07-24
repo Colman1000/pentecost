@@ -32,7 +32,6 @@ module.exports.bootstrap = async function() {
       language: "pt"
     },
     { voice: "de-DE", flag: "/svg/de.svg", name: "German", language: "de" },
-    { voice: "", flag: "/svg/china.svg", name: "China", language: "zh" },
     {
       voice: "ko-KR",
       flag: "/svg/south-korea.svg",
@@ -53,8 +52,22 @@ module.exports.bootstrap = async function() {
     },
 
     //! NO VOICE OUTPUT
-    { voice: "", flag: "/svg/israel.svg", name: "Hebrew", language: "he" },
     {
+      noVoiceText: "抱歉，目前没有语音输出",
+      voice: "",
+      flag: "/svg/china.svg",
+      name: "China",
+      language: "zh"
+    },
+    {
+      noVoiceText: "סליחה, אין כרגע פלט קולי זמין",
+      voice: "",
+      flag: "/svg/israel.svg",
+      name: "Hebrew",
+      language: "he"
+    },
+    {
+      noVoiceText: "xin lỗi, hiện tại không có đầu ra giọng nói",
       voice: "",
       flag: "/svg/vietnam.svg",
       name: "vietnam",

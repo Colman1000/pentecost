@@ -55,7 +55,7 @@ export default {
     var that = this;
     window.addEventListener("blur", function(e) {
       if (that.$store.state.isActivated) {
-        new Notification("Pentecost is still running...");
+        new Notification("Pentecost is running...");
       }
     });
   },
@@ -70,6 +70,7 @@ export default {
     isActivated(v) {
       //? Somthing like this can be used instead
       //? this.snackbarStart = !this.snackbarEnd;
+      //* But it works..
       if (v) {
         this.snackbarStart = true;
         this.snackbarEnd = false;
@@ -82,13 +83,15 @@ export default {
     }
   },
   mounted() {
+    //? Export `this` for illegal conflict with local fns
     var that = this;
     if (!("webkitSpeechRecognition" in window)) {
-      alert("Oops!");
+      alert("Oops, how come? did you remove your speech listener ?");
     } else {
       var recognition = new webkitSpeechRecognition();
       recognition.continuous = true;
       recognition.interimResults = true;
+      recognition.lang = "en-NG";
       var final_transcript = "",
         final_span = "";
 
@@ -99,6 +102,8 @@ export default {
         console.log("Speech ended! restarting...");
         that.isSpeaking = false;
         that.$store.state.isActivated = false;
+        //? Start recognition if stopped
+        recognition.start();
       };
       recognition.onerror = function(event) {
         console.warn("onerror called!", event);

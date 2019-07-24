@@ -17,7 +17,9 @@ module.exports = {
 
     flag: { type: "string", unique: true, required: true },
 
-    voice: { type: "string", unique: false, required: false }
+    voice: { type: "string", unique: false, required: false },
+
+    noVoiceText: { type: "string", unique: false, required: false }
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

@@ -23,6 +23,9 @@
 <script>
 export default {
   mounted() {},
+  data() {
+    return {};
+  },
   methods: {
     togglePower() {
       this.$store.state.isActivated = !this.$store.state.isActivated;

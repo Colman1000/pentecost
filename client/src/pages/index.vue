@@ -12,6 +12,14 @@
 import Sampler from "@/components/Browser-Rec";
 export default {
   components: { Sampler },
+  mounted() {
+    var isFirstTimer = localStorage.getItem("isFirstTimer");
+    if (!isFirstTimer) {
+      this.$router.push("/channels");
+    } else {
+      this.$router.push("/cont");
+    }
+  },
   data() {
     return {
       languages: [
