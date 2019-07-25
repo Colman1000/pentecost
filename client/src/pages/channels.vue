@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     navigate(channelId) {
+      this.$store.state._loading = true;
       // TODO : Make this a mixin
       var isFirstTimer = localStorage.getItem("isFirstTimer");
       if (!isFirstTimer) {

@@ -1,29 +1,13 @@
 <template>
   <div>
-    <v-container
-      align-baseline
-      align-center
-      align-content-center
-      align-content-end
-      align-content-space-around
-      align-content-space-between
-      align-content-start
-      align-end
-      align-start
-      d-flex
-      fill-height
-      fluid
-      grid-list-xs
-      id="id"
-      justify-center
-      justify-end
-      justify-space-around
-      justify-space-between
-      justify-start
-      reverse
-      tag="div"
-      wrap
-    >
+    <v-progress-linear
+      v-if="_loading"
+      height="6"
+      indeterminate
+      color="primary"
+      background-color="secondary"
+    ></v-progress-linear>
+    <v-container justify-center align-center class="pa-0">
       <router-view></router-view>
     </v-container>
   </div>

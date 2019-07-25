@@ -2,25 +2,30 @@
   <div>
     <!-- TODO: Should override `pt-2` for mobile screens -->
 
+    <!-- TRANSCRIBED BIBLE PASSAGE -->
+    <v-dialog fullscreen v-model="overlay">
+      <v-card class="justify-center text-center">
+        <v-container fill-height>
+          <v-layout justify-center align-center>
+            <v-flex xs12 md4>
+              <v-card-text class="text-center">
+                <v-icon size="200">mdi-bible</v-icon>
+                <br />
+                <h2 class="mt-4">{{ biblePassage }}</h2>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn block x-large color="primary" rounded @click="overlay = false">Amen</v-btn>
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card>
+    </v-dialog>
+    <!--// TRANSCRIBED BIBLE PASSAGE -->
     <v-container fluid class="pa-0" grid-list-md>
       <v-layout justify-center row wrap>
-        <!-- TRANSCRIBED BIBLE PASSAGE -->
-        <v-dialog fullscreen width="400" v-model="overlay">
-          <v-card class="text-center">
-            <v-card-text class="display-1">
-              <v-icon size="200">mdi-bible</v-icon>
-              <br />
-              {{ biblePassage }}
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn x-large color="primary" rounded @click="overlay = false">Amen</v-btn>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <!--// TRANSCRIBED BIBLE PASSAGE -->
-
         <v-card
           height="680"
           id="screen"
@@ -39,14 +44,14 @@
             <!-- <div v-if="currentSpoke === ''" class="text-xs-center">No live translations for now</div> -->
             <div id="translationScreen" class="headline font-weigth-light text-center">
               <div
-                v-for="(t, index) in trans"
+                v-for="(t, index) in translations"
                 :key="index"
-                class="beautify"
-                :style="`color: ${ index === numberOfTranslations -1 ? 'white': 'grey' }`"
+                class="mt-4 beautify"
+                :style="`color: ${ index === 0 ? 'white': 'grey' }`"
               >
-                {{ t.text }}
+                {{ t.nativeWord }}
                 <br />
-                <small class="smaller">{{ t.createdAt }}</small>
+                <small class="smaller">{{ t.createdAt | moment("h:ma") }}</small>
               </div>
             </div>
           </v-card-text>
@@ -70,13 +75,11 @@ export default {
       noVoiceOutput: false, //? Determines if theresa voice output for a channel
       noVoiceText: "...",
       channel: {},
-      trans: [],
       currentSpoke: "",
-      sock: "",
+      translations: [],
       opacity: 0.19,
       message: "No active translations now",
-      isSpeaking: false,
-      scope: [],
+
       // Grain Config
       config: {
         animate: true,
@@ -93,7 +96,6 @@ export default {
   },
 
   //? Show a transcript of a particular bible message before this component is visited
-
   beforeRouteEnter(to, from, next) {
     let biblePassage = `We are from these different countries, but we can hear these men in our own languages! We can all understand the great things they are saying about God.`;
     /** Window element */ io.post(
@@ -111,7 +113,7 @@ export default {
     );
   },
 
-  // warn the user is he tries to change the channel
+  //! warn the user is he tries to change the channel
   beforeRouteLeave(to, from, next) {
     const answer = window.confirm(
       "Do you really want to leave? multiple languages would be activated and multiple voices would be spoken at once"
@@ -127,17 +129,39 @@ export default {
       noise("#screen", this.config);
     });
   },
+  beforeMount() {
+    // remove any loading state
+    this.$store.state._loading = false;
+  },
   computed: {
     // Computed channelID
     channelId() {
       return this.$route.params.id;
-    },
-    numberOfTranslations() {
-      return this.trans.length;
     }
   },
   mounted() {
-    this.words = localStorage.getItem("words");
+    // ███████╗ ██████╗  ██████╗██╗  ██╗███████╗████████╗
+    // ██╔════╝██╔═══██╗██╔════╝██║ ██╔╝██╔════╝╚══██╔══╝
+    // ███████╗██║   ██║██║     █████╔╝ █████╗     ██║
+    // ╚════██║██║   ██║██║     ██╔═██╗ ██╔══╝     ██║
+    // ███████║╚██████╔╝╚██████╗██║  ██╗███████╗   ██║
+    // ╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝   ╚═╝
+    this.$io.on("rotciv", data => {
+      console.log("new audio detected", data);
+      // ┌┐┌┌─┐┌┬┐┬┬  ┬┌─┐╦ ╦┌─┐┬─┐┌┬┐  ┬┌─┐  ┌─┐┬┬ ┌┬┐┌─┐┬─┐┌─┐┌┬┐
+      // │││├─┤ │ │└┐┌┘├┤ ║║║│ │├┬┘ ││  │└─┐  ├┤ ││  │ ├┤ ├┬┘├┤  ││
+      // ┘└┘┴ ┴ ┴ ┴ └┘ └─┘╚╩╝└─┘┴└──┴┘  ┴└─┘  └  ┴┴─┘┴ └─┘┴└─└─┘─┴┘  ooo
+      //      ┬┌┐┌  ┌┬┐┬ ┬┌─┐  ╔╦╗┌─┐┌┬┐┌─┐┬  ┌─┐┌┬┐┌─┐
+      //      ││││   │ ├─┤├┤    ║ ├┤ │││├─┘│  ├─┤ │ ├┤
+      // ooo  ┴┘└┘   ┴ ┴ ┴└─┘   ╩ └─┘┴ ┴┴  ┴─┘┴ ┴ ┴ └─┘
+      this.translations.unshift(data);
+      this.speakTranslatedText(data.nativeWord);
+    });
+
+    // ┌─┐┌─┐┌┬┐╔═╗┬─┐┌─┐┬  ┬┬┌─┐┬ ┬┌─┐╔╦╗┬─┐┌─┐┌┐┌┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌┌─┐
+    // │ ┬├┤  │ ╠═╝├┬┘├┤ └┐┌┘││ ││ │└─┐ ║ ├┬┘├─┤│││└─┐│  ├─┤ │ ││ ││││└─┐
+    // └─┘└─┘ ┴ ╩  ┴└─└─┘ └┘ ┴└─┘└─┘└─┘ ╩ ┴└─┴ ┴┘└┘└─┘┴─┘┴ ┴ ┴ ┴└─┘┘└┘└─┘
+    this.getPreviousTranslations();
 
     var channelId = this.$route.params.id;
     // Subscribe to a channel
@@ -158,12 +182,22 @@ export default {
         }
       }
     );
-    this.$io.on("rotciv", data => {
-      console.log("new audio detected", data);
-      this.speakTranslatedText(data.nativeWord);
-    });
   },
   methods: {
+    /**
+     * @description Retireves the list of translations this channel has from a particular session
+     */
+    getPreviousTranslations() {
+      this.$io.get(
+        "/channel/get-translations",
+        {
+          channel: this.channelId
+        },
+        translations => {
+          this.translations = translations;
+        }
+      );
+    },
     /**
      * @description Speak the argumented text
      * @param {text: string}
@@ -174,7 +208,6 @@ export default {
       // Send to server to return the {{ Base64 }} encoding buffer for the text
       this.$io.post(
         "/channel/speak",
-        // Arguments
         {
           text: text,
           locale: this.channel.voice // <- The server should have an alternate
@@ -188,34 +221,6 @@ export default {
         }
       );
     }
-    // /**
-    //  * @description Translate the new audio input text to the native socket language
-    //  * @param {data: string}
-    //  * @returns {void}
-    //  */
-    // translateAudioToText(data) {
-    //   this.$io.post(
-    //     `/channel/broadcast-message/?audioId=${data.id}&channelId=${this.$route.params.id}`,
-    //     text => {
-    //       // unshift our stack
-    //       this.trans.push({
-    //         text: text,
-    //         createdAt: new Date(Date.now()).toLocaleTimeString()
-    //       });
-    //       // Speak the translated text
-    //       this.speakTranslatedText(text);
-
-    //       try {
-    //         //CUSTOM CODE ==>>>>>
-    //         const elem = document.getElementById("translationScreen");
-    //         elem.scrollTop = elem.scrollHeight;
-    //         //CUSTOM CODE ==>>>>>
-    //       } catch (e) {
-    //         console.warn(e);
-    //       }
-    //     }
-    //   );
-    // },
   }
 };
 </script>
