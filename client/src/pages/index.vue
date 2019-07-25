@@ -15,11 +15,11 @@ import Sampler from "@/components/Cont";
 export default {
   components: { Sampler },
   mounted() {
-    // Checks if user is `brand new` :)
-    var isFirstTimer = localStorage.getItem("isFirstTimer");
-    if (!isFirstTimer) {
-      this.$router.push("/channels");
-    }
+    // // Checks if user is `brand new` :)
+    // var isFirstTimer = localStorage.getItem("isFirstTimer");
+    // if (!isFirstTimer) {
+    //   this.$router.push("/channels");
+    // }
   },
   data() {
     return {
