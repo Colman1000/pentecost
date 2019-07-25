@@ -158,46 +158,12 @@ export default {
         }
       }
     );
-    // Subcribe to socket event
-    this.$io.on("new audio", data => {
-      // console.log("new audio", data);
-      this.translateAudioToText(data);
-    });
-
-    // Actually forgotten what this does
     this.$io.on("rotciv", data => {
-      this.trans.unshift(data);
+      console.log("new audio detected", data);
+      this.speakTranslatedText(data.nativeWord);
     });
   },
   methods: {
-    /**
-     * @description Translate the new audio input text to the native socket language
-     * @param {data: string}
-     * @returns {void}
-     */
-    translateAudioToText(data) {
-      this.$io.post(
-        `/channel/broadcast-message/?audioId=${data.id}&channelId=${this.$route.params.id}`,
-        text => {
-          // unshift our stack
-          this.trans.push({
-            text: text,
-            createdAt: new Date(Date.now()).toLocaleTimeString()
-          });
-          // Speak the translated text
-          this.speakTranslatedText(text);
-
-          try {
-            //CUSTOM CODE ==>>>>>
-            const elem = document.getElementById("translationScreen");
-            elem.scrollTop = elem.scrollHeight;
-            //CUSTOM CODE ==>>>>>
-          } catch (e) {
-            console.warn(e);
-          }
-        }
-      );
-    },
     /**
      * @description Speak the argumented text
      * @param {text: string}
@@ -222,6 +188,34 @@ export default {
         }
       );
     }
+    // /**
+    //  * @description Translate the new audio input text to the native socket language
+    //  * @param {data: string}
+    //  * @returns {void}
+    //  */
+    // translateAudioToText(data) {
+    //   this.$io.post(
+    //     `/channel/broadcast-message/?audioId=${data.id}&channelId=${this.$route.params.id}`,
+    //     text => {
+    //       // unshift our stack
+    //       this.trans.push({
+    //         text: text,
+    //         createdAt: new Date(Date.now()).toLocaleTimeString()
+    //       });
+    //       // Speak the translated text
+    //       this.speakTranslatedText(text);
+
+    //       try {
+    //         //CUSTOM CODE ==>>>>>
+    //         const elem = document.getElementById("translationScreen");
+    //         elem.scrollTop = elem.scrollHeight;
+    //         //CUSTOM CODE ==>>>>>
+    //       } catch (e) {
+    //         console.warn(e);
+    //       }
+    //     }
+    //   );
+    // },
   }
 };
 </script>

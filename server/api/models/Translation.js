@@ -1,5 +1,5 @@
 /**
- * Audio.js
+ * Translation.js
  *
  * @description :: A model definition represents a database table/collection.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
@@ -11,18 +11,29 @@ module.exports = {
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
-    fd: { type: "string", required: true },
-    size: { type: "number", required: true },
-    type: { type: "string", required: true },
-    // updated the text later
-    text: { type: "string", required: false },
-    lang: { type: "string", required: false }
+    foreignWord: {
+      type: "string",
+      required: true,
+      description: "The foreign word that the speaker spoke"
+    },
+
+    nativeWord: {
+      type: "string",
+      required: true,
+      description: "The native translated word the speaker spoke"
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
+    createdAt: false,
+    updatedAt: false,
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
+    channel: {
+      model: "channel",
+      required: true
+    }
   }
 };

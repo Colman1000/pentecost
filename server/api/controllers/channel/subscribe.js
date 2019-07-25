@@ -27,10 +27,18 @@ module.exports = {
     }
     var channel = await Channel.findOne().where({ id: inputs.id });
     if (!channel) throw "notFound";
+
+    let socketId = sails.sockets.getId(this.req);
     // Leave the socket before joing back incase the user is refreshing the page
-    sails.sockets.leave(this.req, channel.name);
-    // Have the socket which made the request join the "Name" room.
+    sails.sockets.leave(this.req, channel.name, done => {
+      sails.log.debug(`${socketId} has left ${channel.name}'s channel`);
+    });
+
+    // Have the socket which made the request join the "Chanel Name" .
     sails.sockets.join(this.req, channel.name);
+    await Channel.updateOne(channel.id).set({
+      connectedClients: socketId
+    });
 
     // All done.
     return channel;

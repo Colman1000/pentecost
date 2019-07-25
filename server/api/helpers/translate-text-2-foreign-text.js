@@ -9,10 +9,17 @@ module.exports = {
       type: "string",
       description: "The text we want to get the locale output"
     },
-    target: {
+    from: {
+      type: "string",
+      description: "The locale the user is translating from",
+      example: "fr",
+      defaultsTo: "en"
+    },
+    to: {
       type: "string",
       required: true,
-      description: "The desired local from the user"
+      description: "The locale the user is translating to",
+      example: "en"
     }
   },
 
@@ -22,9 +29,9 @@ module.exports = {
     }
   },
 
-  fn: async function({ text, target }) {
+  fn: async function({ text, from, to }) {
     const translate = require("translate");
     translate.key = "AIzaSyAtY4abPd-ICKi2FxDl9fccwNazy9CXDLM";
-    return await translate(text, target);
+    return await translate(text, { to: to, from: from });
   }
 };

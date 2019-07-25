@@ -15,6 +15,9 @@ module.exports.bootstrap = async function() {
   // For example:
   // ```
   // // Set up fake development data (or if we already have some, avast)
+
+  // await Translation.destroy({});
+
   if ((await Channel.count()) > 0) {
     return;
   }

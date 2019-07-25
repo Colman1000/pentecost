@@ -19,14 +19,17 @@ module.exports = {
 
     voice: { type: "string", unique: false, required: false },
 
-    noVoiceText: { type: "string", unique: false, required: false }
+    noVoiceText: { type: "string", unique: false, required: false },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
-
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
+    translations: {
+      collection: "translation",
+      via: "channel"
+    }
   }
 };

@@ -23,7 +23,8 @@ module.exports = {
 
     var text = await sails.helpers.translateText2ForeignText.with({
       text: inputs.text,
-      target: channel.language
+      from: "en",
+      to: channel.language
     });
 
     // All done.
