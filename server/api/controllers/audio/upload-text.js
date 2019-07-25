@@ -65,6 +65,12 @@ module.exports = {
        *  "channel": 88
        *}}
        * */
+
+      //! For the sake of testing, remove all translations before ..
+      //! Attempting to create a new one
+      await Translation.destroy({
+        channel: channel.id
+      });
       let _text = await Translation.create({
         channel: channel.id,
         nativeWord: translatedText,

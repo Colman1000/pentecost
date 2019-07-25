@@ -1,6 +1,12 @@
 <template>
   <div>
-    <Sampler :languages="languages"></Sampler>
+    <v-container fill-height grid-list-md>
+      <v-layout justify-center align-center>
+        <v-btn to="/channels" rounded color="secondary">goto channels</v-btn>&nbsp;
+        <v-btn to="/scribe" rounded color="primary">goto scribe</v-btn>
+      </v-layout>
+    </v-container>
+    <!-- <Sampler :languages="languages"></Sampler> -->
   </div>
 </template>
 
