@@ -3,7 +3,7 @@
     <v-container grid-list-md fill-height>
       <v-layout row wrap justify-center align-center>
         <v-flex xs6>
-          <v-switch ripple color="primary" v-model="isActive"></v-switch>
+          <v-switch append-icon="mdi-power" color="primary" v-model="isActive"></v-switch>
           <v-card :loading="isActive" width="500">
             <v-card-title></v-card-title>
             <v-card-text>{{ said }}</v-card-text>
