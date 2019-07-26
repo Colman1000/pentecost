@@ -22,13 +22,5 @@ module.exports.routes = {
   "POST /api/v1/audio/get-audio-text": {
     action: "audio/get-audio-text",
     isSocket: true
-  },
-
-  //   MEMBERS ARENA
-  // SET THE USERS PREFERED LANGAUGE
-  "POST /api/v1/member/set-language": {
-    action: "member/set-language",
-    isSocket: true,
-    cors: "*"
   }
 };

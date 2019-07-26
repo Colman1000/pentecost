@@ -12,12 +12,18 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    user: {},
     _loading: false,
     connected: false,
     waiting: true,
     isActivated: false,
     timer: 0,
     infinite: false //? Whether the mic should continue speaking even after its inbuilt timeout
+  },
+  mutations: {
+    SET_USER(state, user) {
+      state.user = user;
+    }
   },
   actions: {
     setTimer(state, time) {

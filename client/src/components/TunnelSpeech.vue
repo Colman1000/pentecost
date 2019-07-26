@@ -13,7 +13,7 @@
             class="mt-5 mb-2"
             outlined
             @change="changeLanguage($event)"
-            :items="languages"
+            :items="langs"
             label="Select language"
           ></v-select>
 
@@ -30,6 +30,11 @@
     </v-container>
     <br />
     <br />
+
+    <v-btn @click="test">test</v-btn>
+    <br />
+    <br />
+
     <v-divider></v-divider>
     {{ instruction }}
   </div>
@@ -43,13 +48,26 @@ var recognition = new SpeechRecognition();
 window.recognition = recognition;
 export default {
   props: {
-    languages: {
-      type: Array,
-      required: false
-    },
     gender: {
       type: Array,
       required: false
+    },
+    from: {
+      type: String | Number,
+      required: true
+    },
+    lang: {
+      type: String | Array,
+      required: true
+    },
+    langs: {
+      description: "Viewer languages",
+      type: Array,
+      required: true
+    },
+    to: {
+      type: String | Number,
+      required: true
     }
   },
   data() {
@@ -57,7 +75,7 @@ export default {
       isActive: false,
       instruction: "",
       said: "",
-      lang: "en-NG"
+      fromLang: "de",
     };
   },
   watch: {
@@ -70,11 +88,17 @@ export default {
       // ╚════██║██║   ██║██║     ██╔═██╗ ██╔══╝     ██║
       // ███████║╚██████╔╝╚██████╗██║  ██╗███████╗   ██║
       // ╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝   ╚═╝
-      this.$io.post(`/audio/upload-text/`, {
+      let toSend = {
         lang: this.lang,
-        text: word
-      });
-      console.log(`Sent: ${word}`);
+        speech: word,
+        from: {
+          id: this.from,
+          lang: this.fromLang
+        },
+        to: this.to
+      };
+      this.$io.post(`/tunnel/upload-speech/`, toSend);
+      console.log(`Sent: ${toSend}`);
     },
     // Toggle state of pentecost
     isActive(bool) {
@@ -89,6 +113,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.lang);
     var that = this,
       noteContent = "";
 
@@ -129,6 +154,9 @@ export default {
     };
   },
   methods: {
+    test() {
+      this.said = "What";
+    },
     changeGender(e) {
       this.$io.post(
         "/channel/change-ssml-gender",
@@ -141,7 +169,7 @@ export default {
       );
     },
     changeLanguage(e) {
-      this.lang = e;
+      this.fromLang = e;
     },
     stop() {
       recognition.stop();

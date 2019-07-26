@@ -36,7 +36,8 @@ Vue.mixin({
       "_loading",
       "waiting",
       "connected",
-      "timer"
+      "timer",
+      "user"
     ])
   }
 });
