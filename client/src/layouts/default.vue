@@ -1,23 +1,17 @@
 <template>
   <div>
-    <v-system-bar height="50" color="primary">
-      <v-spacer></v-spacer>
+    <v-app app>
+      <v-system-bar height="10" color="primary"></v-system-bar>
 
-      <v-icon @click="togglePower" v-if="!isActivated" color="white" size="30">mdi-power</v-icon>
-      <v-icon @click="togglePower" v-else color="white" size="30">mdi-power-off</v-icon>&nbsp;
-      <v-icon v-if="connected" color="white" size="30">mdi-wifi-strength-2</v-icon>&nbsp;
-      <v-icon v-if="waiting" color="white" size="30">mdi-bell-sleep</v-icon>&nbsp;
-      <!-- <span>12:30</span> -->
-    </v-system-bar>
-
-    <v-content>
-      <v-container>
-        <v-layout justify-center>
-          <router-view></router-view>
-        </v-layout>
-      </v-container>
-    </v-content>
-    <Footer></Footer>
+      <v-content>
+        <v-container>
+          <v-layout justify-center class="ma-5">
+            <router-view></router-view>
+          </v-layout>
+        </v-container>
+      </v-content>
+      <Footer></Footer>
+    </v-app>
   </div>
 </template>
 
