@@ -17,11 +17,15 @@ module.exports = {
   exits: {},
 
   fn: async function(inputs) {
-    var spoke = await sails.helpers.translateText2Speech.with({
+    sails.log.silly("Speaking with", this.req.session.ssmlGender);
+
+    var spoken = await sails.helpers.translateText2Speech.with({
       locale: inputs.locale,
-      text: inputs.text
+      text: inputs.text,
+      gender: this.req.session.ssmlGender
     });
+
     // All done.
-    return spoke;
+    return spoken;
   }
 };

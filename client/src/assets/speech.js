@@ -1,3 +1,13 @@
+var gender = [
+  {
+    text: "Male",
+    value: "MALE"
+  },
+  {
+    text: "Female",
+    value: "FEMALE"
+  }
+];
 var languages = [
   {
     text: "Afrikaans (Suid-Afrika)",
@@ -473,4 +483,4 @@ var languages = [
   }
 ];
 
-export default languages;
+export { gender, languages };

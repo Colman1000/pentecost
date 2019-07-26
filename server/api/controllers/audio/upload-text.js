@@ -82,7 +82,7 @@ module.exports = {
       sails.sockets.broadcast(channel.name, "rotciv", _text, this.req);
     });
     var socketId = sails.sockets.getId(this.req);
-    sails.log("My socket ID is: " + socketId);
+    sails.log("Current Socket ID: " + socketId);
 
     // sails.sockets.blast("new audio", savedAudio);
 

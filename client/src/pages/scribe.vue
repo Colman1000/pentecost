@@ -1,11 +1,11 @@
 <template>
   <div>
-    <Speech :languages="langs"></Speech>
+    <Speech :gender="gender" :languages="langs"></Speech>
   </div>
 </template>
 
 <script>
-import languages from "@/assets/languages.js";
+import { languages, gender } from "@/assets/speech.js";
 import Speech from "@/components/Cont";
 
 export default {
@@ -14,7 +14,8 @@ export default {
   },
   data() {
     return {
-      langs: languages
+      langs: languages,
+      gender: gender
     };
   }
 };

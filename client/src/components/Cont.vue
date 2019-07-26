@@ -16,6 +16,14 @@
             :items="languages"
             label="Select language"
           ></v-select>
+
+          <v-select
+            class="mb-2"
+            outlined
+            @change="changeGender($event)"
+            :items="gender"
+            label="Voice Output"
+          ></v-select>
         </v-flex>
       </v-layout>
     </v-container>
@@ -37,6 +45,10 @@ export default {
     languages: {
       type: Array,
       required: true
+    },
+    gender: {
+      type: Array,
+      required: true
     }
   },
   data() {
@@ -48,6 +60,7 @@ export default {
     };
   },
   watch: {
+    // Watch for said words and do something to them..
     said(word) {
       // i can run some codes here with out bottering the API
       // ███████╗ ██████╗  ██████╗██╗  ██╗███████╗████████╗
@@ -62,6 +75,7 @@ export default {
       });
       console.log(`Sent: ${word}`);
     },
+    // Toggle state of pentecost
     isActive(bool) {
       if (bool && "recognition" in window) {
         recognition.lang = this.lang;
@@ -110,11 +124,21 @@ export default {
       if (!mobileRepeatBug) {
         noteContent += transcript;
         that.said = transcript;
-        console.log(transcript);
       }
     };
   },
   methods: {
+    changeGender(e) {
+      this.$io.post(
+        "/channel/change-ssml-gender",
+        {
+          gender: e
+        },
+        done => {
+          console.log("Changed  voice output to: " + done);
+        }
+      );
+    },
     changeLanguage(e) {
       this.lang = e;
     },
@@ -122,9 +146,7 @@ export default {
       recognition.stop();
     },
     start() {
-      if ("recognition" in window) {
-        recognition.start();
-      }
+      recognition && "recognition" in window ? recognition.start() : null;
     }
   }
 };

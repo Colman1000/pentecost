@@ -27,18 +27,16 @@ export default {
   },
   methods: {
     navigate(channelId) {
+      // load the page while waiting for transcript in other languages
       this.$store.state._loading = true;
-      // TODO : Make this a mixin
-      var isFirstTimer = localStorage.getItem("isFirstTimer");
-      if (!isFirstTimer) {
-        localStorage.setItem("isFirstTimer", true);
-        this.$router.push(`/channel/${channelId}`);
-      } else {
-        this.$router.push(`/channel/${channelId}`);
-      }
+      // Anyhow just set this value
+      localStorage.setItem("isFirstTimer", true);
+      // Finally?
+      this.$router.push(`/tongue/${channelId}`);
     }
   },
   mounted() {
+    // Get all channels
     this.$io.get("/channel/get-channels", data => {
       this.channels = data;
     });
