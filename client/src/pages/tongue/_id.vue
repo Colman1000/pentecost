@@ -98,20 +98,19 @@ export default {
   //? Show a transcript of a particular bible message before this component is visited
   beforeRouteEnter(to, from, next) {
     let biblePassage = `We are from these different countries, but we can hear these men in our own languages! We can all understand the great things they are saying about God - Acts 2:11`;
-    // io.post(
-    //   "/channel/translate-text",
-    //   {
-    //     text: biblePassage,
-    //     channelId: to.params.id
-    //   },
-    //   data => {
-    //     next(vm => {
-    //       vm.overlay = true;
-    //       vm.biblePassage = data;
-    //     });
-    //   }
-    // );
-    next();
+    io.post(
+      "/channel/translate-text",
+      {
+        text: biblePassage,
+        channelId: to.params.id
+      },
+      data => {
+        next(vm => {
+          vm.overlay = true;
+          vm.biblePassage = data;
+        });
+      }
+    );
   },
 
   //! warn the user is he tries to change the channel
