@@ -1,37 +1,39 @@
 <template>
   <div>
-    <v-app app>
-      <v-system-bar height="10" color="primary"></v-system-bar>
-
-      <v-content>
-        <v-container>
-          <v-layout justify-center class="ma-5">
-            <router-view></router-view>
-          </v-layout>
-        </v-container>
-      </v-content>
-      <Footer></Footer>
-    </v-app>
+    <v-progress-linear
+      v-if="_loading"
+      height="6"
+      indeterminate
+      color="primary"
+      background-color="secondary"
+    ></v-progress-linear>
+    <v-toolbar color="primary" class="mb-5" dark>
+      <v-toolbar-title>Pentecost</v-toolbar-title>
+    </v-toolbar>
+    <v-container justify-center align-center class="pa-0">
+      <v-alert class="text-center" v-model="oops" type="error">{{ message }}!</v-alert>
+      <router-view></router-view>
+    </v-container>
   </div>
 </template>
 
 <script>
-import Footer from "@/components/Footer";
 export default {
-  components: {
-    Footer
-  },
-  mounted() {},
   data() {
-    return {};
+    return {
+      oops: false,
+      message: ""
+    };
   },
-  methods: {
-    togglePower() {
-      this.$store.state.isActivated = !this.$store.state.isActivated;
-    }
-  },
-  computed: {}
+  mounted() {
+    this.$io.on("connect", done => {
+      this.oops = false;
+    });
+    this.$io.on("disconnect", oops => {
+      this.oops = true;
+      this.message =
+        "Pentecost has been disconnected from the server that serves it";
+    });
+  }
 };
 </script>
-
-
