@@ -33,6 +33,6 @@ module.exports = {
       to: inputs.to.split("-")[0]
     });
     // All done.
-    return { text, user: user.username };
+    return { text, user: user.username, time: Date.now() };
   }
 };

@@ -71,7 +71,12 @@ module.exports = {
         sails.log("Subcribed to", _tunnel.tunnel);
       });
       this.req.session.me = userRecord;
-      return { id: userRecord.id, lang: userRecord.lang, tunnel: _tunnel.id };
+      return {
+        username: userRecord.username,
+        id: userRecord.id,
+        lang: userRecord.lang,
+        tunnel: _tunnel.id
+      };
     }
     throw "tunnelNotFound";
   }
