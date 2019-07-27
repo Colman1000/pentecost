@@ -11,7 +11,7 @@
       <v-layout column justify-center align-center>
         <v-flex xs12>
           <div class="chat_master pa-1 scrollbar" id="chat_container">
-            <v-card flat height="600" class="text-center pa-3" color="transparent" width="500">
+            <v-card flat class="text-center pa-3" color="transparent" width="500">
               <v-icon v-if="spoken.length === 0" size="200">mdi-gesture-tap</v-icon>
               <Bubble
                 v-else
@@ -19,7 +19,7 @@
                 :key="i"
                 :time="message.time"
                 :userName="message.user == user.username ? 'You': message.user"
-                :message="message.speech"
+                :message="message.text"
                 :align="message.user == user.username ? 'right': 'left'"
               />
             </v-card>
@@ -87,13 +87,14 @@ export default {
     this.$io.on("message", newMessage => {
       console.log("New message", newMessage);
       // GET TRANSLATION FOR USERLAND
+      console.log(newMessage);
       _this19.$io.post(
         "/tunnel/translate-for",
         {
           speech: newMessage.speech,
           from: newMessage.lang,
           to: _this19.user.lang,
-          user: _this19.user.id
+          user: newMessage.from
         },
         data => {
           console.log("Transcript:", data);
@@ -131,7 +132,7 @@ export default {
 }
 .chat_master {
   top: 0px;
-  height: 500px !important;
+  height: 300px !important;
   /* border: 1px solid gray; */
   overflow: auto;
 }

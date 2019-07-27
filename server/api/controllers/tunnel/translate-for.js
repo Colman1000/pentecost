@@ -26,13 +26,13 @@ module.exports = {
   exits: {},
 
   fn: async function(inputs) {
-    let user = await User.findOne({ id: inputs.user });
+    // let user = await User.findOne({ username: inputs.user });
     var text = await sails.helpers.translateText2ForeignText.with({
       text: inputs.speech,
       from: inputs.from.split("-")[0],
       to: inputs.to.split("-")[0]
     });
     // All done.
-    return { text, user: user.username, time: Date.now() };
+    return { text, user: inputs.user, time: Date.now() };
   }
 };
