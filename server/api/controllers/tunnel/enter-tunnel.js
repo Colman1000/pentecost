@@ -20,7 +20,7 @@ module.exports = {
 
   exits: {
     badCombo: {
-      description: `The provided email and password combination does not
+      description: `The provided username or password combination does not
       match any user in the database.`,
       statusCode: 409
       // ^This uses the custom `unauthorized` response located in `api/responses/unauthorized.js`.
@@ -72,6 +72,7 @@ module.exports = {
       });
       this.req.session.me = userRecord;
       return {
+        userTunnel: userRecord.tunnel,
         username: userRecord.username,
         id: userRecord.id,
         lang: userRecord.lang,

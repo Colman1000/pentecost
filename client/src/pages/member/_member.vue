@@ -4,6 +4,10 @@
     <!-- <h3>Conversation Started with {{ tunnel.username }}</h3> -->
     <br />
     <v-container>
+      Username:
+      <b>{{ user.username }}</b>
+      <br />Your Tunnel:
+      <b>{{ user.userTunnel }}</b>
       <v-layout column justify-center align-center>
         <v-flex xs12>
           <div class="chat_master pa-1 scrollbar" id="chat_container">
@@ -99,13 +103,14 @@ export default {
         }
       );
     });
+
     // WARN IF USER IS IN HIS CHANNEL WHILST LISTENING FOR MESSAGES - THIS COULD CAUSE SOCKET ERROR
-    if (this.user.id == this.with) {
-      // Or the relay should change
-      this.snackbar = true;
-      this.message =
-        "Inconsitency Violation attempted to enter a tunnel that is already yours, this may cause conflicting disorders";
-    } // </if>
+    // if (this.user.id == this.with) {
+    //   // Or the relay should change
+    //   this.snackbar = true;
+    //   this.message =
+    //     "Inconsitency Violation attempted to enter a tunnel that is already yours, this may cause conflicting disorders";
+    // } // </if>
 
     // // REDIRECT FOR UNAUTHORIZED ACCESS
     // if (

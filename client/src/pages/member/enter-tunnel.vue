@@ -2,6 +2,7 @@
   <div>
     <h3>Enter Tunnel ID:</h3>
     <br />
+    {{ message }}
     <v-form v-model="valid">
       <v-text-field :rules="idRules" v-model="id" outlined label="Enter tunnel name"></v-text-field>
       <v-text-field :rules="usernameRules" v-model="username" outlined label="Username"></v-text-field>
@@ -16,9 +17,10 @@ export default {
   data() {
     return {
       valid: false,
-      id: "ctit",
-      password: "1",
-      username: "thing",
+      message: "",
+      id: "",
+      password: "",
+      username: "",
       passwordRules: [v => !!v || "Password is required"],
       idRules: [
         v => !!v || "ID is required",
@@ -39,7 +41,10 @@ export default {
           password: this.password,
           username: this.username
         },
-        data => {
+        (data, e) => {
+          if (e.statusCode) {
+            this.message = e.headers["x-exit-description"];
+          }
           // data should be the user
           if (data.id) {
             this.$store.commit("SET_USER", data);

@@ -27,7 +27,15 @@
       <v-select v-model="lang" outlined label="Prefered Language" :items="languages"></v-select>
       <v-btn @click="submit" rounded color="primary" block :disabled="!valid">submit</v-btn>
     </v-form>
-    <div v-else>{{ tunnel }}</div>
+    <div v-else>
+      <v-card outlined>
+        <v-card-title>{{ tunnel.tunnel }}</v-card-title>
+        <v-card-text>
+          {{ tunnel.username }}
+          <br />
+        </v-card-text>
+      </v-card>
+    </div>
   </div>
 </template>
 
