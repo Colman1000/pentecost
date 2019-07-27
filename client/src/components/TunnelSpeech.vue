@@ -9,13 +9,13 @@
             <v-card-text>{{ said }}</v-card-text>
           </v-card>
 
-          <v-select
+          <!-- <v-select
             class="mt-5 mb-2"
             outlined
             @change="changeLanguage($event)"
             :items="langs"
             label="Select language"
-          ></v-select>
+          ></v-select>-->
 
           <v-select
             v-if="gender"
@@ -29,12 +29,6 @@
       </v-layout>
     </v-container>
     <br />
-    <br />
-
-    <v-btn @click="test">test</v-btn>
-    <br />
-    <br />
-
     <v-divider></v-divider>
     {{ instruction }}
   </div>
@@ -51,31 +45,13 @@ export default {
     gender: {
       type: Array,
       required: false
-    },
-    from: {
-      type: String | Number,
-      required: true
-    },
-    lang: {
-      type: String | Array,
-      required: true
-    },
-    langs: {
-      description: "Viewer languages",
-      type: Array,
-      required: true
-    },
-    to: {
-      type: String | Number,
-      required: true
     }
   },
   data() {
     return {
       isActive: false,
       instruction: "",
-      said: "",
-      fromLang: "de",
+      said: ""
     };
   },
   watch: {
@@ -89,13 +65,9 @@ export default {
       // ███████║╚██████╔╝╚██████╗██║  ██╗███████╗   ██║
       // ╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝   ╚═╝
       let toSend = {
-        lang: this.lang,
         speech: word,
-        from: {
-          id: this.from,
-          lang: this.fromLang
-        },
-        to: this.to
+        user: this.user,
+        tunnel: this.user.tunnel
       };
       this.$io.post(`/tunnel/upload-speech/`, toSend);
       console.log(`Sent: ${toSend}`);
@@ -103,7 +75,8 @@ export default {
     // Toggle state of pentecost
     isActive(bool) {
       if (bool && "recognition" in window) {
-        recognition.lang = this.lang;
+        console.log(this.user.lang);
+        recognition.lang = this.user.lang;
         recognition.continuous = true;
         recognition.interimResults = false;
         recognition.start();
@@ -113,7 +86,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.lang);
+    console.log("from", this.from);
     var that = this,
       noteContent = "";
 
@@ -167,9 +140,6 @@ export default {
           console.log("Changed  voice output to: " + done);
         }
       );
-    },
-    changeLanguage(e) {
-      this.fromLang = e;
     },
     stop() {
       recognition.stop();

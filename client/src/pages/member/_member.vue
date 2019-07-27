@@ -2,7 +2,8 @@
   <div>
     <!-- Any one that is successfully in this tunnel should further subscribe to socket events  -->
     <!-- <h3>Conversation Started with {{ tunnel.username }}</h3> -->
-    <Speak v-if="tunnel.lang" :langs="langs" :from="user.id" :to="tunnel.id" :lang="tunnel.lang"></Speak>
+    {{ spoken }}
+    <Speak></Speak>
 
     <v-snackbar
       multi-line
@@ -24,6 +25,7 @@ export default {
   },
   data() {
     return {
+      spoken: [],
       langs: languages,
       tunnel: {},
       snackbar: false,
@@ -36,37 +38,40 @@ export default {
     }
   },
   mounted() {
+    let _this19 = this;
     // LISTEN FOR NEW MESSAGES TRIGGER
     this.$io.on("message", newMessage => {
       console.log("New message", newMessage);
+      this.$io.post(
+        "/tunnel/translate-for",
+        {
+          speech: newMessage.speech,
+          from: newMessage.lang,
+          to: this.user.lang,
+          user: this.user.id
+        },
+        data => {
+          console.log("Transcript:", data);
+          _this19.spoken.push(data);
+        }
+      );
     });
-    // Verify unique constraints ..
-    // .. just in case the user refreshes this page
-    this.$io.post(
-      "/tunnel/enter-tunnel",
-      {
-        tunnel: this.with
-      },
-      (data, jwr) => {
-        this.tunnel = data;
-        // WARN IF USER IS IN HIS CHANNEL WHILST LISTENING FOR MESSAGES - THIS COULD CAUSE SOCKET ERROR
-        if (this.user.id == this.tunnel.id) {
-          // Or the relay should change
-          this.snackbar = true;
-          this.message =
-            "Inconsitency Violation attempted to enter a tunnel that is already yours, this may cause conflicting disorders";
-        } // </if>
+    // WARN IF USER IS IN HIS CHANNEL WHILST LISTENING FOR MESSAGES - THIS COULD CAUSE SOCKET ERROR
+    if (this.user.id == this.with) {
+      // Or the relay should change
+      this.snackbar = true;
+      this.message =
+        "Inconsitency Violation attempted to enter a tunnel that is already yours, this may cause conflicting disorders";
+    } // </if>
 
-        // REDIRECT FOR UNAUTHORIZED ACCESS
-        if (
-          _.isEmpty(this.with) ||
-          _.isUndefined(this.with) ||
-          jwr.statusCode === 404
-        ) {
-          this.$router.push("/member/enter-tunnel");
-        } //</fi>
-      }
-    );
+    // // REDIRECT FOR UNAUTHORIZED ACCESS
+    // if (
+    //   _.isEmpty(this.with) ||
+    //   _.isUndefined(this.with) ||
+    //   jwr.statusCode === 404
+    // ) {
+    //   this.$router.push("/member/enter-tunnel");
+    // } //</fi>
   }
 };
 </script>

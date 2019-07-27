@@ -10,7 +10,7 @@ dependencies:
   randomatic: 3.1.1
   sails: 1.2.3
   sails-hook-apianalytics: 2.0.3
-  sails-hook-cloud: 0.1.1
+  sails-hook-cloud: 0.1.3
   sails-hook-organics: 1.0.0
   sails-hook-orm: 2.1.1
   sails-hook-sockets: 2.0.0
@@ -2975,12 +2975,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-6ZEpBCmJM6uzS6esAaZkRWRM7hh5zXHNN/BtYR+6l0ztTRKPQl9YMTc8JE3bBP+XC7Z8T4Is36B0YukkoMuIOg==
-  /sails-hook-cloud/0.1.1:
+  /sails-hook-cloud/0.1.3:
     dev: false
     engines:
       node: '>=8.0.0'
     resolution:
-      integrity: sha512-Xj+d7L/BVfxzCnXRW9K1KH+94Lp8xH7QNsOD9ixLqfqCHEjlglT3hTAhAW+GQrt70pFXGsJq+YtGOPZKya19uw==
+      integrity: sha512-bOE0a2IVDCPjF8SxzPpZwe3xpCxpJYUZuTSkvKfyNI/2aMZBOxOdQDwfxfXsm+ai6k0/CJpaROVDXKz3Qthv+w==
   /sails-hook-organics/1.0.0:
     dependencies:
       '@sailshq/lodash': 3.10.3
@@ -3856,7 +3856,7 @@ specifiers:
   randomatic: ^3.1.1
   sails: ^1.2.2
   sails-hook-apianalytics: ^2.0.3
-  sails-hook-cloud: ^0.1.1
+  sails-hook-cloud: ^0.1.3
   sails-hook-organics: ^1.0.0
   sails-hook-orm: ^2.1.1
   sails-hook-sockets: ^2.0.0
