@@ -33,7 +33,8 @@ module.exports = {
     },
     tunnelNotFound: {
       statusCode: 404,
-      description: "The tunnel cann't be found"
+      description:
+        "The tunnel can't be found, please make sure you copied the right tunnel name, tunnels are case sensitive"
     }
   },
 
@@ -42,7 +43,7 @@ module.exports = {
 
     // Verify that the user exist
     var userRecord = await User.findOne({
-      username: inputs.username.toLowerCase()
+      username: inputs.username.toLowerCase().trim()
     });
 
     // If there was no matching user, respond thru the "badCombo" exit.
@@ -64,7 +65,7 @@ module.exports = {
       .select(["id", "tunnel", "username", "lang"]);
 
     if (_tunnel) {
-      sails.log(`${userRecord.username} logged into ${_tunnel.username}`);
+      sails.log.silly(`${userRecord.username} logged into ${_tunnel.username}`);
       // All done.
       // Subcribe to socket event
       sails.sockets.join(this.req, _tunnel.tunnel, __ => {

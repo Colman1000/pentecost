@@ -1,14 +1,8 @@
 <template>
   <div>
-    <!-- Any one that is successfully in this tunnel should further subscribe to socket events  -->
-    <!-- <h3>Conversation Started with {{ tunnel.username }}</h3> -->
-    <br />
     <v-container>
-      Username:
-      <b>{{ user.username }}</b>
-      <br />Your Tunnel:
-      <b>{{ user.userTunnel }}</b>
       <v-layout column justify-center align-center>
+        <v-chip color="primary">{{ user.username }}@{{ user.userTunnel }}</v-chip>
         <v-flex xs12>
           <div class="chat_master pa-1 scrollbar" id="chat_container">
             <v-card flat class="text-center pa-3" color="transparent" width="500">
@@ -17,7 +11,6 @@
                 v-else
                 v-for="(message, i) of spoken"
                 :key="i"
-                :time="message.time"
                 :userName="message.user == user.username ? 'You': message.user"
                 :message="message.text"
                 :align="message.user == user.username ? 'right': 'left'"
@@ -46,6 +39,7 @@ import Speak from "@/components/TunnelSpeech";
 import { languages } from "@/assets/speech";
 window.speak = new Audio();
 export default {
+  layout: "blank",
   components: {
     Speak,
     Bubble
