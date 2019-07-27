@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!-- TODO: Should override `pt-2` for mobile screens -->
-
     <!-- TRANSCRIBED BIBLE PASSAGE -->
     <v-dialog fullscreen v-model="overlay">
       <v-card class="justify-center text-center">
@@ -104,10 +102,15 @@ export default {
         text: biblePassage,
         channelId: to.params.id
       },
-      data => {
+      (data, jwr) => {
         next(vm => {
-          vm.overlay = true;
-          vm.biblePassage = data;
+          // Catch Error's
+          if (jwr.statusCode === 500) {
+            vm.$router.push("/tongues");
+          } else {
+            vm.overlay = true;
+            vm.biblePassage = data;
+          }
         });
       }
     );
