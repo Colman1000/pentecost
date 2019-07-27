@@ -1,14 +1,20 @@
 <template>
   <div>
     <v-container grid-list-md fill-height>
-      <v-layout row wrap justify-center align-center>
-        <v-flex xs6>
-          <v-switch append-icon="mdi-power" color="primary" v-model="isActive"></v-switch>
-          <v-card :loading="isActive" width="500">
-            <v-card-title></v-card-title>
-            <v-card-text>{{ said }}</v-card-text>
-          </v-card>
-
+      <v-layout justify-center align-center>
+        <v-flex xs12 md12 class="text-center">
+          <!-- <v-switch x-large color="primary" v-model="isActive"></v-switch> -->
+          <div>
+            <v-icon
+              class="ma-0"
+              v-if="!isActive"
+              @click="isActive = !isActive"
+              size="100"
+            >mdi-toggle-switch-off-outline</v-icon>
+            <v-icon class="ma-0" v-else @click="isActive = !isActive" size="100">mdi-toggle-switch</v-icon>
+          </div>
+          <v-progress-linear height="8" v-if="isActive" indeterminate></v-progress-linear>
+          <v-textarea solo v-model="said"></v-textarea>
           <!-- <v-select
             class="mt-5 mb-2"
             outlined
@@ -28,9 +34,6 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <br />
-    <v-divider></v-divider>
-    {{ instruction }}
   </div>
 </template>
 
@@ -46,6 +49,9 @@ export default {
       type: Array,
       required: false
     }
+  },
+  created() {
+    this.$nextTick(tick => {});
   },
   data() {
     return {

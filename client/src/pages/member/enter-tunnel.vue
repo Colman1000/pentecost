@@ -2,13 +2,27 @@
   <div>
     <h3>Enter Tunnel ID:</h3>
     <br />
-    {{ message }}
     <v-form v-model="valid">
       <v-text-field :rules="idRules" v-model="id" outlined label="Enter tunnel name"></v-text-field>
       <v-text-field :rules="usernameRules" v-model="username" outlined label="Username"></v-text-field>
       <v-text-field :rules="passwordRules" v-model="password" outlined label="Password"></v-text-field>
-      <v-btn @click="enterTunnel" :disabled="!valid" rounded block color="primary">Enter</v-btn>
+      <v-btn
+        :loading="loading"
+        @click="enterTunnel"
+        :disabled="!valid"
+        rounded
+        block
+        color="primary"
+      >Enter</v-btn>
     </v-form>
+    <v-snackbar
+      class="text-center"
+      bottom
+      left
+      multi-line
+      v-model="snackbar"
+      color="warning"
+    >{{ message }}</v-snackbar>
   </div>
 </template>
 
@@ -18,6 +32,8 @@ export default {
     return {
       valid: false,
       message: "",
+      snackbar: false,
+      loading: false,
       id: "",
       password: "",
       username: "",
@@ -34,6 +50,7 @@ export default {
   },
   methods: {
     enterTunnel() {
+      this.loading = true;
       this.$io.post(
         "/tunnel/enter-tunnel",
         {
@@ -43,6 +60,8 @@ export default {
         },
         (data, e) => {
           if (e.statusCode) {
+            this.snackbar = true;
+            this.loading = false;
             this.message = e.headers["x-exit-description"];
           }
           // data should be the user
