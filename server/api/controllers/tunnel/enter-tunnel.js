@@ -61,14 +61,9 @@ module.exports = {
       tunnel: inputs.tunnel
     });
     // filter explict result
-
     if (_tunnel) {
       sails.log.silly(`${userRecord.username} logged into ${_tunnel.username}`);
       // All done.
-      // Subcribe to socket event
-      sails.sockets.join(this.req, _tunnel.tunnel, __ => {
-        sails.log("Subcribed to", _tunnel.tunnel);
-      });
       this.req.session.me = userRecord;
       return _.extend(userRecord, { tunnelIn: _tunnel });
     }

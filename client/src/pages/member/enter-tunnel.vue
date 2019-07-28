@@ -55,6 +55,7 @@ export default {
   mounted() {
     // loadup the users details
     this.username = this.user.username;
+    this.id = this.user.tunnel;
   },
   methods: {
     enterTunnel() {

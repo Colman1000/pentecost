@@ -32,10 +32,9 @@ module.exports = {
     // Leave the socket before joing back incase the user is refreshing the page
     sails.sockets.leave(this.req, channel.name, done => {
       sails.log.debug(`${socketId} has left ${channel.name}'s channel`);
+      sails.sockets.join(this.req, channel.name);
     });
-
     // Have the socket which made the request join the "Chanel Name" .
-    sails.sockets.join(this.req, channel.name);
     await Channel.updateOne(channel.id).set({
       connectedClients: socketId
     });

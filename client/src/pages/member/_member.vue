@@ -56,10 +56,23 @@ export default {
   },
   computed: {
     with() {
-      return this.$route.params.member;
+      return this.$route.query.with;
     }
   },
   methods: {
+    // Remount the socket in case of refreshing
+    remountSocket() {
+      this.$io.post(
+        "/tunnel/re-join",
+        {
+          tunnel: this.with,
+          user: this.user.id
+        },
+        data => {
+          console.log("remounted", data);
+        }
+      );
+    },
     speak(word, lang) {
       this.$io.post(
         "/channel/speak",
@@ -77,12 +90,12 @@ export default {
     }
   },
   mounted() {
+    this.remountSocket();
     let _this19 = this;
     // LISTEN FOR NEW MESSAGES TRIGGER
     this.$io.on("message", newMessage => {
       console.log("New message", newMessage);
       // GET TRANSLATION FOR USERLAND
-      console.log(newMessage);
       _this19.$io.post(
         "/tunnel/translate-for",
         {
