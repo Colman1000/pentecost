@@ -93,8 +93,12 @@ export default {
         data => {
           console.log("Transcript:", data);
           // SPEAK THE TRANSCRIPT
-          _this19.speak(data.text, _this19.user.lang);
           _this19.spoken.push(data);
+
+          //* Don't speak for the user that sent stuff
+          if (data.user != _this19.user.username) {
+            _this19.speak(data.text, _this19.user.lang);
+          }
         }
       );
     });
