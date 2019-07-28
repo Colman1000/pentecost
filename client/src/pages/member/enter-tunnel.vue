@@ -1,28 +1,32 @@
 <template>
   <div>
-    <h3>Enter Tunnel ID:</h3>
-    <br />
-    <v-form v-model="valid">
-      <v-text-field :rules="idRules" v-model="id" outlined label="Enter tunnel name"></v-text-field>
-      <v-text-field :rules="usernameRules" v-model="username" outlined label="Username"></v-text-field>
-      <v-text-field :rules="passwordRules" v-model="password" outlined label="Password"></v-text-field>
-      <v-btn
-        :loading="loading"
-        @click="enterTunnel"
-        :disabled="!valid"
-        rounded
-        block
-        color="primary"
-      >Enter</v-btn>
-    </v-form>
-    <v-snackbar
-      class="text-center"
-      bottom
-      left
-      multi-line
-      v-model="snackbar"
-      color="warning"
-    >{{ message }}</v-snackbar>
+    <v-container>
+      <v-layout justify-center align-center column>
+        <h3>Enter Tunnel ID:</h3>
+        <br />
+        <v-form v-model="valid">
+          <v-text-field :rules="idRules" v-model="id" outlined label="Enter tunnel name"></v-text-field>
+          <v-text-field :rules="usernameRules" v-model="username" outlined label="Username"></v-text-field>
+          <v-text-field :rules="passwordRules" v-model="password" outlined label="Password"></v-text-field>
+          <v-btn
+            :loading="loading"
+            @click="enterTunnel"
+            :disabled="!valid"
+            rounded
+            block
+            color="primary"
+          >Enter</v-btn>
+        </v-form>
+        <v-snackbar
+          class="text-center"
+          bottom
+          left
+          multi-line
+          v-model="snackbar"
+          color="warning"
+        >{{ message }}</v-snackbar>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
@@ -47,6 +51,10 @@ export default {
         // v => v.length <= 4 || "username must be less than 4 characters"
       ]
     };
+  },
+  mounted() {
+    // loadup the users details
+    this.username = this.user.username;
   },
   methods: {
     enterTunnel() {

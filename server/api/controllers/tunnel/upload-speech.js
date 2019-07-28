@@ -9,7 +9,7 @@ module.exports = {
       required: true
     },
     user: {
-      type: "ref",
+      type: "string",
       required: true
     },
     tunnel: {
@@ -22,7 +22,7 @@ module.exports = {
 
   fn: async function(inputs) {
     sails.log(inputs);
-    var user = await User.findOne({ id: inputs.user.id });
+    var user = await User.findOne({ id: inputs.user });
     var tunnel = await User.findOne({ id: inputs.tunnel });
 
     let broadcasting = {

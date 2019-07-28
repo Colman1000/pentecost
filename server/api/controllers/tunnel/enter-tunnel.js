@@ -57,12 +57,10 @@ module.exports = {
       .intercept("incorrect", "badCombo");
 
     // Then look up the channel
-    var _tunnel = await User.findOne()
-      .where({
-        tunnel: inputs.tunnel
-      })
-      // filter explict result
-      .select(["id", "tunnel", "username", "lang"]);
+    var _tunnel = await User.findOne().where({
+      tunnel: inputs.tunnel
+    });
+    // filter explict result
 
     if (_tunnel) {
       sails.log.silly(`${userRecord.username} logged into ${_tunnel.username}`);
@@ -72,13 +70,7 @@ module.exports = {
         sails.log("Subcribed to", _tunnel.tunnel);
       });
       this.req.session.me = userRecord;
-      return {
-        userTunnel: userRecord.tunnel,
-        username: userRecord.username,
-        id: userRecord.id,
-        lang: userRecord.lang,
-        tunnel: _tunnel.id
-      };
+      return _.extend(userRecord, { tunnelIn: _tunnel });
     }
     throw "tunnelNotFound";
   }

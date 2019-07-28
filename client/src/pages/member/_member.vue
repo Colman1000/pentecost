@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <v-layout column justify-center align-center>
-        <v-chip color="primary">{{ user.username }}@{{ user.userTunnel }}</v-chip>
+        <v-chip color="primary">{{ user.username }}@{{ user.userTunnel }} => {{ user.lang }}</v-chip>
         <v-flex xs12>
           <div class="chat_master pa-1 scrollbar" id="chat_container">
             <v-card flat class="text-center pa-3" color="transparent" width="500">
@@ -93,7 +93,7 @@ export default {
         data => {
           console.log("Transcript:", data);
           // SPEAK THE TRANSCRIPT
-          _this19.speak(data.speech, _this19.user.lang);
+          _this19.speak(data.text, _this19.user.lang);
           _this19.spoken.push(data);
         }
       );

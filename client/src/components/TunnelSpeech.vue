@@ -14,7 +14,7 @@
             <v-icon class="ma-0" v-else @click="isActive = !isActive" size="100">mdi-toggle-switch</v-icon>
           </div>
           <v-progress-linear height="8" v-if="isActive" indeterminate></v-progress-linear>
-          <v-textarea solo v-model="said"></v-textarea>
+          <v-textarea disabled solo v-model="said"></v-textarea>
           <!-- <v-select
             class="mt-5 mb-2"
             outlined
@@ -72,8 +72,8 @@ export default {
       // ╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝   ╚═╝
       let toSend = {
         speech: word,
-        user: this.user,
-        tunnel: this.user.tunnel
+        user: this.user.id,
+        tunnel: this.user.tunnelIn.id
       };
       this.$io.post(`/tunnel/upload-speech/`, toSend);
       console.log(`Sent: ${toSend}`);

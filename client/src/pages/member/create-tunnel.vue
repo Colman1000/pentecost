@@ -1,41 +1,45 @@
 
 <template>
   <div>
-    <v-form v-if="_.isEmpty(tunnel)" v-model="valid">
-      <h3 class="mb-4">Do something</h3>
-      <v-text-field
-        outlined
-        label="Username"
-        v-model="username"
-        :rules="usernameRules"
-        :counter="10"
-        required
-      ></v-text-field>
+    <v-container>
+      <v-layout justify-center align-center column>
+        <v-form v-if="_.isEmpty(tunnel)" v-model="valid">
+          <h3 class="mb-4">Do something</h3>
+          <v-text-field
+            outlined
+            label="Username"
+            v-model="username"
+            :rules="usernameRules"
+            :counter="10"
+            required
+          ></v-text-field>
 
-      <v-text-field
-        outlined
-        name="name"
-        label="Enter your password"
-        hint="At least 8 characters"
-        min="8"
-        v-model="password"
-        :append-icon="value ? 'mdi-eye' : 'mdi-eye-off'"
-        :append-icon-cb="() => (value = !value)"
-        :type="value ? 'password' : 'text'"
-      ></v-text-field>
+          <v-text-field
+            outlined
+            name="name"
+            label="Enter your password"
+            hint="At least 8 characters"
+            min="8"
+            v-model="password"
+            :append-icon="value ? 'mdi-eye' : 'mdi-eye-off'"
+            :append-icon-cb="() => (value = !value)"
+            :type="value ? 'password' : 'text'"
+          ></v-text-field>
 
-      <v-select v-model="lang" outlined label="Prefered Language" :items="languages"></v-select>
-      <v-btn @click="submit" rounded color="primary" block :disabled="!valid">submit</v-btn>
-    </v-form>
-    <div v-else>
-      <v-card outlined>
-        <v-card-title>{{ tunnel.tunnel }}</v-card-title>
-        <v-card-text>
-          {{ tunnel.username }}
-          <br />
-        </v-card-text>
-      </v-card>
-    </div>
+          <v-select v-model="lang" outlined label="Prefered Language" :items="languages"></v-select>
+          <v-btn @click="submit" rounded color="primary" block :disabled="!valid">submit</v-btn>
+        </v-form>
+        <div v-else>
+          <v-card outlined>
+            <v-card-title>Tunnel Name: {{ tunnel.tunnel }}</v-card-title>
+            <v-card-text>
+              Username: {{ tunnel.username }}
+              <br />
+            </v-card-text>
+          </v-card>
+        </div>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
