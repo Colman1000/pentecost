@@ -1,16 +1,24 @@
 <template>
   <div class="text-center">
+    <v-alert type="error" v-if="error">{{ instruction }}</v-alert>
     <v-container grid-list-md fill-height>
       <v-layout row wrap justify-center align-center>
         <v-flex xs12 sm5 md4 class="text-center">
           <div>
             <v-icon
               class="ma-0"
+              color="secondary"
               v-if="!isActive"
               @click="isActive = !isActive"
               size="100"
             >mdi-lightbulb-outline</v-icon>
-            <v-icon class="ma-0" v-else @click="isActive = !isActive" size="100">mdi-lightbulb-on</v-icon>
+            <v-icon
+              color="primary"
+              class="ma-0"
+              v-else
+              @click="isActive = !isActive"
+              size="100"
+            >mdi-lightbulb-on</v-icon>
           </div>
           <br />
           <v-progress-linear height="8" v-if="isActive" indeterminate></v-progress-linear>
@@ -64,7 +72,8 @@ export default {
       isActive: false,
       instruction: "",
       said: "",
-      lang: "en-NG"
+      lang: "en-NG",
+      error: false
     };
   },
   watch: {
@@ -100,6 +109,7 @@ export default {
       noteContent = "";
 
     recognition.onstart = function() {
+      that.error = false;
       that.instruction =
         "Voice recognition activated. Try speaking into the microphone.";
     };
@@ -111,10 +121,16 @@ export default {
     };
 
     recognition.onerror = function(event) {
-      console.warn(event);
       if (event.error == "no-speech") {
         that.instruction = "No speech was detected. Try again.";
+      } else if (event.error == "not-allowed") {
+        that.instruction =
+          "Somehow pentecost was not allowed to use speech model, are you on a proxy?";
+      } else {
+        that.instruction =
+          "Inconsitency violation: Somehow pentecost encountered an error and was not able to handle it automatically!";
       }
+      that.error = true;
     };
 
     recognition.onresult = function(event) {

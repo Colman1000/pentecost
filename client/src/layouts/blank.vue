@@ -10,12 +10,18 @@
     <v-container justify-center align-center class="pa-0">
       <v-alert class="text-center" v-model="oops" type="error">{{ message }}!</v-alert>
       <router-view></router-view>
+      <Footer></Footer>
     </v-container>
   </div>
 </template>
 
 <script>
+import Footer from "@/components/Footer";
 export default {
+  components: {
+    Footer
+  },
+
   data() {
     return {
       oops: false,

@@ -11,7 +11,13 @@
               @click="isActive = !isActive"
               size="100"
             >mdi-toggle-switch-off-outline</v-icon>
-            <v-icon class="ma-0" v-else @click="isActive = !isActive" size="100">mdi-toggle-switch</v-icon>
+            <v-icon
+              v-else
+              @click="isActive = !isActive"
+              class="ma-0"
+              color="primary"
+              size="100"
+            >mdi-toggle-switch</v-icon>
           </div>
           <v-progress-linear height="8" v-if="isActive" indeterminate></v-progress-linear>
           <v-textarea disabled solo v-model="said"></v-textarea>

@@ -90,6 +90,9 @@ export default {
     }
   },
   mounted() {
+    // Set fake chats
+
+    setInterval(int => {}, 2000);
     this.remountSocket();
     let _this19 = this;
     // LISTEN FOR NEW MESSAGES TRIGGER

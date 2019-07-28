@@ -14,11 +14,16 @@
       <v-alert class="text-center" v-model="oops" type="error">{{ message }}!</v-alert>
       <router-view></router-view>
     </v-container>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
+import Footer from "@/components/Footer";
 export default {
+  components: {
+    Footer
+  },
   data() {
     return {
       oops: false,
