@@ -70,14 +70,15 @@ export default {
           if (e.statusCode) {
             this.snackbar = true;
             this.loading = false;
-            this.message = e.headers["x-exit-description"];
+            this.message =
+              "Inconsistency Violation: cross-check your details and try again";
           }
           // data should be the user
           if (data.id) {
             this.$store.commit("SET_USER", data);
             this.$router.push({
               path: `/member/${data.id}`,
-              query: { with: data.id }
+              query: { with: data.tunnelIn.id }
             });
           }
         }

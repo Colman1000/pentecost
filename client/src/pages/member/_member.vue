@@ -24,6 +24,7 @@
 
     <v-snackbar
       multi-line
+      :timeout="5000"
       v-model="snackbar"
       bottom
       left
@@ -49,8 +50,8 @@ export default {
       spoken: [],
       langs: languages,
       tunnel: {},
-      snackbar: false,
-      message: ""
+      snackbar: true,
+      message: "Refreshing of this page will break your socket connection"
     };
   },
   computed: {
