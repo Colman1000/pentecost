@@ -2,8 +2,8 @@
   <div>
     <v-container fill-height grid-list-md>
       <v-layout row wrap justify-center align-center>
-        <v-flex xs12 md8 v-for="(action, i) in actions" :key="i">
-          <v-card :to="`/member/${action.to}`" outlined>
+        <v-flex xs12 md3 v-for="(action, i) in actions" :key="i">
+          <v-card class="text-center" :to="`/member/${action.to}`" outlined>
             <v-card-title>{{ action.title }}</v-card-title>
             <v-card-text>{{ action.text }}</v-card-text>
           </v-card>
@@ -21,14 +21,15 @@ export default {
       actions: [
         {
           to: "create-tunnel",
-          title: "Create tunnel",
-          text: "create a starting tunnel entry where people can access you"
-        },
-        {
-          to: "enter-tunnel",
-          title: "Enter tunnel id",
-          text: "Start talking to someone in other languages"
+          title: "Create or Login",
+          text:
+            "create or login into your tunnel entry where people can access you or you can access people"
         }
+        // {
+        //   to: "enter-tunnel",
+        //   title: "Enter tunnel name",
+        //   text: "Start talking to someone in other languages"
+        // }
       ]
     };
   }

@@ -6,8 +6,6 @@
         <br />
         <v-form v-model="valid">
           <v-text-field :rules="idRules" v-model="id" outlined label="Enter tunnel name"></v-text-field>
-          <v-text-field :rules="usernameRules" v-model="username" outlined label="Username"></v-text-field>
-          <v-text-field :rules="passwordRules" v-model="password" outlined label="Password"></v-text-field>
           <v-btn
             :loading="loading"
             @click="enterTunnel"
@@ -39,24 +37,13 @@ export default {
       snackbar: false,
       loading: false,
       id: "",
-      password: "",
-      username: "",
-      passwordRules: [v => !!v || "Password is required"],
       idRules: [
         v => !!v || "ID is required",
         v => v.length <= 4 || "ID must be less than 4 characters"
-      ],
-      usernameRules: [
-        v => !!v || "Username is required"
-        // v => v.length <= 4 || "username must be less than 4 characters"
       ]
     };
   },
-  mounted() {
-    // loadup the users details
-    this.username = this.user.username;
-    this.id = this.user.tunnel;
-  },
+  mounted() {},
   methods: {
     enterTunnel() {
       this.loading = true;
@@ -64,15 +51,13 @@ export default {
         "/tunnel/enter-tunnel",
         {
           tunnel: this.id,
-          password: this.password,
-          username: this.username
+          user: this.user.id
         },
         (data, e) => {
           if (e.statusCode) {
             this.snackbar = true;
             this.loading = false;
-            this.message =
-              "Inconsistency Violation: cross-check your details and try again";
+            this.message = "Tunnel not found";
           }
           // data should be the user
           if (data.id) {

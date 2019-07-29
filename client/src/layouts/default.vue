@@ -10,8 +10,8 @@
     <v-toolbar color="primary" class="mb-5" dark>
       <v-toolbar-title>Pentecost</v-toolbar-title>
     </v-toolbar>
+    <v-alert class="text-center" v-model="oops" type="error">{{ message }}!</v-alert>
     <v-container justify-center align-center class="pa-0">
-      <v-alert class="text-center" v-model="oops" type="error">{{ message }}!</v-alert>
       <router-view></router-view>
     </v-container>
     <Footer></Footer>

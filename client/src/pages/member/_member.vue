@@ -60,6 +60,13 @@ export default {
     }
   },
   methods: {
+    /**
+     * @param {id}
+     */
+    chatScrollToBottom(id) {
+      var element = document.getElementById(id);
+      element.scrollTop = element.scrollHeight + 1000;
+    },
     // Remount the socket in case of refreshing
     remountSocket() {
       this.$io.post(
@@ -90,10 +97,9 @@ export default {
     }
   },
   mounted() {
-    // Set fake chats
-
-    setInterval(int => {}, 2000);
     this.remountSocket();
+    this.chatScrollToBottom("chat_container");
+
     let _this19 = this;
     // LISTEN FOR NEW MESSAGES TRIGGER
     this.$io.on("message", newMessage => {
@@ -109,9 +115,12 @@ export default {
         },
         data => {
           console.log("Transcript:", data);
-          // SPEAK THE TRANSCRIPT
           _this19.spoken.push(data);
 
+          // Scroll bottoto the end of the chat bottom
+          this.chatScrollToBottom("chat_container");
+
+          // SPEAK THE TRANSCRIPT
           //* Don't speak for the user that sent stuff
           if (data.user != _this19.user.username) {
             _this19.speak(data.text, _this19.user.lang);
@@ -121,21 +130,6 @@ export default {
     });
 
     // WARN IF USER IS IN HIS CHANNEL WHILST LISTENING FOR MESSAGES - THIS COULD CAUSE SOCKET ERROR
-    // if (this.user.id == this.with) {
-    //   // Or the relay should change
-    //   this.snackbar = true;
-    //   this.message =
-    //     "Inconsitency Violation attempted to enter a tunnel that is already yours, this may cause conflicting disorders";
-    // } // </if>
-
-    // // REDIRECT FOR UNAUTHORIZED ACCESS
-    // if (
-    //   _.isEmpty(this.with) ||
-    //   _.isUndefined(this.with) ||
-    //   jwr.statusCode === 404
-    // ) {
-    //   this.$router.push("/member/enter-tunnel");
-    // } //</fi>
   }
 };
 </script>
