@@ -18,9 +18,9 @@ module.exports.bootstrap = async function() {
 
   // await Translation.destroy({});
 
-  if ((await Channel.count()) > 0) {
-    return;
-  }
+  // if ((await Channel.count()) > 0) {
+  //   return;
+  // }
   //
   await Channel.destroy({});
   await Channel.createEach([
@@ -73,8 +73,15 @@ module.exports.bootstrap = async function() {
       noVoiceText: "xin lỗi, hiện tại không có đầu ra giọng nói",
       voice: "",
       flag: "/svg/vietnam.svg",
-      name: "vietnam",
+      name: "Vietnam",
       language: "vi"
+    },
+    {
+      noVoiceText: "দুঃখিত, বর্তমানে কোনও ভয়েস আউটপুট উপলব্ধ নেই",
+      voice: "",
+      flag: "/svg/bangladesh.svg",
+      name: "Bangladesh",
+      language: "bn"
     }
 
     // etc.

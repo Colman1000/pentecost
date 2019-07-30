@@ -6,8 +6,10 @@
           <div class="left_bubble_pointer1 v-card"></div>
           <div class="left_bubble_pointer2"></div>
           <div class="left_message_box pa-2 v-card">
-            <p class="mb-1 font-weight-light text-truncate">{{userName}}</p>
-            {{message}}
+            <p class="mb-1 font-weight-light text-truncate">
+              <small>{{ userName }}</small>
+            </p>
+            {{ message }}
             <p class="mb-1 font-weight-light text-truncate text-xs-right pr-1 pl-1 font-italic">
               <small>{{ time | moment("ddd, hA")}}</small>
             </p>
