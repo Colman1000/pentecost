@@ -31,7 +31,7 @@ module.exports = {
 
   fn: async function({ text, from, to }) {
     const translate = require("translate");
-    translate.key = "AIzaSyAtY4abPd-ICKi2FxDl9fccwNazy9CXDLM";
+    translate.key = "AIzaSyAZMYD0LfFS7xZOB9vMpLrrODtLsaGPrtQ";
     return await translate(text, { to: to, from: from });
   }
 };
