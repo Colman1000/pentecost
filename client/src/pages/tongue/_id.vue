@@ -114,7 +114,7 @@ export default {
         next(vm => {
           // Catch Error's
           if (jwr.statusCode === 500) {
-            vm.$router.push("/tongues");
+            vm.overlay = false;
           } else {
             vm.overlay = true;
             vm.biblePassage = data;
@@ -130,7 +130,8 @@ export default {
       "Do you really want to leave? multiple languages would be activated and multiple voices would be spoken at once"
     );
     if (answer) {
-      next();
+      this.$router.go();
+      // next();
     } else {
       next(false);
     }
@@ -225,8 +226,8 @@ export default {
         },
         data => {
           // Mount an Audio instance
-          // TODO: Some channels don't have a voice output and should be caught here
           speak = new Audio("data:audio/wav;base64," + data);
+          console.log("speak", speak.paused, speak.duration, speak.ended);
           // Automatically play the audio
           speak.play();
         }

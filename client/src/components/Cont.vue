@@ -4,7 +4,7 @@
     <v-container grid-list-md fill-height>
       <v-layout row wrap justify-center align-center>
         <v-flex xs12 sm5 md4 class="text-center">
-          <div>
+          <div tabindex="1" @keyup.space="isActive = !isActive">
             <v-icon
               class="ma-0"
               color="secondary"
@@ -22,7 +22,7 @@
           </div>
           <br />
           <v-progress-linear height="8" v-if="isActive" indeterminate></v-progress-linear>
-          <v-textarea disabled solo v-model="said"></v-textarea>
+          <v-textarea disabled solo :placeholder="fakeInterim" v-model="said"></v-textarea>
 
           <v-select
             class="mt-5 mb-2"
@@ -51,9 +51,11 @@
 </template>
 
 <script>
+import { setInterval } from "timers";
 var SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 var recognition = new SpeechRecognition();
+
 // Export for window
 window.recognition = recognition;
 export default {
@@ -73,6 +75,7 @@ export default {
       instruction: "",
       said: "",
       lang: "en-NG",
+      fakeInterim: "",
       error: false
     };
   },
@@ -86,18 +89,24 @@ export default {
       // ╚════██║██║   ██║██║     ██╔═██╗ ██╔══╝     ██║
       // ███████║╚██████╔╝╚██████╗██║  ██╗███████╗   ██║
       // ╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝   ╚═╝
-      this.$io.post(`/audio/upload-text/`, {
-        lang: this.lang,
-        text: word
-      });
-      console.log(`Sent: ${word}`);
+      let wo = word.charAt(0).toUpperCase() + word.slice(1) + ".";
+      this.$io.post(
+        `/audio/upload-text/`,
+        {
+          lang: this.lang,
+          text: wo
+        },
+        data => {
+          console.log(`Sent: ${data}`);
+        }
+      );
     },
     // Toggle state of pentecost
     isActive(bool) {
       if (bool && "recognition" in window) {
         recognition.lang = this.lang;
         recognition.continuous = true;
-        recognition.interimResults = false;
+        recognition.interimResults = true;
         recognition.start();
       } else {
         recognition.stop();
@@ -114,7 +123,9 @@ export default {
         "Voice recognition activated. Try speaking into the microphone.";
     };
 
-    recognition.onspeechend = function() {
+    recognition.onspeechend = function(b) {
+      console.log("speech", b);
+
       that.instruction =
         "You were quiet for a while so pentecost turned itself off.";
       that.isActive = false;
@@ -142,9 +153,16 @@ export default {
       // Get a transcript of what was said.
       var transcript = event.results[current][0].transcript;
 
+      that.fakeInterim = transcript;
+
+      if (!event.results[current].isFinal) return;
+
+      // console.log("to send", event.results[current][0]);
+
       // Add the current transcript to the contents of our Note.
       var mobileRepeatBug =
         current == 1 && transcript == event.results[0][0].transcript;
+
       if (!mobileRepeatBug) {
         noteContent += transcript;
         that.said = transcript;

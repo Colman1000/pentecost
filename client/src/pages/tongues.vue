@@ -31,7 +31,7 @@ export default {
       this.$store.state._loading = true;
       // Anyhow just set this value
       localStorage.setItem("isFirstTimer", true);
-      // Finally?
+      // Finally
       this.$router.push(`/tongue/${channelId}`);
     }
   },
