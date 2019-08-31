@@ -51,7 +51,6 @@
 </template>
 
 <script>
-import { setInterval } from "timers";
 var SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 var recognition = new SpeechRecognition();
@@ -106,7 +105,8 @@ export default {
       if (bool && "recognition" in window) {
         recognition.lang = this.lang;
         recognition.continuous = true;
-        recognition.interimResults = true;
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
         recognition.start();
       } else {
         recognition.stop();

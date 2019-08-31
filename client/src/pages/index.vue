@@ -12,6 +12,7 @@
 <script>
 export default {
   mounted() {
+    this.$router.push("/tongues");
     // // Checks if user is `brand new` :)
     // var isFirstTimer = localStorage.getItem("isFirstTimer");
     // if (!isFirstTimer) {

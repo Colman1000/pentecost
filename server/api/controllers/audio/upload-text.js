@@ -21,17 +21,41 @@ module.exports = {
 
   fn: async function(inputs) {
     sails.log(inputs);
+    const axios = require("axios");
 
+    let puntuatedText = inputs.text;
+
+    sails.log.info("Adding puntuations..");
+    try {
+      // Attempt to puntuate the text
+      let { data } = await axios.post(
+        "http://bark.phon.ioc.ee/punctuator",
+        `text=${encodeURI(inputs.text)}`,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          }
+        }
+      );
+      puntuatedText = data;
+    } catch {
+      // Fall back to normal text spoken
+      sails.log.error(
+        "Could not puntuate text, falling back to normal text spoken.."
+      );
+      puntuatedText = inputs.text;
+    }
+
+    sails.log.silly("Creating..");
     var savedAudio = await Audio.create({
       fd: "undefined",
       size: 1122,
       type: "text/buffet",
-      text: inputs.text,
+      text: puntuatedText,
       lang: inputs.lang
     }).fetch();
 
     function convertlanguage(langCode) {}
-
     //! Google translate does not recognize non ISO 639-1
     //! The name "en-ca" is not part of the ISO 639-1 and we couldn't automatically parse it
     let translateLang = savedAudio.lang.split("-")[0];
@@ -87,6 +111,6 @@ module.exports = {
     // sails.sockets.blast("new audio", savedAudio);
 
     // All done.
-    return;
+    return puntuatedText;
   }
 };
