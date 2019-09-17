@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <v-col cols="12" class="text-center grey--text">
-                <div class="display-2">Generate Emmanuel TV Subtitles for Mobile app Users</div>
+                <div class="display-1">Generate Emmanuel TV Subtitles for Mobile app Users</div>
                 <small class="caption">Here you can upload English Subtitles to generate subtitles  for users of the mobile apps 
                     as they watch Emmanuel TV programmes. 
                     That is, while they watch Emmanuel TV on their mobile app, they get the generated subtitle according to their peferred language.

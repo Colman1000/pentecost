@@ -3,7 +3,7 @@
         <v-row class="mb-0">
             <v-col cols="12">
                 <div class="text-center grey--text">
-                    <div class="display-2">Meditation Scheduler</div>
+                    <div class="display-1">Meditation Scheduler</div>
                     <small class="caption">Set up scheduled notes everyday for users to meditate on</small>
                 </div>
             </v-col>
