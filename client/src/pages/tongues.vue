@@ -35,11 +35,14 @@
     <v-container fill-height grid-list-md>
       <v-layout justify-center align-center row wrap>
         <v-row v-show="!loading" no-gutters>
-          <v-col cols="6" sm="3" v-for="(chan, i) in filteredList" :key="i" class="pa-1">
+          <v-col cols="12" sm="3" v-for="(chan, i) in filteredList" :key="i" class="pa-1">
             <v-card outlined ripple class="hover" @click="navigate(chan.id)">
               <v-card-text class="font-weight-bold">
                 <v-avatar size="25">
-                  <v-img v-if="selectedChannel !== chan.id" :src="`https://www.countryflags.io/${chan.flag}/shiny/64.png`"></v-img>
+                  <v-img
+                    v-if="selectedChannel !== chan.id"
+                    :src="`https://www.countryflags.io/${chan.flag}/shiny/64.png`"
+                  ></v-img>
                   <v-icon v-else class="spinner">mdi-loading</v-icon>
                 </v-avatar>
                 {{ chan.name }}
@@ -104,13 +107,17 @@ export default {
     filteredList() {
       if (!this.query) return this.channels;
       const re = RegExp(this.query, "i");
-      return this.channels.filter(channel => re.test(channel.name));
+      const newList = this.channels.filter(channel => re.test(channel.name));
+      // console.log(newList);
+      return newList;
     }
   },
   mounted() {
     // Get all channels
     this.$io.get("/channel/get-channels", data => {
-      this.channels = data;
+      this.channels = data.sort((a, b) =>
+        a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+      );
       this.loading = false;
     });
   }
