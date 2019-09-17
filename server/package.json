@@ -30,7 +30,7 @@
     "eslint": "6.1.0"
   },
   "scripts": {
-    "start": "export GOOGLE_APPLICATION_CREDENTIALS=./pentecost-voice.json && NODE_ENV=development node app.js",
+    "start": "SET GOOGLE_APPLICATION_CREDENTIALS=./pentecost-voice.json && SET NODE_ENV=development && node app.js",
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
     "lint": "./node_modules/eslint/bin/eslint.js . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
     "custom-tests": "echo \"(No other custom tests yet.)\" && echo"

@@ -9,10 +9,11 @@ import store from "../store";
 //   "application/x-www-form-urlencoded";
 
 let config = {
-  baseURL:
-    process.env.NODE_ENV == "development"
-      ? "//192.168.43.113:1337"
-      : "https://pentecust.herokuapp.com",
+  baseURL: process.env.NODE_ENV == "development" ?
+    "http://192.168.0.106:1337"
+    //  "//192.168.43.113:1337"
+    :
+    "https://thepentecost.herokuapp.com",
 
   timeout: 60 * 1000, // Timeout
   withCredentials: true // Check cross-site Access-Control
@@ -21,12 +22,12 @@ let config = {
 const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
-  function(config) {
+  function (config) {
     store.state.loading = true;
     // Do something before request is sent
     return config;
   },
-  function(error) {
+  function (error) {
     // Do something with request error
     return Promise.reject(error);
   }
@@ -34,7 +35,7 @@ _axios.interceptors.request.use(
 
 // Add a response interceptor
 _axios.interceptors.response.use(
-  function(response) {
+  function (response) {
     store.state.error = false;
     // ┬ ┬┌─┐┌┐┌┌┬┐┬  ┌─┐  ┌─┐┬  ┌─┐┌┐ ┌─┐┬    ┌─┐┬─┐┬─┐┌─┐┬─┐┌─┐
     // ├─┤├─┤│││ │││  ├┤   │ ┬│  │ │├┴┐├─┤│    ├┤ ├┬┘├┬┘│ │├┬┘└─┐
@@ -57,10 +58,11 @@ _axios.interceptors.response.use(
     store.state.loading = false;
     return response;
   },
-  function(error) {
+  function (error) {
     if (
       String(error).includes("Network Error") &&
-      /* and the app is not offline*/ !store.state.isOffline
+      /* and the app is not offline*/
+      !store.state.isOffline
     ) {
       // then only prompt the error
       store.state.error = true;
@@ -80,7 +82,7 @@ _axios.interceptors.response.use(
   }
 );
 
-Plugin.install = function(Vue, options) {
+Plugin.install = function (Vue, options) {
   Vue.axios = _axios;
   window.axios = _axios;
   window.http = _axios;
