@@ -34,7 +34,7 @@
 
     <v-container fill-height grid-list-md>
       <v-layout justify-center align-center row wrap>
-        <v-row v-show="!loading" no-gutters>
+        <v-row v-show="!loading" no-gutters class="mb-5">
           <v-col cols="12" sm="3" v-for="(chan, i) in filteredList" :key="i" class="pa-1">
             <v-card outlined ripple class="hover" @click="navigate(chan.id)">
               <v-card-text class="font-weight-bold">
@@ -48,6 +48,13 @@
                 {{ chan.name }}
               </v-card-text>
             </v-card>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <div class="text-center mx-auto caption">
+              <img src="/svg/google.svg" />
+            </div>
           </v-col>
         </v-row>
       </v-layout>
