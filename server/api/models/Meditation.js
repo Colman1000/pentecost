@@ -23,6 +23,11 @@ module.exports = {
       defaultsTo: 'en',
       description: 'The original language the meditation note is written in'
     },
+    interval: {
+      type: 'number',
+      defaultsTo: 30,
+      description: 'The interval at which the notifications will be shuffled'
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
