@@ -1,28 +1,30 @@
 module.exports = {
-  friendlyName: 'Add Meditations',
+  friendlyName: "Add Meditations",
 
-  description: 'Adds Meditation Notes to DataBase',
+  description: "Adds Meditation Notes to DataBase",
 
   inputs: {
     notes: {
       required: true,
-      type: 'json'
+      type: "json"
     },
     interval: {
       required: true,
-      type: 'number'
+      type: "number"
     },
     lang: {
-      defaultsTo: 'en',
-      type: 'number'
+      type: "string",
+      defaultsTo: "en"
     }
   },
 
   exits: {},
 
-  fn: async function (inputs) {
+  fn: async function(inputs) {
     const saveArr = [];
-    inputs.notes.forEach(note => saveArr.push({note: note, interval: inputs.interval}));
+    inputs.notes.forEach(note =>
+      saveArr.push({ note: note, interval: inputs.interval })
+    );
 
     await Meditation.createAll(saveArr);
 
