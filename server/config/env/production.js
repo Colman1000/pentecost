@@ -327,7 +327,7 @@ module.exports = {
    *                                                                         *
    ***************************************************************************/
   custom: {
-    baseUrl: "https://thepentecost.herokuapp.com/",
+    baseUrl: "https://thepentecost.herokuapp.com",
     internalEmailAddress: "support@example.com"
 
     // mailgunDomain: 'mg.example.com',

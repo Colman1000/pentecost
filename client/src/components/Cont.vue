@@ -8,7 +8,9 @@
               <v-icon size="70">mdi-voice</v-icon>
               <br />
               <h4 class="mt-4 mb-2 headline">
-                <span class="primary--text">Good morning scribe of heaven!</span> <br/> Pentecost uses artificial intelligence so it is still learning. <br/> For best results, here are a few things to note:
+                <span class="primary--text">Good morning scribe of heaven!</span>
+                <br />Pentecost uses artificial intelligence so it is still learning.
+                <br />For best results, here are a few things to note:
               </h4>
             </v-card-text>
             <v-card-text>
@@ -16,23 +18,20 @@
                 <li
                   class="subtitle-1"
                 >The better the internet connection, the faster and smoother translations would be.</li>
-                
+
                 <li
                   class="subtitle-1"
                 >Select the your preferred language dialect, for Engilish, English(United States) is recommended.</li>
                 <li
                   class="subtitle-1"
-                > Always confirm that the sensitivity or gain of your microphone isn't too high or low. This can affect the quality of the your speech and may create inaccurate translation.  So always check and see that your mic sensitivity or gain is properly set before begining Pentecost. You can adjust your microphone sensitivity in your PC settings.</li>
-                   <li
+                >Always confirm that the sensitivity or gain of your microphone isn't too high or low. This can affect the quality of the your speech and may create inaccurate translation. So always check and see that your mic sensitivity or gain is properly set before begining Pentecost. You can adjust your microphone sensitivity in your PC settings.</li>
+                <li
                   class="subtitle-1"
-                >  Pentecost performs better when you speak in short single sentences. Pause for few seconds for your sentence to be processed and sent before making another sentence. </li>
-          
-               
-                <li class="subtitle-1">
-                  Use direct and simple sentences as opposed to derived or figurative sentences, else Pentecost
-                  would translate the literal meaning of the sentence. e.g Rather than saying -Jesus is around the corner, say: Jesus is near. 
-                  <br /> Your translation results would be much better if Pentecost understands your sentence. So rather explain your sentences, that is:  make your sentences as simple to understand as possible. 
-                </li>
+                >Pentecost performs better when you speak in short single sentences. Pause for few seconds for your sentence to be processed and sent before making another sentence.</li>
+
+                <li
+                  class="subtitle-1"
+                >PENTECOST will understand the context of your sentence and translate better if you clearly explain your sentence. e.g Rather than saying "keep your medicines until the doctor comes" Say "The doctor wants you to wait for him to return before taking your medicines"</li>
               </ol>
             </v-card-text>
             <v-card-text class="mt-10">
@@ -50,12 +49,26 @@
       <v-btn color="red" text @click="chromeSnack = false">Close</v-btn>
     </v-snackbar>
 
-    <v-snackbar multi-line bottom right color="info" v-model="showInstruction" style="z-index: 20!important;">
+    <v-snackbar
+      multi-line
+      bottom
+      right
+      color="info"
+      v-model="showInstruction"
+      style="z-index: 20!important;"
+    >
       <v-icon>mdi-information</v-icon>
       {{instruction}}
     </v-snackbar>
 
-    <v-snackbar multi-line bottom color="warning" z-index="-50" :timeout="0" v-model="showMicNoiseWarning">
+    <v-snackbar
+      multi-line
+      bottom
+      color="warning"
+      z-index="-50"
+      :timeout="0"
+      v-model="showMicNoiseWarning"
+    >
       <span class="font-weight-bold">Try to reduce the Microphone noise</span>
     </v-snackbar>
     <!-- Alerts -->
@@ -141,7 +154,7 @@ export default {
     gender: {
       type: Array,
       required: false
-    },
+    }
   },
   data() {
     return {
@@ -228,12 +241,12 @@ export default {
       if (this.overlay) return false;
       return !this.isActive && this.volume > threshold.normal;
     },
-    listen(){
-      return this.route === 'scribe';
+    listen() {
+      return this.route === "scribe";
     }
-    },
-  beforeMount(){
-    if (storage && storage.getItem('shownIntroAlready')){
+  },
+  beforeMount() {
+    if (storage && storage.getItem("shownIntroAlready")) {
       showIntro = false;
     }
   },
@@ -255,8 +268,7 @@ export default {
     recognition.onspeechend = function(b) {
       console.log("speech", b);
 
-      that.instruction =
-        "You were quiet for a while so pentecost fell asleep.";
+      that.instruction = "You were quiet for a while so pentecost fell asleep.";
       that.isActive = false;
     };
 
@@ -324,7 +336,7 @@ export default {
           const analyser = audioContext.createAnalyser();
           const scriptProcessor = audioContext.createScriptProcessor();
           const processInput = audioProcessingEvent => {
-            if(this.$store.state.route !== 'scribe') {
+            if (this.$store.state.route !== "scribe") {
               return;
             }
 
@@ -388,20 +400,20 @@ export default {
     start() {
       recognition && "recognition" in window ? recognition.start() : null;
     },
-    hideIntro(){
+    hideIntro() {
       this.overlay = false;
-      if(storage) storage.setItem('shownIntroAlready', true);
+      if (storage) storage.setItem("shownIntroAlready", true);
     }
   }
 };
 </script>
 
 <style>
-  .v-snack--bottom{
-    z-index: 20;
-    bottom: 6vh
-  }
-  .transTextArea .v-input__slot {
+.v-snack--bottom {
+  z-index: 20;
+  bottom: 6vh;
+}
+.transTextArea .v-input__slot {
   background: transparent !important;
   border: none;
   border-radius: 10px;
