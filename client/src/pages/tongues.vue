@@ -122,6 +122,8 @@ export default {
   mounted() {
     // Get all channels
     this.$io.get("/channel/get-channels", data => {
+      if(!data || data.length < 1) return;
+
       this.channels = data.sort((a, b) =>
         a.name > b.name ? 1 : b.name > a.name ? -1 : 0
       );

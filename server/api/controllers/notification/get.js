@@ -28,7 +28,7 @@ module.exports = {
       select: ['subject', 'desc', 'lang']
     });
 
-    const translate_subject_and_desc  = async (arr = [], fromLang = 'en') => ({
+    const translate_subject_desc  = async (arr = [], fromLang) => ({
       subject: await sails.helpers.translateText2ForeignText({
         text: arr[0],
         from: fromLang,
@@ -39,8 +39,12 @@ module.exports = {
         from: fromLang,
         to: inputs.lang
       })
-      });
+      })
+    ;
 
-    return notifs.map(async (notif) => await translate_subject_and_desc([notif.subject, notif.desc], notif.lang));
+
+    const notifTrans8Promises = notifs.map( )
+    //TODO: TRANSLATE B4 SENDING........
+
   }
 };
