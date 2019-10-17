@@ -76,6 +76,7 @@
 <script>
 import noise from "noisedot";
 // My plugins config
+const translationStash = [];
 window.speak = new Audio();
 export default {
   layout: "blank",
@@ -146,8 +147,9 @@ export default {
     }
   },
   mounted() {
-    this.width = window.screen.availWidth;
-    this.height = window.screen.availHeight;
+    const that = this;
+    that.width = window.screen.availWidth;
+    that.height = window.screen.availHeight;
 
     // ███████╗ ██████╗  ██████╗██╗  ██╗███████╗████████╗
     // ██╔════╝██╔═══██╗██╔════╝██║ ██╔╝██╔════╝╚══██╔══╝
@@ -155,7 +157,7 @@ export default {
     // ╚════██║██║   ██║██║     ██╔═██╗ ██╔══╝     ██║
     // ███████║╚██████╔╝╚██████╗██║  ██╗███████╗   ██║
     // ╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝   ╚═╝
-    this.$io.on("rotciv", data => {
+    that.$io.on("rotciv", data => {
       console.log("new audio detected", data);
       // ┌┐┌┌─┐┌┬┐┬┬  ┬┌─┐╦ ╦┌─┐┬─┐┌┬┐  ┬┌─┐  ┌─┐┬┬ ┌┬┐┌─┐┬─┐┌─┐┌┬┐
       // │││├─┤ │ │└┐┌┘├┤ ║║║│ │├┬┘ ││  │└─┐  ├┤ ││  │ ├┤ ├┬┘├┤  ││
@@ -163,19 +165,22 @@ export default {
       //      ┬┌┐┌  ┌┬┐┬ ┬┌─┐  ╔╦╗┌─┐┌┬┐┌─┐┬  ┌─┐┌┬┐┌─┐
       //      ││││   │ ├─┤├┤    ║ ├┤ │││├─┘│  ├─┤ │ ├┤
       // ooo  ┴┘└┘   ┴ ┴ ┴└─┘   ╩ └─┘┴ ┴┴  ┴─┘┴ ┴ ┴ └─┘
-      this.translations.unshift(data);
-      this.speakTranslatedText(data.nativeWord);
+
+      //PUSH TO STACK AND WAIT FOR OPENING...
+      translationStash.push(data);
+      console.log(translationStash);
+      that.playNextTranslation();
     });
 
     // ┌─┐┌─┐┌┬┐╔═╗┬─┐┌─┐┬  ┬┬┌─┐┬ ┬┌─┐╔╦╗┬─┐┌─┐┌┐┌┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌┌─┐
     // │ ┬├┤  │ ╠═╝├┬┘├┤ └┐┌┘││ ││ │└─┐ ║ ├┬┘├─┤│││└─┐│  ├─┤ │ ││ ││││└─┐
     // └─┘└─┘ ┴ ╩  ┴└─└─┘ └┘ ┴└─┘└─┘└─┘ ╩ ┴└─┴ ┴┘└┘└─┘┴─┘┴ ┴ ┴ ┴└─┘┘└┘└─┘
-    this.getPreviousTranslations();
+    that.getPreviousTranslations();
 
     var channelId = this.$route.params.id;
     // Subscribe to a channel
-    this.$io.get(
-      "/channel/subscribe/?id=" + this.$route.params.id,
+    that.$io.get(
+      "/channel/subscribe/?id=" + that.$route.params.id,
       (body, jwt) => {
         if (jwt.statusCode == 404) {
           // Only Tweak the screen if the channel don't exist
@@ -207,31 +212,37 @@ export default {
         }
       );
     },
+    playNextTranslation() {
+      if (!speak.paused) return;
+      const data = translationStash.splice(0, 1)[0]; // remove the first item from stash so as to play
+      if (!data) return;
+      this.speakTranslatedText(data.nativeWord, data);
+    },
     /**
      * @description Speak the argumented text
      * @param {text: string}
      * @returns {:void}
      */
-    speakTranslatedText(text) {
-      this.currentSpoke = text;
+    speakTranslatedText(text, __) {
+      const that = this;
+      that.currentSpoke = text;
+      console.log("trying to speak: ", text);
       // Send to server to return the {{ Base64 }} encoding buffer for the text
-      this.$io.post(
+      that.$io.post(
         "/channel/speak",
         {
           text: text,
-          locale: this.channel.voice // <- The server should have an alternate
+          locale: that.channel.voice // <- The server should have an alternate
         },
         data => {
-          //Pause previous audio is still playing..
-          speak.pause();
-          const handle = window.setTimeout(() => {
-            window.clearTimeout(handle);
-            // Mount an Audio instance
-            speak = new Audio("data:audio/wav;base64," + data);
-            console.log("speak", speak.paused, speak.duration, speak.ended);
-            // Automatically play the audio
-            speak.play();
-          }, 500);
+          //add new text to translations
+          that.translations.unshift(__);
+          // Mount an Audio instance
+          speak = new Audio("data:audio/wav;base64," + data);
+          console.log("speak", speak.paused, speak.duration, speak.ended);
+          speak.onended = () => that.playNextTranslation();
+          // Automatically play the audio
+          speak.play();
         }
       );
     }

@@ -30,8 +30,13 @@ module.exports = {
   },
 
   fn: async function({ text, from, to }) {
+    
     const translate = require("translate");
+
     translate.key = "AIzaSyAZMYD0LfFS7xZOB9vMpLrrODtLsaGPrtQ";
-    return await translate(text, { to: to, from: from });
+    return await translate(text, {
+      to: to,
+      from: from
+    });
   }
 };

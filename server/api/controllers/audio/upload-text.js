@@ -19,32 +19,32 @@ module.exports = {
 
   exits: {},
 
-  fn: async function(inputs) {
+  fn: async function (inputs) {
     sails.log(inputs);
     const axios = require("axios");
 
     let puntuatedText = inputs.text;
 
     sails.log.info("Adding puntuations..");
-    try {
-      // Attempt to puntuate the text
-      let { data } = await axios.post(
-        "http://bark.phon.ioc.ee/punctuator",
-        `text=${encodeURI(inputs.text)}`,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          }
-        }
-      );
-      puntuatedText = data;
-    } catch {
-      // Fall back to normal text spoken
-      sails.log.error(
-        "Could not puntuate text, falling back to normal text spoken.."
-      );
-      puntuatedText = inputs.text;
-    }
+    // try {
+    //   // Attempt to puntuate the text
+    //   let { data } = await axios.post(
+    //     "http://bark.phon.ioc.ee/punctuator",
+    //     `text=${encodeURI(inputs.text)}`,
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/x-www-form-urlencoded"
+    //       }
+    //     }
+    //   );
+    //   puntuatedText = data;
+    // } catch {
+    //   // Fall back to normal text spoken
+    //   sails.log.error(
+    //     "Could not puntuate text, falling back to normal text spoken.."
+    //   );
+    //   puntuatedText = inputs.text;
+    // }
 
     sails.log.silly("Creating..");
     var savedAudio = await Audio.create({
@@ -73,7 +73,7 @@ module.exports = {
       // translate thier text to thier foreign channel language
 
       //* What should really translate is not the inputs language but the chanels ISO 639-1 language
-      let translatedText = await sails.helpers.translateText2ForeignText.with({
+      let translatedText = await sails.helpers.deeplTranslate.with({
         text: savedAudio.text,
         from: inputs.lang.split("-")[0],
         to: channel.language
