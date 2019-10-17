@@ -32,6 +32,12 @@ module.exports = {
     // Creates a client
     const client = new textToSpeech.TextToSpeechClient();
 
+    console.log("Translate text 2 speech");
+    console.log({
+      text,
+      locale,
+      gender
+    });
     // Construct the request
     const request = {
       input: { text: text },

@@ -6,6 +6,7 @@
   "scripts": {
     "rot": "cd ./server && npm i && cd ..",
     "build": "cd ./client && npm install && npm run build",
+    "_": "cd ./client && start npm run serve && cd ../server && start npm run start && exit",
     "start": "npm run rot && cd ./server && export GOOGLE_APPLICATION_CREDENTIALS=pentecost-voice.json && NODE_ENV=production node app.js",
     "test": "echo \"Test passed!\" && exit 0"
   },

@@ -16,7 +16,7 @@ io.sails.environment = process.env.NODE_ENV;
 
 io.sails.url =
   process.env.NODE_ENV == "development" ?
-  "http://192.168.0.106:1337"
+  "http://127.0.0.1:1337"
   //  "//192.168.43.113:1337"
   :
   "https://thepentecost.herokuapp.com";

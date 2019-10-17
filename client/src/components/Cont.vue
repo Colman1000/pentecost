@@ -101,7 +101,13 @@
           </div>
           <br />
           <v-progress-linear rounded v-if="isActive" :value="volume" :color="color"></v-progress-linear>
-          <v-textarea flat disabled solo rows="4" :placeholder="fakeInterim" class="transTextArea"></v-textarea>
+          <v-textarea flat solo rows="4" :placeholder="fakeInterim" class="transTextArea"></v-textarea>
+          <v-progress-linear
+            rounded
+            :value="confirmTimeoutValue"
+            v-if="canEcsape"
+            class="confirmInterval"
+          ></v-progress-linear>
           <transition name="fade">
             <div class="grey--text styled zoomIn beautify">{{ said }}</div>
           </transition>
@@ -128,284 +134,333 @@
 </template>
 
 <script>
-const isChrome =
-  /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-const threshold = {
-  xtreme: 80,
-  loud: 60,
-  normal: 10
-};
-var SpeechRecognition =
-  window.SpeechRecognition || window.webkitSpeechRecognition;
-var recognition = new SpeechRecognition();
+  const isChrome =
+    /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+  const threshold = {
+    xtreme: 85,
+    loud: 70,
+    normal: 15,
+    inative: 25
+  };
+  var SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+  var recognition = new SpeechRecognition();
 
-let showIntro = true;
+  let showIntro = true;
+  let confirmTimeoutHandle;
+  let decrementTimeoutHandle;
+  const storage = window.sessionStorage;
 
-const storage = window.sessionStorage;
-
-// Export for window
-window.recognition = recognition;
-export default {
-  props: {
-    languages: {
-      type: Array,
-      required: false
+  // Export for window
+  window.recognition = recognition;
+  export default {
+    props: {
+      languages: {
+        type: Array,
+        required: false
+      },
+      gender: {
+        type: Array,
+        required: false
+      }
     },
-    gender: {
-      type: Array,
-      required: false
-    }
-  },
-  data() {
-    return {
-      isActive: false,
-      instruction: "",
-      said: "",
-      lang: "en-NG",
-      fakeInterim: "",
-      error: false,
-      overlay: showIntro,
-      chromeSnack: !isChrome,
-      volume: 0,
-      fakeIt: false,
-      adverbs: [
-        "!#Dg",
-        "s",
-        "R4",
-        "$",
-        "*(#@!",
-        "%%3=",
-        "^TC?",
-        "&R",
-        "*",
-        " ",
-        "#%9E",
-        " ",
-        "(GTU",
-        ")R",
-        "",
-        "H9]",
-        ";w]"
-      ]
-    };
-  },
-  watch: {
-    // Watch for said words and do something to them..
-    said(word) {
-      // i can run some codes here with out bottering the API
-      // ███████╗ ██████╗  ██████╗██╗  ██╗███████╗████████╗
-      // ██╔════╝██╔═══██╗██╔════╝██║ ██╔╝██╔════╝╚══██╔══╝
-      // ███████╗██║   ██║██║     █████╔╝ █████╗     ██║
-      // ╚════██║██║   ██║██║     ██╔═██╗ ██╔══╝     ██║
-      // ███████║╚██████╔╝╚██████╗██║  ██╗███████╗   ██║
-      // ╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝   ╚═╝
-      let wo = word.charAt(0).toUpperCase() + word.slice(1) + ".";
-      this.$io.post(
-        `/audio/upload-text/`,
-        {
-          lang: this.lang,
-          text: wo
-        },
-        data => {
-          console.log(`Sent: ${data}`);
+    data() {
+      return {
+        isActive: false,
+        instruction: "",
+        said: "",
+        lang: "en-NG",
+        fakeInterim: "",
+        error: false,
+        overlay: showIntro,
+        // overlay: false,
+        chromeSnack: !isChrome,
+        volume: 0,
+        confirmTimeout: 2000,
+        confirmTimeoutValue: 100,
+        fakeIt: false,
+        canEcsape: false,
+        adverbs: [
+          "!#Dg",
+          "s",
+          "R4",
+          "$",
+          "*(#@!",
+          "%%3=",
+          "^TC?",
+          "&R",
+          "*",
+          " ",
+          "#%9E",
+          " ",
+          "(GTU",
+          ")R",
+          "",
+          "H9]",
+          ";w]"
+        ]
+      };
+    },
+    watch: {
+      // Watch for said words and do something to them..
+      said(word) {
+        // i can run some codes here with out bottering the API
+        // ███████╗ ██████╗  ██████╗██╗  ██╗███████╗████████╗
+        // ██╔════╝██╔═══██╗██╔════╝██║ ██╔╝██╔════╝╚══██╔══╝
+        // ███████╗██║   ██║██║     █████╔╝ █████╗     ██║
+        // ╚════██║██║   ██║██║     ██╔═██╗ ██╔══╝     ██║
+        // ███████║╚██████╔╝╚██████╗██║  ██╗███████╗   ██║
+        // ╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝   ╚═╝
+        let wo = word.charAt(0).toUpperCase() + word.slice(1) + ".";
+        this.$io.post(
+          `/audio/upload-text/`,
+          {
+            lang: this.lang,
+            text: wo
+          },
+          data => {
+            console.log(`Sent: ${data}`);
+          }
+        );
+      },
+      // Toggle state of pentecost
+      isActive(bool) {
+        if (bool && "recognition" in window) {
+          recognition.lang = this.lang;
+          recognition.continuous = true;
+          recognition.interimResults = !false;
+          recognition.maxAlternatives = 1;
+          recognition.start();
+        } else {
+          recognition.stop();
         }
-      );
+      }
     },
-    // Toggle state of pentecost
-    isActive(bool) {
-      if (bool && "recognition" in window) {
-        recognition.lang = this.lang;
-        recognition.continuous = true;
-        recognition.interimResults = !false;
-        recognition.maxAlternatives = 1;
-        recognition.start();
-      } else {
+    computed: {
+      color() {
+        return this.volume > threshold.xtreme
+          ? "error"
+          : this.volume > threshold.loud
+          ? "warning"
+          : this.volume > threshold.normal
+          ? "info"
+          : "#aaa";
+      },
+      showInstruction() {
+        return !!this.instruction && !this.error;
+      },
+      showMicNoiseWarning() {
+        if (this.overlay) return false;
+        return !this.isActive && this.volume > threshold.inative;
+      },
+      listen() {
+        return this.route === "scribe";
+      }
+    },
+    beforeMount() {
+      if (storage && storage.getItem("shownIntroAlready")) {
+        showIntro = false;
+      }
+    },
+    mounted() {
+      var that = this,
+        noteContent = "";
+
+      window.onkeydown = function(e) {
+        e && e.preventDefault && e.preventDefault();
+        if (e && e.code === "Space") {
+          that.isActive = !that.isActive;
+          return;
+        }
+        if (e && e.code === "Escape" && that.canEcsape) {
+          clearTimeout(confirmTimeoutHandle);
+          that.canEcsape = false;
+          that.fakeIt = false;
+          that.confirmTimeoutValue = 100;
+          that.fakeInterim = "";
+        }
+      };
+
+      recognition.onstart = function() {
+        that.error = false;
+        that.instruction =
+          "Voice recognition activated. Try speaking into the microphone.";
+      };
+
+      recognition.onspeechend = function(b) {
+        that.instruction = "You were quiet for a while so pentecost fell asleep.";
+        that.isActive = false;
+      };
+
+      recognition.onerror = function(event) {
+        if (event.error == "no-speech") {
+          that.instruction = "No speech was detected. Try again.";
+        } else if (event.error == "not-allowed") {
+          that.instruction =
+            "Somehow pentecost was not allowed to use speech model, are you on a proxy?";
+        } else {
+          that.instruction =
+            "Inconsitency violation: Somehow pentecost encountered an error and was not able to handle it automatically!";
+        }
+        that.error = true;
+      };
+
+      recognition.onresult = function(event) {
+        // event is a SpeechRecognitionEvent object.
+        // It holds all the lines we have captured so far.
+        // We only need the current one.
+        var current = event.resultIndex;
+
+        if (!event.results[current].isFinal) {
+          // const adLen = that.adverbs.length,
+          //   random = Math.floor(Math.random() * 5);
+          // let concat = "";
+          // for (let i = 0; i < random; i++) {
+          //   concat += that.adverbs[Math.floor(Math.random() * adLen)];
+          // }
+          // that.fakeInterim = `${that.fakeInterim}${concat}`;
+
+          that.fakeInterim = "...";
+          return;
+        }
+
+        const transcript = event.results[current][0].transcript;
+        // Add the current transcript to the contents of our Note.
+        var mobileRepeatBug =
+          current == 1 && transcript == event.results[0][0].transcript;
+
+        that.fakeInterim = transcript;
+
+        const _dec = parseInt(that.confirmTimeout / 5);
+        that.canEcsape = true;
+        decrementTimeoutHandle = setTimeout(
+          () => that.decrementTimeout(_dec),
+          _dec
+        );
+        confirmTimeoutHandle = setTimeout(
+          () => that.propagate(transcript),
+          that.confirmTimeout
+        );
+
+        // if (!mobileRepeatBug) {
+        //   noteContent += transcript;
+        //   that.said = transcript;
+
+        //   that.fakeInterim = "";
+        //   that.fakeIt = false;
+        // }
+      };
+      // CUSTOM CODE =>>>
+      window.highest = 0;
+      navigator.mediaDevices
+        .getUserMedia({
+          audio: true
+        })
+        .then(
+          stream => {
+            // Handle the incoming audio stream
+            // const bars = []; // We'll use this later
+            const audioContext = new AudioContext();
+            const input = audioContext.createMediaStreamSource(stream);
+            const analyser = audioContext.createAnalyser();
+            const scriptProcessor = audioContext.createScriptProcessor();
+            const processInput = audioProcessingEvent => {
+              if (this.$store.state.route !== "scribe") {
+                return;
+              }
+
+              const tempArray = new Uint8Array(analyser.frequencyBinCount);
+              analyser.getByteFrequencyData(tempArray);
+              const vol = getAverageVolume(tempArray);
+              that.volume = vol * 3;
+              if (vol > window.highest) {
+                window.highest = vol;
+                // console.info("Loudest is ", vol);
+              }
+              // bars.push(vol);
+              // We'll create this later
+              // console.log(bars);
+            };
+
+            const getAverageVolume = array => {
+              const length = array.length;
+              let values = 0;
+              let i = 0;
+
+              for (; i < length; i++) {
+                values += array[i];
+              }
+              return Math.round(values / length);
+            };
+
+            // Some analyser setup
+            analyser.smoothingTimeConstant = 0.3;
+            analyser.fftSize = 1024;
+
+            input.connect(analyser);
+            analyser.connect(scriptProcessor);
+            scriptProcessor.connect(audioContext.destination);
+            scriptProcessor.onaudioprocess = processInput;
+          },
+          error => {
+            // Something went wrong, or the browser does not support getUserMedia
+            console.warn("we messed up sir");
+          }
+        );
+    },
+    methods: {
+      changeGender(e) {
+        this.$io.post(
+          "/channel/change-ssml-gender",
+          {
+            gender: e
+          },
+          done => {
+            console.log("Changed  voice output to: " + done);
+          }
+        );
+      },
+      changeLanguage(e) {
+        this.lang = e;
+      },
+      stop() {
         recognition.stop();
+      },
+      start() {
+        recognition && "recognition" in window ? recognition.start() : null;
+      },
+      hideIntro() {
+        this.overlay = false;
+        if (storage) storage.setItem("shownIntroAlready", true);
+      },
+      propagate(transcript) {
+        clearTimeout(confirmTimeoutHandle);
+        this.said = transcript;
+        this.canEcsape = false;
+        this.confirmTimeoutValue = 100;
+        this.fakeIt = false;
+        this.fakeInterim = false;
+      },
+      decrementTimeout(_dec) {
+        if (!this.canEcsape) return;
+
+        const that = this;
+
+        that.confirmTimeoutValue = that.confirmTimeoutValue - 20;
+        console.log("Reduced to ", that.confirmTimeoutValue);
+
+        if (that.confirmTimeoutValue > 0) {
+          decrementTimeoutHandle = setTimeout(
+            () => that.decrementTimeout(_dec),
+            _dec
+          );
+        } else {
+          clearTimeout(decrementTimeoutHandle);
+          that.confirmTimeoutValue = 0;
+        }
       }
     }
-  },
-  computed: {
-    color() {
-      return this.volume > threshold.xtreme
-        ? "error"
-        : this.volume > threshold.loud
-        ? "warning"
-        : this.volume > threshold.normal
-        ? "info"
-        : "#aaa";
-    },
-    showInstruction() {
-      return !!this.instruction && !this.error;
-    },
-    showMicNoiseWarning() {
-      if (this.overlay) return false;
-      return !this.isActive && this.volume > threshold.normal;
-    },
-    listen() {
-      return this.route === "scribe";
-    }
-  },
-  beforeMount() {
-    if (storage && storage.getItem("shownIntroAlready")) {
-      showIntro = false;
-    }
-  },
-  mounted() {
-    var that = this,
-      noteContent = "";
-
-    window.onkeypress = function(e) {
-      e && e.preventDefault && e.preventDefault();
-      if (e && e.code === "Space") that.isActive = !that.isActive;
-    };
-
-    recognition.onstart = function() {
-      that.error = false;
-      that.instruction =
-        "Voice recognition activated. Try speaking into the microphone.";
-    };
-
-    recognition.onspeechend = function(b) {
-      console.log("speech", b);
-
-      that.instruction = "You were quiet for a while so pentecost fell asleep.";
-      that.isActive = false;
-    };
-
-    recognition.onerror = function(event) {
-      if (event.error == "no-speech") {
-        that.instruction = "No speech was detected. Try again.";
-      } else if (event.error == "not-allowed") {
-        that.instruction =
-          "Somehow pentecost was not allowed to use speech model, are you on a proxy?";
-      } else {
-        that.instruction =
-          "Inconsitency violation: Somehow pentecost encountered an error and was not able to handle it automatically!";
-      }
-      that.error = true;
-    };
-
-    recognition.onresult = function(event) {
-      // event is a SpeechRecognitionEvent object.
-      // It holds all the lines we have captured so far.
-      // We only need the current one.
-      var current = event.resultIndex;
-
-      if (!event.results[current].isFinal) {
-        const adLen = that.adverbs.length,
-          random = Math.floor(Math.random() * 5);
-        let concat = "";
-        for (let i = 0; i < random; i++) {
-          concat += that.adverbs[Math.floor(Math.random() * adLen)];
-        }
-        that.fakeInterim = `${that.fakeInterim}${concat}`;
-        return;
-      }
-
-      const transcript = event.results[current][0].transcript;
-      // Add the current transcript to the contents of our Note.
-      var mobileRepeatBug =
-        current == 1 && transcript == event.results[0][0].transcript;
-
-      that.said = transcript;
-
-      that.fakeInterim = "";
-      that.fakeIt = false;
-
-      // if (!mobileRepeatBug) {
-      //   noteContent += transcript;
-      //   that.said = transcript;
-
-      //   that.fakeInterim = "";
-      //   that.fakeIt = false;
-      // }
-    };
-
-    // CUSTOM CODE =>>>
-    window.highest = 0;
-    navigator.mediaDevices
-      .getUserMedia({
-        audio: true
-      })
-      .then(
-        stream => {
-          // Handle the incoming audio stream
-          // const bars = []; // We'll use this later
-          const audioContext = new AudioContext();
-          const input = audioContext.createMediaStreamSource(stream);
-          const analyser = audioContext.createAnalyser();
-          const scriptProcessor = audioContext.createScriptProcessor();
-          const processInput = audioProcessingEvent => {
-            if (this.$store.state.route !== "scribe") {
-              return;
-            }
-
-            const tempArray = new Uint8Array(analyser.frequencyBinCount);
-            analyser.getByteFrequencyData(tempArray);
-            const vol = getAverageVolume(tempArray);
-            that.volume = vol * 4;
-            if (vol > window.highest) {
-              window.highest = vol;
-              console.info("Loudest is ", vol);
-            }
-            // bars.push(vol);
-            // We'll create this later
-            // console.log(bars);
-          };
-
-          const getAverageVolume = array => {
-            const length = array.length;
-            let values = 0;
-            let i = 0;
-
-            for (; i < length; i++) {
-              values += array[i];
-            }
-            return Math.round(values / length);
-          };
-
-          // Some analyser setup
-          analyser.smoothingTimeConstant = 0.3;
-          analyser.fftSize = 1024;
-
-          input.connect(analyser);
-          analyser.connect(scriptProcessor);
-          scriptProcessor.connect(audioContext.destination);
-          scriptProcessor.onaudioprocess = processInput;
-        },
-        error => {
-          // Something went wrong, or the browser does not support getUserMedia
-          console.warn("we messed up sir");
-        }
-      );
-  },
-  methods: {
-    changeGender(e) {
-      this.$io.post(
-        "/channel/change-ssml-gender",
-        {
-          gender: e
-        },
-        done => {
-          console.log("Changed  voice output to: " + done);
-        }
-      );
-    },
-    changeLanguage(e) {
-      this.lang = e;
-    },
-    stop() {
-      recognition.stop();
-    },
-    start() {
-      recognition && "recognition" in window ? recognition.start() : null;
-    },
-    hideIntro() {
-      this.overlay = false;
-      if (storage) storage.setItem("shownIntroAlready", true);
-    }
-  }
-};
+  };
 </script>
 
 <style>
@@ -413,11 +468,15 @@ export default {
   z-index: 20;
   bottom: 6vh;
 }
+.transTextArea {
+  margin-bottom: 0;
+  transition: all 200ms linear;
+}
 .transTextArea .v-input__slot {
-  background: transparent !important;
   border: none;
   border-radius: 10px;
   box-shadow: 0 1px 5px rgba(10, 10, 10, 0.06);
+  transition: all 200ms linear;
 }
 .tap-btn {
   color: rgba(147, 170, 191, 0.88) !important;
@@ -461,6 +520,9 @@ export default {
   animation: pulse 2s linear infinite;
   z-index: 0 !important;
 }
+.confirmInterval {
+  margin-top: -20px;
+}
 @keyframes pulse {
   0% {
     transform: scale(0.2);
@@ -477,6 +539,10 @@ export default {
 
 .styled {
   transition: all 300ms ease;
+  margin: 10px 0;
+  padding: 20px 0;
+  border: 0.5px dotted #dedede;
+  border-radius: 20px;
 }
 @-webkit-keyframes zoomIn {
   from {
