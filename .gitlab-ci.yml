@@ -22,6 +22,7 @@ install:
     # install for server
     - cd ./server && npm i && cd ..
   only:
+    - rotciv
     - master
 
 # HEROKU
