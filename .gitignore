@@ -1,3 +1,4 @@
 builds
 cache
 panel/node_modules
+.npmrc
