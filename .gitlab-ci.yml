@@ -1,21 +1,34 @@
 image: node:latest
 
 stages:
-  # - setup
+  - setup
+  - build
   - production
 
 cache:
   paths:
     - node_modules/
 
-# setup:
-#   stage: setup
-#   script:
-#     - cd ./client && npm i && cd ..
-#     - cd ./server && npm i && cd ..
-#     - cd ./client && npm run build && cd ..
-#   only:
-#     - master
+install:
+  stage: install
+  script:
+    # Install deps
+    - npm i -g @quasar/cli sails --offline
+    - cd ./client && npm i && cd ..
+    - cd ./panel && npm i && quasar build spa && cd ..
+    - cd ./server && npm i && cd ..
+  only:
+    - master
+
+setup:
+  stage: setup
+  script:
+    # build the admin panel
+    - cd ./client && npm i && cd ..
+    - cd ./server && npm i && cd ..
+    - cd ./client && npm run build && cd ..
+  only:
+    - master
 
 # HEROKU
 production:
