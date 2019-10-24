@@ -1,16 +1,16 @@
 {
   "name": "pentecost",
   "version": "1.0.1",
-  "description": "This consist of the client and server codes, nothing to say for now..",
+  "description": "This consist of the client and server codes with admin panel, nothing to say for now..",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm i -g @quasar/cli sails --offline",
+    "postinstall": "npm i -g @quasar/cli sails && npm run init ",
     "setup-panel": "cd ./panel && npm i && quasar build spa && cd ..",
     "setup-client": "cd ./client && npm i && npm run build && cd ..",
     "setup-server": "cd ./server && npm i && cd ..",
     "copy": "mkdir -p ./server/dist/panel && cp -R ./panel/dist/spa/* ./server/dist/panel",
     "init": "npm run setup-panel && npm run setup-client && npm run setup-server && npm run copy",
-    "start": "npm run init && cd ./server && export GOOGLE_APPLICATION_CREDENTIALS=pentecost-voice.json && NODE_ENV=production node app.js",
+    "start": "cd ./server && export GOOGLE_APPLICATION_CREDENTIALS=pentecost-voice.json && NODE_ENV=production node app.js",
     "test": "echo \"Test passed!\" && exit 0"
   },
   "repository": {
