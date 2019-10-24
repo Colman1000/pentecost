@@ -1,4 +1,7 @@
-image: node:latest
+image: node:12.13.0
+
+before_script:
+  - node -v
 
 stages:
   - install
@@ -22,6 +25,7 @@ install:
     # install for server
     - cd ./server && npm i && cd ..
   only:
+    - rotciv
     - master
 
 # HEROKU
