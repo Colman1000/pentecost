@@ -1,4 +1,7 @@
-image: node:latest
+image: node:node:12.13.0
+
+before_script:
+  - node -v
 
 stages:
   - install
@@ -14,13 +17,13 @@ install:
     # Install deps
     - npm i -g @quasar/cli sails
     # install and build for client
-    - cd ./client && npm ci && npm run build && cd ..
+    - cd ./client && npm i && npm run build && cd ..
     # install and build for panel
-    - cd ./panel && npm ci && quasar build spa && cd ..
+    - cd ./panel && npm i && quasar build spa && cd ..
     - mkdir -p ./server/dist/panel
     - cp -R ./panel/dist/spa/* ./server/dist/panel # copy to root panel folder
     # install for server
-    - cd ./server && npm ci && cd ..
+    - cd ./server && npm i && cd ..
   only:
     - rotciv
     - master
