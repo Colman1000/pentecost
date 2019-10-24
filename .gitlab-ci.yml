@@ -1,8 +1,5 @@
 image: node:12.13.0
 
-before_script:
-  - node -v
-
 stages:
   - install
   - production
