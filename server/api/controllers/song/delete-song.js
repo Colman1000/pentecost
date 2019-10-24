@@ -15,8 +15,10 @@ module.exports = {
   fn: async function({ songId }) {
     let song = await Song.findOne(songId);
     try {
-      await sails.rm(song.src);
-    } catch {}
+      await sails.rm(song.cid);
+    } catch(e) {
+      sails.log(e)
+    }
     // await Song.destroyOne(songId);
     // All done.
     return;

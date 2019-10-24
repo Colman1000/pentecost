@@ -24,7 +24,7 @@ module.exports.routes = {
   "GET /song/:id": { action: "song/stream-song" },
   "POST /song": { action: "song/upload-song" },
   "PATCH /song": { action: "song/update-song" },
-  "DELETE /song/:id": { action: "song/delete-song" },
+  "DELETE /song/:songId": { action: "song/delete-song" },
 
   "POST /api/v1/audio/get-audio-text": {
     action: "audio/get-audio-text",

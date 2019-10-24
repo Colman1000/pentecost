@@ -39,10 +39,6 @@ module.exports = {
     var info = await sails
       .uploadOne(song, {
         // maxBytes: 3000000,
-        adapter: require("skipper-s3"),
-        key: "thekyehthethaeiaghadkthtekey",
-        secret: "AB2g1939eaGAdesoccertournament",
-        bucket: "pentecost"
       })
       // Note: E_EXCEEDS_UPLOAD_LIMIT is the error code for exceeding
       // `maxBytes` for both skipper-disk and skipper-s3.
@@ -57,7 +53,8 @@ module.exports = {
 
     song = await Song.create({
       title: title,
-      src: info.fd,
+      src: info.extra.Location,
+      cid: info.extra.id,
       size: info.size
     }).fetch();
 

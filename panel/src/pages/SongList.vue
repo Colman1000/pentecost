@@ -9,6 +9,9 @@
         <q-item-section>
           {{ song.title }}
         </q-item-section>
+          <q-item-section side top>
+          <q-icon color="red" @click="deleteSong(song.id)" name="mdi-close" />
+          </q-item-section>
       </q-item>
     </q-list>
   </q-page>
@@ -35,6 +38,14 @@ export default {
     }
   },
   methods: {
+    deleteSong(id){
+      this.$axios.delete("/song/"+id).then((result) => {
+        console.log(result)
+      }).catch((err) => {
+        console.log(err)
+        
+      });
+    },
     playAudio(uri) {
       if (audio.pause) {
       }

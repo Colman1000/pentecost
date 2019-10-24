@@ -22,6 +22,7 @@
     "sails-hook-uploads": "^0.4.3",
     "shelljs": "^0.8.3",
     "skipper-disk": "^0.5.12",
+    "skipper-gclouds": "^1.0.2",
     "skipper-s3": "^0.6.0",
     "translate": "^1.1.0"
   },
