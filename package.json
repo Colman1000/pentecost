@@ -4,10 +4,13 @@
   "description": "This consist of the client and server codes, nothing to say for now..",
   "main": "index.js",
   "scripts": {
-    "rot": "cd ./server && npm i && cd ..",
-    "build": "cd ./client && npm install && npm run build",
-    "_": "cd ./client && start npm run serve && cd ../server && start npm run start && exit",
-    "start": "npm run rot && cd ./server && export GOOGLE_APPLICATION_CREDENTIALS=pentecost-voice.json && NODE_ENV=production node app.js",
+    "postinstall": "npm i -g @quasar/cli sails --offline",
+    "setup-panel": "cd ./panel && npm i && quasar build spa && cd ..",
+    "setup-client": "cd ./client && npm i && npm run build && cd ..",
+    "setup-server": "cd ./server && npm i && cd ..",
+    "copy": "mkdir -p ./server/dist/panel && cp -R ./panel/dist/spa/* ./server/dist/panel",
+    "init": "npm run setup-panel && npm run setup-client && npm run setup-server && npm run copy",
+    "start": "npm run init && cd ./server && export GOOGLE_APPLICATION_CREDENTIALS=pentecost-voice.json && NODE_ENV=production node app.js",
     "test": "echo \"Test passed!\" && exit 0"
   },
   "repository": {

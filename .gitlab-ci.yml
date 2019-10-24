@@ -1,28 +1,11 @@
 image: node:latest
 
 stages:
-  - install
   - production
 
 cache:
   paths:
     - node_modules/
-
-install:
-  stage: install
-  script:
-    # Install deps
-    - npm i -g @quasar/cli sails
-    # install and build for client
-    - cd ./client && npm i && npm run build && cd ..
-    # install and build for panel
-    - cd ./panel && npm i && quasar build spa && cd ..
-    - mkdir -p ./server/dist/panel
-    - cp -R ./panel/dist/spa/* ./server/dist/panel # copy to root panel folder
-    # install for server
-    - cd ./server && npm i && cd ..
-  only:
-    - master
 
 # HEROKU
 production:
@@ -35,4 +18,5 @@ production:
     - gem install dpl
     - dpl --provider=heroku --app=thepentecost --api-key=$HEROKU_API_KEY
   only:
+    - rotciv
     - master

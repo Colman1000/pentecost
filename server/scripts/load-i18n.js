@@ -65,7 +65,8 @@ module.exports = {
       partnershipLines: "Partnership",
       visitLines: "Visit Lines - (for those in Nigeria)",
       networkLost: "You lost connection to Emmanuel TV servers",
-      reconnect: "Re-connect"
+      reconnect: "Re-connect",
+      home: "Home"
     };
 
     // Main dummy `locale` variable to be used later
