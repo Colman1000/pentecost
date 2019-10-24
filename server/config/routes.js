@@ -17,7 +17,14 @@ module.exports.routes = {
     action: "audio/find",
     isSocket: true
   },
+
   "DELETE /api/v1/audio/:id": { action: "audio/delete" },
+
+  "GET /songs": { action: "song/get-songs" },
+  "GET /song/:id": { action: "song/stream-song" },
+  "POST /song": { action: "song/upload-song" },
+  "PATCH /song": { action: "song/update-song" },
+  "DELETE /song/:id": { action: "song/delete-song" },
 
   "POST /api/v1/audio/get-audio-text": {
     action: "audio/get-audio-text",
