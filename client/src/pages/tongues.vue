@@ -50,13 +50,6 @@
             </v-card>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col>
-            <div class="text-center mx-auto caption">
-              <img src="/svg/google.svg" />
-            </div>
-          </v-col>
-        </v-row>
       </v-layout>
     </v-container>
   </v-container>
