@@ -35,7 +35,7 @@
             <q-item-label caption>Adds a new song to all apps</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a">
+        <!-- <q-item clickable tag="a">
           <q-item-section avatar>
             <q-icon name="mdi-shield" />
           </q-item-section>
@@ -43,7 +43,7 @@
             <q-item-label>Status</q-item-label>
             <q-item-label caption>View song summary</q-item-label>
           </q-item-section>
-        </q-item>
+        </q-item> -->
       </q-list>
     </q-drawer>
 

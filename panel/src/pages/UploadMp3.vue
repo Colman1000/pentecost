@@ -2,7 +2,7 @@
   <q-page padding>
     <div id="waveform"></div>
     <div class="row justify-center">
-      <div class="col-6">
+      <div class="col-12 col-md-6">
         <p
           class="text-center"
         >Upload a song then write the title of the song, this will serve as the title shown on the mobile app</p>

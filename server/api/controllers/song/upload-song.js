@@ -54,11 +54,11 @@ module.exports = {
     song = await Song.create({
       title: title,
       src: info.extra.Location,
-      cid: info.extra.id,
-      size: info.size
+      cid: info.extra.name
     }).fetch();
 
     this.req.session.songId = song.id;
+
     // All done.
     return song;
   }

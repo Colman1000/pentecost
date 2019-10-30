@@ -16,10 +16,10 @@ module.exports = {
     let song = await Song.findOne(songId);
     try {
       await sails.rm(song.cid);
-    } catch(e) {
-      sails.log(e)
+      await Song.destroyOne(song.id);
+    } catch (e) {
+      sails.log.error(e);
     }
-    // await Song.destroyOne(songId);
     // All done.
     return;
   }

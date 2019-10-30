@@ -4,9 +4,9 @@ module.exports.uploads = {
   adapter: require("skipper-gclouds"),
   keyFilename: require("path").resolve(
     __dirname,
-    "./credentials/vigilant-guru-245610-88e15341e446.json"
+    "./credentials/first.json"
   ),
-  bucket: "thepentecost",
+  bucket: "emmanueltv",
   //Are files uplodaded public?
   public: true
 };
