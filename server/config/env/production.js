@@ -133,7 +133,7 @@ module.exports = {
      *                                                                          *
      ***************************************************************************/
     cors: {
-      allowOrigins: ["https://example.com"]
+      allowOrigins: ["https://example.com","http://localhost", "http://localhost:8080"]
     }
   },
 
@@ -223,7 +223,7 @@ module.exports = {
      * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
      *                                                                          *
      ***************************************************************************/
-    onlyAllowOrigins: ["https://example.com", "https://staging.example.com"]
+    onlyAllowOrigins: ["http://localhost", "http://localhost:8080"]
 
     /***************************************************************************
      *                                                                          *
