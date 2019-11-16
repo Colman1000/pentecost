@@ -4,7 +4,13 @@
     <q-list>
       <q-item v-for="(song, i) in songList" :key="i" v-ripple>
         <q-item-section avatar clickable>
-          <q-icon v-if="!isPlaying" @click="playAudio(song.src)" color="primary" name="mdi-play" />
+          <!-- There is a bug here of animating all icons on selection of one song, i intend to do this later -->
+          <q-icon
+            v-if="!isPlaying"
+            @click="playAudio(song.src)"
+            color="primary"
+            name="mdi-play"
+          />
           <q-icon v-else @click="stopAudio" color="primary" name="mdi-pause" />
         </q-item-section>
         <q-item-section>{{ song.title }}</q-item-section>
@@ -40,16 +46,29 @@ export default {
   },
   methods: {
     deleteSong(id) {
-      this.$axios
-        .delete("/song/" + id)
-        .then(result => {
-          if (result) {
-            this.$router.go();
-          }
-          console.log(result);
+      this.$q
+        .dialog({
+          title: "Delete song?",
+          message:
+            "This will permernently delete this song from all mobile devices!"
         })
-        .catch(err => {
-          console.log(err);
+        .onOk(() => {
+          this.$q.loading.show();
+          this.$axios
+            .delete("/song/" + id)
+            .then(result => {
+              this.$q.loading.hide();
+
+              if (result) {
+                let songIndex = this.songList.findIndex(ss => ss.id == id);
+                this.songList.splice(songIndex, 1);
+              }
+              console.log(result);
+            })
+            .catch(err => {
+              this.$q.loading.hide();
+              console.log(err);
+            });
         });
     },
     stopAudio() {

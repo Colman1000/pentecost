@@ -1,6 +1,6 @@
 module.exports.bootstrap = async function () {
-  await Channel.destroy({});
-  await Channel.createEach([{
+  if (await Channel.count() === 0) {
+    await Channel.createEach([{
       voice: 'en-US',
       flag: 'us',
       name: 'English',
@@ -54,5 +54,6 @@ module.exports.bootstrap = async function () {
       name: 'Nederlands',
       language: 'NL'
     },
-  ]);
+    ]);
+  }
 };

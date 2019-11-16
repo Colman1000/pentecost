@@ -1,7 +1,7 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
-module.exports = function(ctx) {
+module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
@@ -42,7 +42,7 @@ module.exports = function(ctx) {
       directives: [],
 
       // Quasar plugins
-      plugins: ["Notify"]
+      plugins: ["Notify", "Dialog", "Loading"]
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
@@ -56,10 +56,10 @@ module.exports = function(ctx) {
       // gzip: true,
       // analyze: true,
       // preloadChunks: false,
-      // extractCSS: false,
+      extractCSS: true,
 
       // https://quasar.dev/quasar-cli/cli-documentation/handling-webpack
-      extendWebpack(cfg) {}
+      extendWebpack(cfg) { }
     },
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
