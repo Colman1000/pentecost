@@ -202,7 +202,7 @@
                 });
             },
             async postData(url = '', data = {}) {
-                await fetch(
+                return await fetch(
                     `http://emmanuel-meditation.us-east-2.elasticbeanstalk.com/songs/${url}.php`,
                     {
                         method: 'POST',

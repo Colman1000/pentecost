@@ -36,51 +36,63 @@
                         v-model="note"
                 ></v-textarea>
             </v-col>
-        </v-row>
-        <v-row>
-            <v-col cols="5" offset="6">
-                <div class="text-right float-right">
-                    <v-btn text color="primary" @click="addNote">
-                        <v-icon left>mdi-plus</v-icon>
-                        Add To Meditations
-                    </v-btn>
-                </div>
-            </v-col>
-        </v-row>
-        <v-row  v-if="notes.length > 0">
-            <v-col cols="12">
-                <v-simple-table fixed-header style="min-width: 80%">
-                    <thead>
-                    <tr>
-                        <th class="text-left">S/N</th>
-                        <th class="text-left">Note</th>
-                        <th class="text-left">Operations</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="(item, i) in notes" :key="item.note" class="beautify">
-                        <td>{{ i + 1  }}</td>
-                        <td>{{ item }}</td>
-                        <td>
-                            <v-btn text color="primary" style="display: inline;" @click="editNote(i)">
-                                <v-icon>mdi-pen</v-icon>
-                            </v-btn>
-                            &nbsp;
-                            <v-btn text color="error" style="display: inline;" @click="deleteNote(i)">
-                                <v-icon>mdi-delete</v-icon>
-                            </v-btn>
-                        </td>
-                    </tr>
-                    </tbody>
-                </v-simple-table>
-            </v-col>
-            <v-col cols="2" offset="10" class="mb-5">
-                <v-btn :loading="publishing" color="primary" @click="publish">
-                    <v-icon left>mdi-cloud</v-icon>
+            <v-col class="mb-5" cols="2" offset="10">
+                <v-btn :loading="isUploadingNote" @click="dialog = true" color="primary" text>
+                    <v-icon left>mdi-plus</v-icon>
                     Publish
                 </v-btn>
             </v-col>
         </v-row>
+        <v-row v-if="isGettingNotes">
+            <v-col class="my-5" cols="10" offset="1">
+                <v-progress-linear indeterminate striped></v-progress-linear>
+            </v-col>
+        </v-row>
+        <v-row class="mb-10" v-if="notes.length > 0">
+            <v-col cols="12">
+                <v-simple-table fixed-header style="min-width: 80%">
+                    <thead>
+                    <tr>
+                        <th class="text-left">ID</th>
+                        <th class="text-left">Note</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(item, i) in notes" :key="item.note" class="beautify">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ item }}</td>
+                    </tr>
+                    </tbody>
+                </v-simple-table>
+            </v-col>
+        </v-row>
+
+        <v-dialog
+                max-width="290"
+                v-model="dialog"
+        >
+            <v-card>
+                <v-card-title class="headline">Are you sure?</v-card-title>
+
+                <v-card-text>
+                    Published meditations can not be deleted
+                </v-card-text>
+
+                <v-card-actions>
+
+                    <v-btn @click="dialog = false" color="red darken-1" text>
+                        Cancel
+                    </v-btn>
+
+                    <v-spacer></v-spacer>
+
+
+                    <v-btn @click="addNote" color="green darken-1" text>
+                        Publish
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
 
         <v-snackbar v-model="snackbar" color="error">
             {{errMsg}}
@@ -96,7 +108,9 @@
         layout: 'default',
         data() {
             return {
-                time: null,
+                isGettingNotes: false,
+                isUploadingNote: false,
+                dialog: false,
                 note: '',
                 errMsg: '',
                 showTimePicker: false,
@@ -105,56 +119,75 @@
                 publishing: false
             }
         },
+        mounted() {
+            this.fetAllNotes();
+        },
         methods: {
-            addNote(){
-                if(!this.note) {
+            async addNote() {
+                this.dialog = false;
+                if (this.isUploadingNote) return;
+                if (!this.note) {
                     this.errMsg = "You can not add an empty note!";
                     this.snackbar = true;
-                    window.setTimeout(()=>{
+                    window.setTimeout(() => {
                         this.snackbar = false;
                         this.errMsg = '';
                     }, 3000);
                     return;
                 }
-                this.notes.push(this.note);
+                this.isUploadingNote = true;
+                await this.publish();
+                this.isUploadingNote = false;
                 this.note = '';
+                this.uploadText = 'Success';
+                window.setTimeout(() => {
+                    this.uploadText = 'Publish';
+                }, 3000);
+                this.fetAllNotes();
             },
-            editNote(index){
-                const _notes = this.notes;
-                this.note = _notes.splice(index, 1)[0];
-                this.notes = _notes
-            },
-            deleteNote(index){
-                const _notes = this.notes;
-                _notes.splice(index, 1);
-                this.notes = _notes;
-            },
-            publish(){
+            async fetAllNotes() {
                 const that = this;
-                if(that.note) return that.addNote();
-                if(!that.time) {
-                    that.errMsg = "Please choose a time interval!";
-                    that.snackbar = true;
-                    window.setTimeout(()=>{
-                        that.snackbar = false;
-                        that.errMsg = '';
-                    }, 3000);
-                    return;
-                }
-                if(that.publishing) return;
+                if (that.isGettingNotes) return;
 
-                //TODO: SEND DETAILS TO SERVER
-                that.publishing = true;
-                console.log(that.notes);
-                window.setTimeout(()=>{
-                    that.publishing = false;
-                    that.notes = [];
-                    that.time = 1;
-                }, 1500)
+                that.isGettingNotes = true;
+                const notes = await fetch(
+                    `http://emmanuel-meditation.us-east-2.elasticbeanstalk.com/meditation/index.php`, {
+                        method: 'POST',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer', // no-referrer, *client
+                        body: JSON.stringify({time: 0, lang: 'en'}) // body data type must match "Content-Type" header
+                    });
+
+                const res = await notes.json();
+
+                that.notes = res.data;
+
+                console.log(res);
+
+                that.isGettingNotes = false;
             },
-            trunc(w, characters = 60){
-                if(!w || typeof w !== 'string') return '';
-                return w.length < characters?
+            async publish() {
+                const that = this;
+                return await fetch(
+                    `http://emmanuel-meditation.us-east-2.elasticbeanstalk.com/meditation/add.php`,
+                    {
+                        method: 'POST',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer', // no-referrer, *client
+                        body: JSON.stringify({text: that.note}) // body data type must match "Content-Type" header
+                    });
+            },
+            trunc(w, characters = 60) {
+                if (!w || typeof w !== 'string') return '';
+                return w.length < characters ?
                     w :
                     w.substr(0, characters - 3) + '...';
             }
@@ -168,6 +201,7 @@
         animation-fill-mode: both;
         animation-name: fade;
     }
+
     @keyframes fade {
         from {
             opacity: 0;
