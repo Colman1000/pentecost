@@ -20,24 +20,6 @@
                 </div>
             </v-col>
         </v-row>
-        <v-row >
-            <v-col cols="8" offset="1">
-                <v-slider
-                    prepend-icon="mdi-alarm"
-                    v-model="time"
-                    :step="1"
-                    :max="12"
-                    :min="1"
-                    ticks
-                    hint="Select Meditation Interval"
-                    persistent-hint
-                    thumb-label="interval"
-                ></v-slider>
-            </v-col>
-            <v-col cols="2">
-                <span class="overline">Shuffle every <span class="font-weight-bold">{{time}} hr{{time < 2? '': 's'}}</span></span> 
-            </v-col>
-        </v-row>
         <v-row>
             <v-col cols="10" offset="1">
                 <v-divider></v-divider>
@@ -166,7 +148,7 @@
                 console.log(that.notes);
                 window.setTimeout(()=>{
                     that.publishing = false;
-                    that.notes = []
+                    that.notes = [];
                     that.time = 1;
                 }, 1500)
             },

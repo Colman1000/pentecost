@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@mdi/font": "^4.0.96",
+    "aws-sdk": "^2.614.0",
     "lodash": "^4.17.15",
     "node-sass": "^4.12.0",
     "noisedot": "^1.0.1",

@@ -77,8 +77,9 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
-export default {
+  import {mapMutations} from "vuex";
+
+  export default {
   data() {
     return {
       sheet: false,
@@ -101,9 +102,9 @@ export default {
           icon: "mdi-subtitles"
         },
         {
-          to: "notify",
-          name: "Notifications",
-          icon: "mdi-bell-plus"
+          to: "songs/",
+          name: "Songs",
+          icon: "mdi-music"
         },
         {
           to: "settings",
