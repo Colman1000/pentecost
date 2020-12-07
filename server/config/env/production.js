@@ -44,7 +44,8 @@ module.exports = {
      *                                                                          *
      ***************************************************************************/
     default: {
-      adapter: "sails-firestore",
+      // adapter: "sails-firestore",
+      adapter: "sails-disk",
       serviceAccount: require('../../pentecost-voice.json'),
       //--------------------------------------------------------------------------
       //  /\   To avoid checking it in to version control, you might opt to set

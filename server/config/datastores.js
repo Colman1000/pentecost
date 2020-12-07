@@ -46,7 +46,8 @@ module.exports.datastores = {
      *    (See https://sailsjs.com/config/datastores for help.)                 *
      *                                                                          *
      ***************************************************************************/
-    adapter: "sails-firestore",
+    // adapter: "sails-firestore",
+    adapter: "sails-disk",
     serviceAccount: require('../pentecost-voice.json')
     // url:
     //   "mysql://YAWEH:1111AAxx??@pentecost.cmagfh4p8tdl.us-east-2.rds.amazonaws.com"
