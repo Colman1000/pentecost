@@ -41,7 +41,7 @@
                 <v-avatar size="25">
                   <v-img
                     v-if="selectedChannel !== chan.id"
-                    :src="`https://www.countryflags.io/${chan.flag}/shiny/64.png`"
+                    :src="`https://flagcdn.com/56x42/${chan.flag}.png`"
                   ></v-img>
                   <v-icon v-else class="spinner">mdi-loading</v-icon>
                 </v-avatar>
