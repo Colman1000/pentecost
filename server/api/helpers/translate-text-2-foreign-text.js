@@ -33,7 +33,9 @@ module.exports = {
     
     const translate = require("translate");
 
-    translate.key = "AIzaSyAZMYD0LfFS7xZOB9vMpLrrODtLsaGPrtQ";
+    //translate.key = "AIzaSyAZMYD0LfFS7xZOB9vMpLrrODtLsaGPrtQ";
+    translate.key = "AIzaSyC9JLIJ9DerGOPVPxCKGBIQzAw1RXynGNw";
+
     return await translate(text, {
       to: to,
       from: from
