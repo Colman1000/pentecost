@@ -32,7 +32,7 @@ module.exports = {
   fn: async function (inputs) {
     const axios = require('axios');
 
-    API_KEY = '2bcd2ed7-4af2-6f71-289d-0c0edec22d73';
+    API_KEY = '55add4d2-94f5-6363-6977-bad85630d3d3';
     URL = ' https://api.deepl.com/v2/translate';
 
     let {
