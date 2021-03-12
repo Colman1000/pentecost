@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" class="text-center grey--text">
         <div class="display-1">Broadcast Notifications</div>
-        <small class="caption">Compose Notifications for all users of the Emmanuel TV app</small>
+        <small class="caption">Compose Notifications for all users of the Pentecost app</small>
       </v-col>
     </v-row>
     <v-row>

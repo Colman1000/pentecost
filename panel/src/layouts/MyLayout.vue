@@ -10,7 +10,7 @@
           icon="menu"
           aria-label="Menu"
         />
-        <q-toolbar-title>Emmanuel TV</q-toolbar-title>
+        <q-toolbar-title>Pentecost</q-toolbar-title>
       </q-toolbar>
     </q-header>
 

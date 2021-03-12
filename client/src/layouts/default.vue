@@ -8,7 +8,7 @@
       background-color="secondary"
     ></v-progress-linear>
     <v-app-bar class="graient font-weight-black" dark elevation="5">
-      <v-toolbar-title class="font" style="user-select: none">Emmanuel TV</v-toolbar-title>
+      <v-toolbar-title class="font" style="user-select: none">Pentecost</v-toolbar-title>
       <div class="flex-grow-1"></div>
     </v-app-bar>
     <v-alert class="text-center" v-model="oops" type="error">{{ message }}!</v-alert>
