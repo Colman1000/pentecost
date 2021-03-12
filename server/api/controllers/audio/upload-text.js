@@ -49,7 +49,7 @@ module.exports = {
       // translate thier text to thier foreign channel language
 
       //* What should really translate is not the inputs language but the chanels ISO 639-1 language
-      let translatedText = await sails.helpers.translateText2ForeignText.with({
+      let translatedText = await sails.helpers.deeplTranslate.with({
         text: savedAudio.text,
         from: inputs.lang.split("-")[0],
         to: channel.language,
